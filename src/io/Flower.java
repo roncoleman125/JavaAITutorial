@@ -1,18 +1,13 @@
 package io;
 
 public class Flower implements Comparable<Flower> {
-    public final static int SEPAL_LENGTH = 0;
-    public final static int SEPAL_WIDTH = 1;
-    public final static int PETAL_LENGTH = 2;
-    public final static int PETAL_WIDTH = 3;
-
-    protected Integer sepalLength;
-    protected Integer sepalWidth;
-    protected Integer petalLength;
-    protected Integer petalWidth;
+    protected Double sepalLength;
+    protected Double sepalWidth;
+    protected Double petalLength;
+    protected Double petalWidth;
     protected Species species;
 
-    public Flower(Integer sepalLength, Integer sepalWidth, Integer petalLength, Integer petalWidth, Species species) {
+    public Flower(Double sepalLength, Double sepalWidth, Double petalLength, Double petalWidth, Species species) {
         this.sepalLength = sepalLength;
         this.sepalWidth = sepalWidth;
         this.petalLength = petalLength;
@@ -20,9 +15,13 @@ public class Flower implements Comparable<Flower> {
         this.species = species;
     }
 
-
     @Override
     public int compareTo(Flower flower) {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return this.species.toString();
     }
 }

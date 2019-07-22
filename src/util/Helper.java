@@ -30,7 +30,7 @@ import java.util.*;
 import java.util.function.Function;
 
 /**
- * This is a helper class which implement convenience methods.
+ * This is a helper convenience class which implements convenience methods.
  * @author Ron.Coleman
  */
 public class Helper {
@@ -91,17 +91,41 @@ public class Helper {
 
                     Object obj = parse(parser, fields[col].trim());
 
-                    if(obj instanceof DontCare)
+                    if(obj == null)
+                        System.out.println(lines.get(row));
+
+                     if(obj instanceof DontCare) {
                         continue;
+                    }
 
                     list.add(obj);
                 }
             }
         }
+
+        // Delete the don't care columns in header and data.
+        // First we have to get the don't care columns then delete them because Java list collection
+        // does not permit updating the list while traversing it at the same time.
+        ArrayList<String> trash = new ArrayList<>();
+        for(String title: headers) {
+            if(data.get(title).size() == 0)
+                trash.add(title);
+        }
+
+        for(String title: trash) {
+            data.remove(title);
+            headers.remove(title);
+        }
     }
 
-    private static Object parse(Function<String, Object> function, String value) {
-        return function.apply(value);
+    /**
+     * Parses a string object.
+     * @param function Parser
+     * @param input Data we're going to parse
+     * @return Object result of parsing
+     */
+    private static Object parse(Function<String, Object> function, String input) {
+        return function.apply(input);
     }
 
     /**

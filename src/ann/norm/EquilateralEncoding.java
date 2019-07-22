@@ -25,7 +25,7 @@ package ann.norm;
 import org.encog.mathutil.Equilateral;
 import org.encog.util.Format;
 import util.Helper;
-
+import util.Ontology;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,20 +37,10 @@ import java.util.logging.Logger;
  * @author Ron.Coleman
  */
 public class EquilateralEncoding {
-
-    // This is the structure of the Iris csv file by column
-    final static Ontology[] ONTOLOGIES = {
-            Ontology.NUMERIC,
-            Ontology.NUMERIC,
-            Ontology.NUMERIC,
-            Ontology.NUMERIC,
-            Ontology.NOMINAL
-    };
-
     public static void main(String[] args) {
         try {
             // Load the data
-            Helper.loadCsv("iris.csv", ONTOLOGIES);
+            Helper.loadCsv("iris.csv", Ontology.parsers);
 
             // If we get here without an exception, then get title of last column
             String title = Helper.getTitle(4);
@@ -58,12 +48,12 @@ public class EquilateralEncoding {
             System.out.println(title);
 
             // To set up the equilateral encoding
-            int numberNodes = Helper.getNominalSubtypeCount();
+            int numberNodes = Helper.getNominalSubtypeCount(4);
 
             // Get the equilateral encoding for [-1, 1] range.
             Equilateral eq = new Equilateral(numberNodes, -1, 1);
 
-            ArrayList<String> subtypes = Helper.getNominalSubtypes();
+            ArrayList<String> subtypes = Helper.getNominalSubtypes(4);
 
             // Output the ideal values for each nominal as a point in
             // n-dimension hyperspace
