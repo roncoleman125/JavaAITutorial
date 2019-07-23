@@ -20,11 +20,11 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package util;
+package ann.util;
 
-import io.Setosa;
-import io.Species;
-import io.Versicolor;
+import ann.io.Setosa;
+import ann.io.Species;
+import ann.io.Versicolor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -48,7 +48,7 @@ public class Ontology {
     static Function<String, Object> parseNominal = (String s) -> asSpecies.get(s);
 
     /** Parses a "don't care" column */
-    static Function<String, Object> parseIgnore = (String s) -> new DontCare();
+    static Function<String, Object> parseIgnore = (String s) -> None.getInstance();
 
     /** Parser table: iris.csv has columns of these ontologies. */
     public static ArrayList<Function<String, Object>> parsers =

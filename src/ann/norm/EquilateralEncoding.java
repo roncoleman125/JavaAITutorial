@@ -24,8 +24,8 @@ package ann.norm;
 
 import org.encog.mathutil.Equilateral;
 import org.encog.util.Format;
-import util.Helper;
-import util.Ontology;
+import ann.util.Helper;
+import ann.util.Ontology;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;

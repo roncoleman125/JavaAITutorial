@@ -20,10 +20,12 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package util;
+package ann.io;
 
 /**
- * Scala-style "none" object in lieu of using null.
+ * Implements virginica species.
+ * @author Ron Coleman
  */
-public class DontCare {
+public class Virginica extends Species {
+
 }

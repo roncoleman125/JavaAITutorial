@@ -20,7 +20,7 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package util;
+package ann.util;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -37,15 +37,15 @@ public class Helper {
     public final static boolean DEBUGGING = false;
 
     // Respective data, not including headers
-    public final static HashMap<String, ArrayList> data = new HashMap<>();
+    public final static HashMap<String, List> data = new HashMap<>();
 
     // Respective headers
-    public final static ArrayList<String> headers = new ArrayList<>();
+    public final static List<String> headers = new ArrayList<>();
 
     // 1 of N encoding
-    static HashMap<String,ArrayList<Integer>> oneofn = new HashMap<>();
+    static HashMap<String, List<Integer>> oneofn = new HashMap<>();
 
-    public static void loadCsv(String path, ArrayList<Function<String, Object>> parsers, Random ran)
+    public static void loadCsv(String path, List<Function<String, Object>> parsers, Random ran)
             throws FileNotFoundException, IOException, Exception {
         data.clear();
 
@@ -94,7 +94,7 @@ public class Helper {
                     if(obj == null)
                         System.out.println(lines.get(row));
 
-                     if(obj instanceof DontCare) {
+                     if(obj instanceof None) {
                         continue;
                     }
 
@@ -135,7 +135,7 @@ public class Helper {
      * @param parsers Parsers of data
      * @throws Exception
      */
-    public static void loadCsv(String path, ArrayList<Function<String, Object>> parsers) throws Exception {
+    public static void loadCsv(String path, List<Function<String, Object>> parsers) throws Exception {
         Helper.loadCsv(path, parsers, new Random(0));
     }
 
@@ -144,7 +144,7 @@ public class Helper {
      * @param col Column index
      * @return Names of the subtypes
      */
-    public static ArrayList<String> getNominalSubtypes(int col) {
+    public static List<String> getNominalSubtypes(int col) {
         if(oneofn.isEmpty())
             oneofn = encodeOneOfN(col);
 
@@ -176,17 +176,17 @@ public class Helper {
      * @param col Column of nominals
      * @return Hash map of nominal and its 1-of-n encoding
      */
-    public static HashMap<String, ArrayList<Integer>> encodeOneOfN(int col) {
+    public static HashMap<String, List<Integer>> encodeOneOfN(int col) {
         if(!oneofn.isEmpty())
             return oneofn;
 
         // Hash map to return: nominal name -> 1-of-n encoding
-        oneofn = new HashMap<String, ArrayList<Integer>>();
+        oneofn = new HashMap<String, List<Integer>>();
 
         // Use this title to retrieve the nominal column
         String title = Helper.headers.get(col);
 
-        ArrayList<String> nominals = Helper.data.get(title);
+        List<String> nominals = Helper.data.get(title);
 
         // Count the number of unique nominal values
         // (Note: we also keep a count of nominal values but it is not used.)

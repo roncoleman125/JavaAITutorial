@@ -20,30 +20,37 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package io;
+package ann.io;
 
-import util.Helper;
-import util.Ontology;
+import ann.util.Helper;
+import ann.util.Ontology;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.List;
 
-public class IrisSorter {
-
-
+/**
+ * This class reads the iris csv file and outputs it.
+ */
+public class IrisReader {
     public static void main(String[] args) {
-        ArrayList<Flower> flowers = load();
-
-    }
-
-    public static ArrayList<Flower> load() {
-        ArrayList<Flower> flowers = null;
-
         try {
-            // Load data column-oriented
+            // Load data in column-oriented format which is preferred for normalization
             Helper.loadCsv("iris.csv", Ontology.parsers);
 
-            // Transpose data to row-oriented flowers
-            flowers = asFlowers(Helper.data);
+            // Transpose to row-oriented format which is preferred for output
+            List<Flower> flowers = new ArrayList<>();
+
+            // Get number of rows -- if there aren't any then data hasn't been loaded successfully
+            int rowCount = Helper.getRowCount();
+
+            // Go through each row of each column and make a flower
+            for(int row=0; row < rowCount; row++) {
+                HashMap map = Helper.asMap(row);
+
+                Flower flower = asFlower(map);
+
+                flowers.add(flower);
+            }
 
             for(Flower flower: flowers) {
                 System.out.println(flower);
@@ -51,32 +58,17 @@ public class IrisSorter {
         }
         catch(Exception e) {
             e.printStackTrace();
-            System.exit(1);
         }
-
-        return flowers;
     }
 
-    private static ArrayList<Flower> asFlowers(HashMap<String, ArrayList> data) {
-        // Flowers are stored here
-        ArrayList<Flower> flowers = new ArrayList<>();
-
-        // Get number of rows -- if there aren't any then data hasn't been loaded
-        int rowCount = Helper.getRowCount();
-
-        // Go through each row of each column and make a flower
-        for(int row=0; row < rowCount; row++) {
-            HashMap map = Helper.asMap(row);
-
-            Flower flower = asFlower(map);
-
-            flowers.add(flower);
-        }
-
-        return flowers;
-    }
-
+    /**
+     * Converts map to a single object.
+     * @param map
+     * @return
+     */
     private static Flower asFlower(HashMap map) {
+        // Get correspond value for each key which is directly from iris dataset.
+        // Note the cast needed: Helper doesn't remember ontologies which we pass to it.
         Double sepalLength = (Double) map.get("Sepal.Length");
         Double sepalWidth = (Double) map.get("Sepal.Width");
         Double petalLength = (Double) map.get("Petal.Length");
