@@ -26,7 +26,7 @@ import org.encog.mathutil.Equilateral;
 import org.encog.util.Format;
 import ann.util.Helper;
 import ann.util.Ontology;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,7 +53,7 @@ public class EquilateralEncoding {
             // Get the equilateral encoding for [-1, 1] range.
             Equilateral eq = new Equilateral(numberNodes, -1, 1);
 
-            ArrayList<String> subtypes = Helper.getNominalSubtypes(4);
+            List<String> subtypes = Helper.getNominalSubtypes(4);
 
             // Output the ideal values for each nominal as a point in
             // n-dimension hyperspace

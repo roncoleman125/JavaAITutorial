@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * This class reads the iris csv file and outputs it.
  */
-public class IrisReader {
+public class IrisLoader {
     public static void main(String[] args) {
         try {
             // Load data in column-oriented format which is preferred for normalization
@@ -40,6 +40,8 @@ public class IrisReader {
             // Transpose to row-oriented format which is preferred for output
             List<Flower> flowers = new ArrayList<>();
 
+            List<Measurement> measurements = new ArrayList<>();
+
             // Get number of rows -- if there aren't any then data hasn't been loaded successfully
             int rowCount = Helper.getRowCount();
 
@@ -47,14 +49,13 @@ public class IrisReader {
             for(int row=0; row < rowCount; row++) {
                 HashMap map = Helper.asMap(row);
 
-                Flower flower = asFlower(map);
+                flowers.add(asFlower(map));
 
-                flowers.add(flower);
+                measurements.add(asMeasurement(map));
             }
 
-            for(Flower flower: flowers) {
-                System.out.println(flower);
-            }
+            for(int k=0; k < flowers.size(); k++)
+                System.out.println(flowers.get(k)+""+measurements.get(k));
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -67,14 +68,17 @@ public class IrisReader {
      * @return
      */
     private static Flower asFlower(HashMap map) {
-        // Get correspond value for each key which is directly from iris dataset.
-        // Note the cast needed: Helper doesn't remember ontologies which we pass to it.
+        Species species = (Species) map.get("Species");
+
+        return new Flower(species);
+    }
+
+    private static Measurement asMeasurement(HashMap map) {
         Double sepalLength = (Double) map.get("Sepal.Length");
         Double sepalWidth = (Double) map.get("Sepal.Width");
         Double petalLength = (Double) map.get("Petal.Length");
         Double petalWidth = (Double) map.get("Petal.Width");
-        Species species = (Species) map.get("Species");
 
-        return new Flower(sepalLength,sepalWidth,petalLength,petalWidth,species);
+        return new Measurement(sepalLength,sepalWidth,petalLength,petalWidth);
     }
 }

@@ -23,26 +23,52 @@
 package ann.io;
 
 /**
- * Represents a flower.
+ * Represents flower measurement.
  * @author Ron Coleman
  */
-public class Flower {
-    protected Species species;
+public class Measurement {
+    public Double sepalLength;
+    public Double sepalWidth;
+    public Double petalLength;
+    public Double petalWidth;
 
-    /**
-     * Constructor
-     * @param species Species
-     */
-    public Flower(Species species) {
-        this.species = species;
+    public Measurement(Double sepalLength, Double sepalWidth, Double petalLength, Double petalWidth) {
+        this.sepalLength = sepalLength;
+        this.sepalWidth = sepalWidth;
+        this.petalLength = petalLength;
+        this.petalWidth = petalWidth;
     }
 
     /**
-     * Gets flower species.
-     * @return Species
+     * Gets the sepal length.
+     * @return sepal length
      */
-    public Species getSpecies() {
-        return species;
+    public Double getSepalLength() {
+        return sepalLength;
+    }
+
+    /**
+     * Gets the sepal width.
+     * @return sepal width
+     */
+    public Double getSepalWidth() {
+        return sepalWidth;
+    }
+
+    /**
+     * Gets the petal length.
+     * @return Petal length
+     */
+    public Double getPetalLength() {
+        return petalLength;
+    }
+
+    /**
+     * Gets the petal width.
+     * @return Petal width
+     */
+    public Double getPetalWidth() {
+        return petalWidth;
     }
 
     /**
@@ -51,6 +77,6 @@ public class Flower {
      */
     @Override
     public String toString() {
-        return this.species.toString();
+        return "("+sepalLength+", "+sepalWidth+", "+petalLength+", "+petalWidth+")";
     }
 }
