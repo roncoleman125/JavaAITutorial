@@ -1,4 +1,4 @@
-package ann.basic;
+package javaai.ann.basic;
 
 import org.encog.Encog;
 import org.encog.engine.network.activation.ActivationSigmoid;

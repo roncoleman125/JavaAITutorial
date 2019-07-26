@@ -20,7 +20,7 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package ann.util;
+package javaai.ann.util;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -28,6 +28,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 import java.util.function.Function;
+import static javaai.ann.util.Option.None;
 
 /**
  * This is a helper convenience class which implements convenience methods.
@@ -94,8 +95,9 @@ public class Helper {
                     if(obj == null)
                         System.out.println(lines.get(row));
 
-                     if(obj instanceof None) {
-                        continue;
+                        // Note: == is normally a bad idea but None is static in this case
+                        if(obj == None) {
+                            continue;
                     }
 
                     list.add(obj);

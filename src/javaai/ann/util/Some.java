@@ -20,12 +20,15 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package ann.norm;
+package javaai.ann.util;
 
 /**
- * This code demonstrates how to use one-of-n encoding with the Iris data.
- * For more details see Heaton (2011), p.24.
- * @author Ron.Coleman
+ * Some option emulates Scala's "some" in lieu of null.
  */
-public class OneOfNEncoding {
+public class Some extends Option {
+    public Object obj;
+
+    public Some(Object obj) {
+        this.obj = obj;
+    }
 }

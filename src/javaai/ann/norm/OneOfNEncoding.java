@@ -20,33 +20,12 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package ann.io;
+package javaai.ann.norm;
 
-import java.util.HashMap;
-
-public abstract class Species {
-    private static HashMap<String, Species> asSpecies = new HashMap<String, Species>() {{
-        put("setosa", new Setosa());
-        put("versicolor", new Versicolor());
-        put("virginica", new Versicolor());
-    }};
-
-    /**
-     * Singleton gets a species by name.
-     * @param name Species name
-     * @return Species
-     */
-    public static Species getInstance(String name) {
-        return asSpecies.get(name.trim().toLowerCase());
-    }
-
-    /**
-     * Gets the string representation of a species.
-     * @return
-     */
-    @Override
-    public String toString() {
-        return this.getClass().getName();
-    }
-
+/**
+ * This code demonstrates how to use one-of-n encoding with the Iris data.
+ * For more details see Heaton (2011), p.24.
+ * @author Ron.Coleman
+ */
+public class OneOfNEncoding {
 }

@@ -20,34 +20,46 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package ann.util;
+package javaai.ann.util;
 
-import ann.io.Setosa;
-import ann.io.Species;
-import ann.io.Versicolor;
+import javaai.aann.Species;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.function.Function;
+import static javaai.ann.util.Option.None;
 
 /**
  * This is a container class of parser functionals.
  * @author Ron Coleman
  */
 public class Ontology {
+    public static Integer compute(Function<Integer, Integer> function, Integer value) {
+        return function.apply(value);
+    }
     /** Parses a numeric string */
-    static Function<String, Object> parseNumeric = (String s) -> Double.parseDouble(s);
+    static Function<String, Object> parseNumeric = (String s) ->
+        {
+            try {
+                return Double.parseDouble(s);
+            }
+            catch(Exception e) {
+                return None;
+            }
+        };
 
     /** Parses a nominal as a flower species */
-    static Function<String, Object> parseNominal = (String s) -> Species.getInstance(s);
+    static Function<String, Object> parseNominal = (String s) -> {
+
+        return (s.length() == 0 || s == null) ? None : Species.getInstance(s);
+    };
 
     /** Parses a "don't care" column */
-    static Function<String, Object> parseIgnore = (String s) -> None.getInstance();
+    static Function<String, Object> parseNone = (String s) -> None;
 
     /** Parser table has columns of these ontologies from iris.csv. */
     public static ArrayList<Function<String, Object>> parsers =
             new ArrayList<Function<String, Object>>(Arrays.asList(
-                    parseIgnore,
+                    parseNone,
                     parseNumeric,
                     parseNumeric,
                     parseNumeric,

@@ -20,12 +20,8 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package ann.io;
+package javaai.ann.util;
 
-/**
- * Implements virginica species.
- * @author Ron Coleman
- */
-public class Virginica extends Species {
-
+public abstract class Option {
+    public static Option None = new None_();
 }

@@ -20,19 +20,19 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package ann.io;
+package javaai.aann;
 
 /**
  * Represents flower measurement.
  * @author Ron Coleman
  */
-public class Measurement {
+public class Measure {
     public Double sepalLength;
     public Double sepalWidth;
     public Double petalLength;
     public Double petalWidth;
 
-    public Measurement(Double sepalLength, Double sepalWidth, Double petalLength, Double petalWidth) {
+    public Measure(Double sepalLength, Double sepalWidth, Double petalLength, Double petalWidth) {
         this.sepalLength = sepalLength;
         this.sepalWidth = sepalWidth;
         this.petalLength = petalLength;

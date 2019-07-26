@@ -20,12 +20,12 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package ann.norm;
+package javaai.ann.norm;
 
 import org.encog.mathutil.Equilateral;
 import org.encog.util.Format;
-import ann.util.Helper;
-import ann.util.Ontology;
+import javaai.ann.util.Helper;
+import javaai.ann.util.Ontology;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

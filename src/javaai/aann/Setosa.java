@@ -20,28 +20,12 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package ann.util;
+package javaai.aann;
 
 /**
- * Scala-style "none" object in lieu of using null.
+ * Implements setosa species.
+ * @author Ron Coleman
  */
-public class None {
-    private static None none = null;
+public class Setosa extends Species {
 
-    /**
-     * Constructor
-     */
-    private None() {
-    }
-
-    /**
-     * Singleton for generating none.
-     * @return An instance of none
-     */
-    public static None getInstance() {
-        if(none == null)
-            none = new None();
-
-        return none;
-    }
 }

@@ -20,27 +20,37 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package ann.io;
+package javaai.aann;
 
-import ann.util.Helper;
-import ann.util.Ontology;
+import javaai.ann.util.Helper;
+import javaai.ann.util.Ontology;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This class reads the iris csv file and outputs it.
+ * @author Ron Coleman
  */
 public class Main {
+    protected static List<Species> flowers = new ArrayList<>();
+    protected static List<Measure> measures = new ArrayList<>();
+
     public static void main(String[] args) {
+        load("iris.csv");
+
+        for(int k=0; k < flowers.size(); k++)
+            System.out.println(flowers.get(k)+""+measures.get(k));
+    }
+
+    public static void load() {
+        Main.load("iris.csv");
+    }
+
+    public static void load(String path) {
         try {
-            // Load data in column-oriented format which is preferred for normalization
-            Helper.loadCsv("iris.csv", Ontology.parsers);
-
-            // Transpose to row-oriented format which is preferred for output
-            List<Species> flowers = new ArrayList<>();
-
-            List<Measurement> measurements = new ArrayList<>();
+            // Load data in column-oriented format preferred for normalization, missing values, etc.
+            Helper.loadCsv(path, Ontology.parsers);
 
             // Get number of rows -- if there aren't any then data hasn't been loaded successfully
             int rowCount = Helper.getRowCount();
@@ -51,11 +61,8 @@ public class Main {
 
                 flowers.add(asFlower(map));
 
-                measurements.add(asMeasurement(map));
+                measures.add(asMeasure(map));
             }
-
-            for(int k=0; k < flowers.size(); k++)
-                System.out.println(flowers.get(k)+""+measurements.get(k));
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -76,12 +83,12 @@ public class Main {
      * @param map Row in iris data set
      * @return Measurement
      */
-    private static Measurement asMeasurement(HashMap map) {
+    private static Measure asMeasure(HashMap map) {
         Double sepalLength = (Double) map.get("Sepal.Length");
         Double sepalWidth = (Double) map.get("Sepal.Width");
         Double petalLength = (Double) map.get("Petal.Length");
         Double petalWidth = (Double) map.get("Petal.Width");
 
-        return new Measurement(sepalLength,sepalWidth,petalLength,petalWidth);
+        return new Measure(sepalLength,sepalWidth,petalLength,petalWidth);
     }
 }
