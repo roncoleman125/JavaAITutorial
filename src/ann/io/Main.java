@@ -31,14 +31,14 @@ import java.util.List;
 /**
  * This class reads the iris csv file and outputs it.
  */
-public class IrisLoader {
+public class Main {
     public static void main(String[] args) {
         try {
             // Load data in column-oriented format which is preferred for normalization
             Helper.loadCsv("iris.csv", Ontology.parsers);
 
             // Transpose to row-oriented format which is preferred for output
-            List<Flower> flowers = new ArrayList<>();
+            List<Species> flowers = new ArrayList<>();
 
             List<Measurement> measurements = new ArrayList<>();
 
@@ -63,16 +63,19 @@ public class IrisLoader {
     }
 
     /**
-     * Converts map to a single object.
-     * @param map
-     * @return
+     * Gets the species in the map.
+     * @param map Row in iris data set
+     * @return Species
      */
-    private static Flower asFlower(HashMap map) {
-        Species species = (Species) map.get("Species");
-
-        return new Flower(species);
+    private static Species asFlower(HashMap map) {
+        return (Species) map.get("Species");
     }
 
+    /**
+     * Gets the measurement in the map.
+     * @param map Row in iris data set
+     * @return Measurement
+     */
     private static Measurement asMeasurement(HashMap map) {
         Double sepalLength = (Double) map.get("Sepal.Length");
         Double sepalWidth = (Double) map.get("Sepal.Width");

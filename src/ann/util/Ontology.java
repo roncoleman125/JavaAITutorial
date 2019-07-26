@@ -35,22 +35,16 @@ import java.util.function.Function;
  * @author Ron Coleman
  */
 public class Ontology {
-    private static HashMap<String, Species> asSpecies = new HashMap<String, Species>() {{
-        put("setosa", new Setosa());
-        put("versicolor", new Versicolor());
-        put("virginica", new Versicolor());
-    }};
-
     /** Parses a numeric string */
     static Function<String, Object> parseNumeric = (String s) -> Double.parseDouble(s);
 
     /** Parses a nominal as a flower species */
-    static Function<String, Object> parseNominal = (String s) -> asSpecies.get(s);
+    static Function<String, Object> parseNominal = (String s) -> Species.getInstance(s);
 
     /** Parses a "don't care" column */
     static Function<String, Object> parseIgnore = (String s) -> None.getInstance();
 
-    /** Parser table: iris.csv has columns of these ontologies. */
+    /** Parser table has columns of these ontologies from iris.csv. */
     public static ArrayList<Function<String, Object>> parsers =
             new ArrayList<Function<String, Object>>(Arrays.asList(
                     parseIgnore,
