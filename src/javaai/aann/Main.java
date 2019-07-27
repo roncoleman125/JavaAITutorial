@@ -22,8 +22,8 @@
  */
 package javaai.aann;
 
-import javaai.ann.util.Helper;
-import javaai.ann.util.Ontology;
+import javaai.util.Helper;
+import javaai.util.Ontology;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;

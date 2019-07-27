@@ -36,15 +36,19 @@ public class XorHelloWorld {
      */
     public static double XOR_INPUT[][] = {
             {0.0, 0.0},
-            {1.0, 0.0},
             {0.0, 1.0},
+            {1.0, 0.0},
             {1.0, 1.0}
     };
 
     /**
      * The ideal data necessary for XOR.
      */
-    public static double XOR_IDEAL[][] = {{0.0}, {1.0}, {1.0}, {0.0}};
+    public static double XOR_IDEAL[][] = {
+            {0.0},
+            {1.0},
+            {1.0},
+            {0.0}};
 
     /**
      * The main method.
@@ -56,14 +60,14 @@ public class XorHelloWorld {
         // Create a neural network, without using a factory
         BasicNetwork network = new BasicNetwork();
 
-        // Add input lauyer with no activation function, bias enabled, and two neurons
+        // Add input layer with no activation function, bias enabled, and two neurons
         network.addLayer(new BasicLayer(null, true, 2));
 
-        // Add hidden lauyer with ramped activation, bias enabled, and five neurons
+        // Add hidden layer with ramped activation, bias enabled, and five neurons
         // NOTE: ActivationReLU is not in javadoc but can be found here http://bit.ly/2zyxk7A.
-//        network.addLayer(new BasicLayer(new ActivationReLU(), true, 5));
+        // network.addLayer(new BasicLayer(new ActivationReLU(), true, 5));
 
-        // Add hidden lauyer with sigmoid activation, bias enabled, and two neurons
+        // Add hidden layer with sigmoid activation, bias enabled, and two neurons
         network.addLayer(new BasicLayer(new ActivationSigmoid(), true, 2));
 
         // Add output layer with sigmoid activation, bias disable, and one neuron
@@ -78,9 +82,9 @@ public class XorHelloWorld {
         // Create training data
         MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT, XOR_IDEAL);
 
-        // Train the neural network
+        // Train the neural network.
         // Use a training object to train the network, in this case, an improved
-        // backpropagation. For details on what this does see the javadoc.
+        // back propagation. For details on what this does see the javadoc.
         final ResilientPropagation train = new ResilientPropagation(network, trainingSet);
 
         int epoch = 1;

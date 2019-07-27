@@ -24,8 +24,8 @@ package javaai.ann.norm;
 
 import org.encog.mathutil.Equilateral;
 import org.encog.util.Format;
-import javaai.ann.util.Helper;
-import javaai.ann.util.Ontology;
+import javaai.util.Helper;
+import javaai.util.Ontology;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

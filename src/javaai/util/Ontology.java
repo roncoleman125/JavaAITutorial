@@ -20,13 +20,13 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.ann.util;
+package javaai.util;
 
 import javaai.aann.Species;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Function;
-import static javaai.ann.util.Option.None;
+import static javaai.util.Option.None;
 
 /**
  * This is a container class of parser functionals.

@@ -1,4 +1,4 @@
-package javaai.ann.util;
+package javaai.util;
 
 /**
  * None option emulates Scala's "none" in lieu of null.
