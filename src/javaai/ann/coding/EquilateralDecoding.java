@@ -38,11 +38,11 @@ public class EquilateralDecoding {
     /** Tolerance as a percent, e.g., 1.0 == 1% */
     public final static double TOLERANCE = 100.0;
 
-    /** We know these from running EquilateralEncoding */
+    /** TODO: Copy in the values from running EquilateralEncoding */
     static double ideals[][] = {
-            {0.8660,  0.5000},   // Viginica
-            {-0.8660, 0.5000},   // Setosa
-            {0.0000, -1.0000}    // Versicolor
+            {},   // Viginica
+            {},   // Setosa
+            {}    // Versicolor
     };
 
     /** Specie names -- order MUST correspond to ideals */
@@ -77,24 +77,5 @@ public class EquilateralDecoding {
         System.out.printf("%d of %d or %4.2f%% tolerance = %5.2f%%\n",success, NUM_TESTS, rate, TOLERANCE);
     }
 
-    /**
-     * Gets the activation encodings as a string.
-     * @param encodings Activation encodings
-     * @return String
-     */
-    protected static String asString(double[] encodings) {
-        String s = "(";
 
-        int len = encodings.length;
-
-        for(int k=0; k < len; k++) {
-            s += String.format("%6.4f",encodings[k]);
-            if(k == len-1)
-                s += ")";
-
-            else
-                s += ", ";
-        }
-        return s;
-    }
 }

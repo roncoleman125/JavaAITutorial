@@ -313,4 +313,25 @@ public class Helper {
 
         return data.get(header).size();
     }
+
+    /**
+     * Gets the activation encodings as a string.
+     * @param encodings Activation encodings
+     * @return String
+     */
+    protected static String asString(double[] encodings) {
+        String s = "(";
+
+        int len = encodings.length;
+
+        for(int k=0; k < len; k++) {
+            s += String.format("%6.4f",encodings[k]);
+            if(k == len-1)
+                s += ")";
+
+            else
+                s += ", ";
+        }
+        return s;
+    }
 }
