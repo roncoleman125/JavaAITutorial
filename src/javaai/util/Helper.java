@@ -153,6 +153,7 @@ public class Helper {
         Object[] keys = oneofn.keySet().toArray();
 
         ArrayList<String> subtypes = new ArrayList<>();
+
         for(Object key: keys) {
             subtypes.add((String)key);
         }
@@ -194,6 +195,8 @@ public class Helper {
         // (Note: we also keep a count of nominal values but it is not used.)
         HashMap<String, Integer> counter = new HashMap<>();
 
+        HashSet<String> uniques = new HashSet<>();
+
         nominals.forEach((nominal) -> {
             int count = counter.getOrDefault(nominal, 0);
 
@@ -203,6 +206,10 @@ public class Helper {
         int size = counter.size();
 
         // Encode each nominal
+
+        // Here are the keys we're going to use and in this sequence
+        Object[] keys = counter.keySet().toArray();
+
         for(int j = 0; j < size; j++) {
             ArrayList<Integer> encoding = new ArrayList<>();
 
@@ -213,9 +220,6 @@ public class Helper {
                     encoding.add(-1);
                 }
             }
-
-            // Store the encoding in the hash map
-            Object[] keys = counter.keySet().toArray();
 
             oneofn.put((String) keys[j], encoding);
         }

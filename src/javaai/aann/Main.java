@@ -23,7 +23,6 @@
 package javaai.aann;
 
 import javaai.util.Helper;
-import javaai.util.Ontology;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +32,14 @@ import java.util.List;
  * @author Ron Coleman
  */
 public class Main {
+    /** Container of flower species */
     protected static List<Species> flowers = new ArrayList<>();
+
+    /** Container of species measurements */
     protected static List<Measure> measures = new ArrayList<>();
 
     public static void main(String[] args) {
-        load("iris.csv");
+        load();
 
         for(int k=0; k < flowers.size(); k++)
             System.out.println(flowers.get(k)+""+measures.get(k));
