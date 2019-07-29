@@ -27,48 +27,33 @@ package javaai.aann;
  * @author Ron Coleman
  */
 public class Measure {
-    public Double sepalLength;
-    public Double sepalWidth;
-    public Double petalLength;
-    public Double petalWidth;
+    /** Sepal length index */
+    public final static int SEP_LENGTH = 0;
 
+    /** Sepal width index */
+    public final static int SEP_WIDTH = 1;
+
+    /** Petal length index */
+    public final static int PET_LENGTH = 2;
+
+    /** Petal width index */
+    public final static int PET_WIDTH = 3;
+
+    /** Measurement values */
+    public double[] values = {0, 0, 0, 0};
+
+    /**
+     * Constructor
+     * @param sepalLength Sepal length
+     * @param sepalWidth Sepal width
+     * @param petalLength Petal length
+     * @param petalWidth Petal width
+     */
     public Measure(Double sepalLength, Double sepalWidth, Double petalLength, Double petalWidth) {
-        this.sepalLength = sepalLength;
-        this.sepalWidth = sepalWidth;
-        this.petalLength = petalLength;
-        this.petalWidth = petalWidth;
-    }
-
-    /**
-     * Gets the sepal length.
-     * @return sepal length
-     */
-    public Double getSepalLength() {
-        return sepalLength;
-    }
-
-    /**
-     * Gets the sepal width.
-     * @return sepal width
-     */
-    public Double getSepalWidth() {
-        return sepalWidth;
-    }
-
-    /**
-     * Gets the petal length.
-     * @return Petal length
-     */
-    public Double getPetalLength() {
-        return petalLength;
-    }
-
-    /**
-     * Gets the petal width.
-     * @return Petal width
-     */
-    public Double getPetalWidth() {
-        return petalWidth;
+        this.values[SEP_LENGTH] = sepalLength;
+        this.values[SEP_WIDTH] = sepalWidth;
+        this.values[PET_LENGTH] = petalLength;
+        this.values[PET_WIDTH] = petalWidth;
     }
 
     /**
@@ -77,6 +62,6 @@ public class Measure {
      */
     @Override
     public String toString() {
-        return "("+sepalLength+", "+sepalWidth+", "+petalLength+", "+petalWidth+")";
+        return "("+ values[SEP_LENGTH]+", "+ values[SEP_WIDTH]+", "+ values[PET_LENGTH]+", "+ values[PET_WIDTH]+")";
     }
 }
