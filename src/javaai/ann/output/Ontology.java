@@ -20,7 +20,7 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.aann;
+package javaai.ann.output;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +46,7 @@ public class Ontology {
     /** Parses a nominal as a flower species */
     static Function<String, Object> parseNominal = (String s) -> {
 
-        return (s.length() == 0 || s == null) ? None : Species.getInstance(s);
+        return (s.length() == 0 || s == null) ? None : s;
     };
 
     /** Parses a "don't care" column */
