@@ -83,13 +83,10 @@ public class EquilateralEncoding {
             // Load the data
             Helper.loadCsv("iris.csv", Ontology.parsers);
 
-            // Get title of last column
-            String title = Helper.getTitle(4);
-
             // Use equilateral encoding for [-1, 1] range for TANH activation function.
             subtypes = Helper.getNominalSubtypes(4);
 
-            eq = new Equilateral(subtypes.size(), -1, 1);
+            eq = new Equilateral(subtypes.size(), 1, -1);
 
         } catch (Exception ex) {
             Logger.getLogger(EquilateralEncoding.class.getName()).log(Level.SEVERE, null, ex);

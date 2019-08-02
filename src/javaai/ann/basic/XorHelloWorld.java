@@ -1,5 +1,6 @@
 package javaai.ann.basic;
 
+import javaai.util.Helper;
 import org.encog.Encog;
 import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.ml.data.MLData;
@@ -34,7 +35,7 @@ public class XorHelloWorld {
     /**
      * The input necessary for XOR.
      */
-    public static double XOR_INPUT[][] = {
+    public static double XOR_INPUTS[][] = {
             {0.0, 0.0},
             {0.0, 1.0},
             {1.0, 0.0},
@@ -44,7 +45,7 @@ public class XorHelloWorld {
     /**
      * The ideal data necessary for XOR.
      */
-    public static double XOR_IDEAL[][] = {
+    public static double XOR_IDEALS[][] = {
             {0.0},
             {1.0},
             {1.0},
@@ -80,7 +81,7 @@ public class XorHelloWorld {
         network.reset();
 
         // Create training data
-        MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT, XOR_IDEAL);
+        MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUTS, XOR_IDEALS);
 
         // Train the neural network.
         // Use a training object to train the network, in this case, an improved
