@@ -27,7 +27,7 @@ package javaai.ann.basic;
  * @see "https://www.nnwj.de/backpropagation.html"
  * @author Ron.Coleman
  */
-public class Backprop {
+public class BackpropNetwork {
     public final static int NUM_EPOCHS = 500;
 
     public final static double LEARNING_RATE = 0.25;
@@ -61,13 +61,9 @@ public class Backprop {
     };
 
     public static void main(String[] args) {
-        Backprop bp = new Backprop();
+        BackpropNetwork bp = new BackpropNetwork();
 
-        for(int epoch=0; epoch < NUM_EPOCHS; epoch++) {
-            double error = bp.train();
-
-            System.out.println(error);
-        }
+        run(bp);
     }
 
     /**
@@ -202,7 +198,83 @@ public class Backprop {
         return mse;
     }
 
-    protected double[][] stack = new double[2][];
+    public double compute(double[] inputs) {
+        double[] outputs = null;
+
+        // For each layer do feedforward
+        for (int layer = 0; layer < ws.length; layer++) {
+
+            // Allocate storage for layer outputs
+            outputs = new double[ws[layer].length];
+
+            // For each neuron in the layer
+            for (int neuron = 0; neuron < ws[layer].length; neuron++) {
+
+                // Initialize the sum
+                double sum = 0;
+
+                // Compute the weighted sum
+                for (int i = 0; i < ws[layer][neuron].length; i++) {
+                    // Get weight for the input
+                    double weight = ws[layer][neuron][i];
+
+                    // Get input
+                    double input = inputs[i];
+
+                    // Get the strength of this output
+                    double strength = weight * input;
+
+                    // Add to total strength
+                    sum += strength;
+                }
+
+                // Get the neuron's activation as its output
+                double activation = sigmoid(sum);
+
+                // Update the neuron's output
+                outputs[neuron] = activation;
+            }
+
+            // Outputs of neuron are inputs to next layer
+            inputs = outputs;
+        }
+
+        return outputs[0];
+    }
+
+    public static void run(BackpropNetwork bp) {
+        for(int epoch=0; epoch < NUM_EPOCHS; epoch++) {
+            double error = bp.train();
+
+            System.out.println(error);
+        }
+
+        test(bp);
+    }
+
+    public static void test(BackpropNetwork bp) {
+        double[][] inputs = {
+                {0, 1},
+                {1, 1},
+                {1, 0},
+                {0, 0}
+        };
+
+        double[] ideals = {
+                0,
+                1,
+                0,
+                0
+        };
+
+        for(int k=0; k < inputs.length; k++) {
+            double actual = bp.compute(inputs[k]);
+
+            System.out.println("actual="+actual+" ideal="+ideals[k]);
+        }
+    }
+
+    protected double[][] stack = new double[inputs.length][];
     protected int top = -1;
 
     protected void push(double[] outputs) {
