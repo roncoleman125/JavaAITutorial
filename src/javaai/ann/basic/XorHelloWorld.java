@@ -31,6 +31,8 @@ import org.encog.neural.networks.training.propagation.resilient.ResilientPropaga
  * @date 24 Oct 2017
  */
 public class XorHelloWorld {
+    /** Error tolerance */
+    public final static double TOLERANCE = 0.01;
 
     /**
      * The input necessary for XOR.
@@ -93,12 +95,18 @@ public class XorHelloWorld {
         // Never train on a specific error rate but an acceptable tolerance and
         // if the error drops below that tolerance, the network has converged.
         do {
+            long then = System.nanoTime();
+
             train.iteration();
 
-            System.out.println("Epoch #" + epoch + " Error:" + train.getError());
+            long now = System.nanoTime();
+
+            long dt = now - then;
+
+            System.out.println("dt: "+dt+ " epoch #" + epoch + " error: " + train.getError());
 
             epoch++;
-        } while (train.getError() > 0.01);
+        } while (train.getError() > TOLERANCE);
 
         train.finishTraining();
 
@@ -106,6 +114,7 @@ public class XorHelloWorld {
         System.out.println("Neural Network Results:");
 
         for (MLDataPair pair : trainingSet) {
+
             final MLData output = network.compute(pair.getInput());
 
             System.out.println(pair.getInput().getData(0) + "," + pair.getInput().getData(1)
