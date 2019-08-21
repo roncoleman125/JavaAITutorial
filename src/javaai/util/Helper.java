@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.function.Function;
 import static javaai.util.Option.None;
+import org.encog.ml.genetic.genome.IntegerArrayGenome;
 
 /**
  * This is a helper convenience class which implements convenience methods.
@@ -332,6 +333,44 @@ public class Helper {
             else
                 s += ", ";
         }
+        return s;
+    }
+
+    /**
+     * Converts a bitwise integer array genome to a integer where index 0 is the high-order bit.
+     * @param genome Bitwise genome only 0,1 permitted.
+     * @return Integer
+     */
+    public static int asInt(IntegerArrayGenome genome) {
+        int[] bits = genome.getData();
+
+        int n = 0;
+
+        for(int k=0; k < bits.length; k++) {
+            n = n << 1;
+
+            n = n | bits[k];
+        }
+
+        return n;
+    }
+
+    /**
+     * Converts a bitwise int array genome to a string where index 0 is the high-order bit.
+     * @param genome Bitwise genome only 0,1 permitted.
+     * @return
+     */
+    public static String asString(IntegerArrayGenome genome) {
+        String s = "";
+        int[] bits = genome.getData();
+        for(int bit: bits)
+            s += bit + " ";
+
+        s += "| ";
+        int x = asInt(genome);
+
+        s += x;
+
         return s;
     }
 }
