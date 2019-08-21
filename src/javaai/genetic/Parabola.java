@@ -46,17 +46,18 @@ public class Parabola {
         int iteration = 1;
         double lastSolution = Double.MAX_VALUE;
 
+        // Loop until the best answer doesn't change
         while(sameSolutionCount < MAX_SAME_SOLUTION) {
             genetic.iteration();
 
+            // Get the value of the best solution for f(x)
             double thisSolution = genetic.getError();
 
-            IntegerArrayGenome best = (IntegerArrayGenome)genetic.getBestGenome();
-
-            System.out.printf("|%d %f\n",iteration, thisSolution);
+            System.out.printf("|%d %f %f %d\n",iteration, thisSolution, lastSolution, sameSolutionCount);
 
             iteration++;
 
+            // Check if the solution has changed
             if(Math.abs(lastSolution - thisSolution) < 1.0) {
                 sameSolutionCount++;
             }
@@ -116,7 +117,7 @@ public class Parabola {
             s += bit + " ";
 
         s += "| ";
-        int x = asInt(genome.getData());
+        int x = asInt(genome);
 
         s += x;
 
@@ -124,7 +125,8 @@ public class Parabola {
     }
 
 
-    protected int asInt(int[] bits) {
+    public static int asInt(IntegerArrayGenome genome) {
+        int[] bits = genome.getData();
         int num = 0;
         for(int k=0; k < bits.length; k++) {
             num = num << 1;
@@ -141,7 +143,7 @@ class Score implements CalculateScore {
     public double calculateScore(MLMethod phenotype) {
         IntegerArrayGenome genome = (IntegerArrayGenome) phenotype;
 
-        int x = asInt(genome.getData());
+        int x = Parabola.asInt(genome);
 
         double y = f(x);
 
@@ -156,16 +158,6 @@ class Score implements CalculateScore {
     @Override
     public boolean requireSingleThreaded() {
         return true;
-    }
-
-    protected int asInt(int[] bits) {
-        int num = 0;
-        for(int k=0; k < bits.length; k++) {
-            num = num << 1;
-            num = num | bits[k];
-        }
-
-        return num;
     }
 
     protected double f(int x) {
