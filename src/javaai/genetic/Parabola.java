@@ -57,12 +57,14 @@ public class Parabola {
     /** Used to initialize an individual in population */
     protected Random ran = new Random(0);
 
+    protected int sameCount = 0;
+    protected double yLast;
+
     /**
      * Runs the program.
      * @param args Command line arguments not used.
      */
     public static void main(String[] args) {
-
         Parabola parabola = new Parabola();
 
         IntegerArrayGenome best = parabola.solve();
@@ -92,7 +94,7 @@ public class Parabola {
         genetic.addOperation(MUTATION_RATE, new MutateShuffle());
 
         // Do the learning algorithm
-        learn(genetic);
+        train(genetic);
 
         // Return the best individual
         IntegerArrayGenome best = (IntegerArrayGenome)genetic.getBestGenome();
@@ -107,15 +109,18 @@ public class Parabola {
      * Runs the learning algorithm.
      * @param genetic
      */
-    protected void learn(TrainEA genetic) {
-        int sameCount = 0;
+    protected void train(TrainEA genetic) {
+//        int sameCount = 0;
+//
+//        double yLast = Double.MAX_VALUE;
 
         int iteration = 0;
 
-        double yLast = Double.MAX_VALUE;
+        boolean converged = false;
 
         // Loop until the best answer doesn't change for a while
-        while(sameCount < MAX_SAME_COUNT) {
+//        while(sameCount < MAX_SAME_COUNT) {
+        while(!converged) {
             dump("iteration = "+iteration, genetic.getPopulation());
 
             genetic.iteration();
@@ -129,15 +134,29 @@ public class Parabola {
 
             iteration++;
 
-            // Check if the solution has changed
-            if(Math.abs(yLast - y) < TOLERANCE) {
-                sameCount++;
-            }
-            else
-                sameCount = 0;
-
-            yLast = y;
+            converged = getConvergence(y,  genetic.getPopulation());
         }
+    }
+
+    /**
+     * Tests whether GA has converged.
+     * @param y Y value in y=f(x)
+     * @param pop Population of individuals
+     * @return True if the GA has converge, otherwise false
+     */
+    public boolean getConvergence(double y, Population pop) {
+        if(sameCount >= MAX_SAME_COUNT)
+            return true;
+
+        if(Math.abs(yLast - y) < TOLERANCE) {
+            sameCount++;
+        }
+        else
+            sameCount = 0;
+
+        yLast = y;
+
+        return false;
     }
 
     /**

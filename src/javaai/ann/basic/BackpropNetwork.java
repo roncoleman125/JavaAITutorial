@@ -48,13 +48,13 @@ public class BackpropNetwork {
             }
     };
 
-    // Input pattern to learn
+    // Input pattern to train
     protected double[][] inputs  = {
             {0, 1},
             {1, 1} ,
     };
 
-    // Output ideal pattern to learn
+    // Output ideal pattern to train
     protected double[] ideals = {
             0,
             1
