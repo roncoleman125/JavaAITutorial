@@ -45,10 +45,17 @@ public class Main {
             System.out.println(flowers.get(k)+""+measures.get(k));
     }
 
+    /**
+     * Loads the iris csv file from the default path.
+     */
     public static void load() {
-        Main.load("iris.csv");
+        load("iris.csv");
     }
 
+    /**
+     * Loads data in given a path.
+     * @param path File path
+     */
     public static void load(String path) {
         try {
             // Load data in column-oriented format preferred for normalization, missing values, etc.

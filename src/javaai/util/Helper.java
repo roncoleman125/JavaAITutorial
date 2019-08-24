@@ -47,6 +47,15 @@ public class Helper {
     // 1 of N encoding
     static HashMap<String, List<Integer>> oneofn = new HashMap<>();
 
+    /**
+     * Loads a CSV file -- column must be of same ontology.
+     * @param path Path in system to file
+     * @param parsers Parsers to interpret the column
+     * @param ran Randoum number generator to randomize the rows prior to parsing.
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws Exception
+     */
     public static void loadCsv(String path, List<Function<String, Object>> parsers, Random ran)
             throws FileNotFoundException, IOException, Exception {
         data.clear();
