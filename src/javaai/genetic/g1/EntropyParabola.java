@@ -20,7 +20,7 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.genetic;
+package javaai.genetic.g1;
 
 import org.encog.ml.ea.genome.Genome;
 import org.encog.ml.ea.population.Population;
@@ -48,7 +48,7 @@ public class EntropyParabola extends Parabola {
      * @return True if the GA has converge, otherwise false
      */
     @Override
-    public boolean getConvergence(double y, Population pop) {
+    public boolean didConverge(double y, Population pop) {
         double entropy = getEntropy(pop);
 
         return entropy < TOLERANCE;

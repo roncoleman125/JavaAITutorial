@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.util.*;
 import java.util.function.Function;
 import static javaai.util.Option.None;
+
+import org.encog.ml.genetic.genome.DoubleArrayGenome;
 import org.encog.ml.genetic.genome.IntegerArrayGenome;
 
 /**
@@ -364,6 +366,25 @@ public class Helper {
         return n;
     }
 
+    public static double asDouble(IntegerArrayGenome genome) {
+        int[] bits = genome.getData();
+
+        double n = 0.0;
+
+        double sign = 1;
+        if(bits[0] == 1)
+            sign = -1;
+
+        double adder = 0.5;
+        for(int k=1; k < bits.length; k++) {
+            if(bits[k] == 1)
+                n += adder;
+            adder /= 2;
+        }
+
+        return n;
+    }
+
     /**
      * Converts a bitwise int array genome to a string where index 0 is the high-order bit.
      * @param genome Bitwise genome only 0,1 permitted.
@@ -379,6 +400,17 @@ public class Helper {
         int x = asInt(genome);
 
         s += x;
+
+        return s;
+    }
+
+    public static String asString(DoubleArrayGenome genome) {
+        String s = "";
+
+        double[] ws = genome.getData();
+
+        for(double w: ws)
+            s += String.format("%4.2f", w) + " ";
 
         return s;
     }

@@ -20,7 +20,7 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.genetic;
+package javaai.genetic.g1;
 
 import org.encog.ml.CalculateScore;
 import org.encog.ml.MLMethod;
@@ -35,7 +35,7 @@ class Fitness implements CalculateScore {
     /**
      * Calculates the fitness.
      * @param phenotype Individual
-     * @return Fitness
+     * @return FitnessGA
      */
     @Override
     public double calculateScore(MLMethod phenotype) {

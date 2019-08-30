@@ -20,7 +20,7 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.genetic;
+package javaai.genetic.g1;
 
 import org.encog.ml.CalculateScore;
 import org.encog.ml.ea.genome.Genome;
@@ -29,6 +29,7 @@ import org.encog.ml.ea.population.Population;
 import org.encog.ml.ea.species.BasicSpecies;
 import org.encog.ml.ea.species.Species;
 import org.encog.ml.ea.train.basic.TrainEA;
+import org.encog.ml.genetic.crossover.Splice;
 import org.encog.ml.genetic.genome.IntegerArrayGenome;
 import org.encog.ml.genetic.genome.IntegerArrayGenomeFactory;
 import org.encog.ml.genetic.mutate.MutateShuffle;
@@ -49,7 +50,7 @@ public class Parabola {
     public final static int POPULATION_SIZE = 50;
 
     /** Chromosome size (ie, number of genes): domain is [0, (2^n-1)]. */
-    public final static int CHROMOSOME_SIZE = 7;
+    public final static int GENOME_SIZE = 7;
 
     /** Mutation rate */
     public final static double MUTATION_RATE = 0.10;
@@ -88,10 +89,13 @@ public class Parabola {
         TrainEA genetic = new TrainEA(pop, fitness);
 
         // Assume the default splice for crossover is random
-//        genetic.addOperation(0.9, new SpliceNoRepeat(CHROMOSOME_SIZE/2));
+//        genetic.addOperation(0.9, new SpliceNoRepeat(GENOME_SIZE/2));
 
         // Set the mutation rate
         genetic.addOperation(MUTATION_RATE, new MutateShuffle());
+
+        // Set up to splice along the middle of the genome
+        genetic.addOperation(0.9, new Splice(GENOME_SIZE /2));
 
         // Do the learning algorithm
         train(genetic);
@@ -130,11 +134,11 @@ public class Parabola {
 
             IntegerArrayGenome best = (IntegerArrayGenome) genetic.getBestGenome();
 
-            System.out.printf("%d y=%4.2f >> %s\n",iteration, y, asString(best));
+            System.out.printf("%d y=%4.2f same=%d >> %s\n",iteration, y, sameCount, asString(best));
 
             iteration++;
 
-            converged = getConvergence(y,  genetic.getPopulation());
+            converged = didConverge(y,  genetic.getPopulation());
         }
     }
 
@@ -144,7 +148,7 @@ public class Parabola {
      * @param pop Population of individuals
      * @return True if the GA has converge, otherwise false
      */
-    public boolean getConvergence(double y, Population pop) {
+    public boolean didConverge(double y, Population pop) {
         if(sameCount >= MAX_SAME_COUNT)
             return true;
 
@@ -164,19 +168,19 @@ public class Parabola {
      * @return Population
      */
     protected Population initPop() {
-        Population pop = new BasicPopulation(100, null);
+        Population pop = new BasicPopulation(POPULATION_SIZE, null);
 
         BasicSpecies species = new BasicSpecies();
 
         species.setPopulation(pop);
 
         for(int k=0; k < POPULATION_SIZE; k++) {
-            final IntegerArrayGenome genome = randomGenome(7);
+            final IntegerArrayGenome genome = randomGenome(GENOME_SIZE);
 
             species.getMembers().add(genome);
         }
 
-        pop.setGenomeFactory(new IntegerArrayGenomeFactory(CHROMOSOME_SIZE));
+        pop.setGenomeFactory(new IntegerArrayGenomeFactory(GENOME_SIZE));
         pop.getSpecies().add(species);
 
         return pop;
@@ -188,7 +192,7 @@ public class Parabola {
      * @return
      */
     public IntegerArrayGenome randomGenome(int sz) {
-        IntegerArrayGenome genome = new IntegerArrayGenome(CHROMOSOME_SIZE);
+        IntegerArrayGenome genome = new IntegerArrayGenome(sz);
 
         final int[] organism = genome.getData();
 
