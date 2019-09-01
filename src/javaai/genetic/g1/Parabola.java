@@ -43,7 +43,7 @@ public class Parabola {
     /** Stopping criteria as difference between best solution and last best one */
     public final double TOLERANCE = 1.0;
 
-    /** Convergence criteria: number of time best solution stays best */
+    /** Convergence criteria: number of times best solution stays best */
     public final static int MAX_SAME_COUNT = 5;
 
     /** Population has this many individuals. */
@@ -58,7 +58,10 @@ public class Parabola {
     /** Used to initialize an individual in population */
     protected Random ran = new Random(0);
 
+    /** Same count for test of convergence */
     protected int sameCount = 0;
+
+    /** Last y value of training iteration */
     protected double yLast;
 
     /**
@@ -88,9 +91,6 @@ public class Parabola {
         // Create the evolutionary training algorithm
         TrainEA genetic = new TrainEA(pop, fitness);
 
-        // Assume the default splice for crossover is random
-//        genetic.addOperation(0.9, new SpliceNoRepeat(GENOME_SIZE/2));
-
         // Set the mutation rate
         genetic.addOperation(MUTATION_RATE, new MutateShuffle());
 
@@ -114,16 +114,11 @@ public class Parabola {
      * @param genetic
      */
     protected void train(TrainEA genetic) {
-//        int sameCount = 0;
-//
-//        double yLast = Double.MAX_VALUE;
-
         int iteration = 0;
 
         boolean converged = false;
 
         // Loop until the best answer doesn't change for a while
-//        while(sameCount < MAX_SAME_COUNT) {
         while(!converged) {
             dump("iteration = "+iteration, genetic.getPopulation());
 
