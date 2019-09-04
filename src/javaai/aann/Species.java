@@ -24,11 +24,15 @@ package javaai.aann;
 
 import java.util.HashMap;
 
+/**
+ * Represents a species of iris.
+ * @author Ron.Coleman
+ */
 public abstract class Species {
     private static HashMap<String, Species> asSpecies = new HashMap<String, Species>() {{
         put("setosa", new Setosa());
         put("versicolor", new Versicolor());
-        put("virginica", new Versicolor());
+        put("virginica", new Virginica());
     }};
 
     /**
@@ -43,11 +47,10 @@ public abstract class Species {
 
     /**
      * Gets the string representation of a species.
-     * @return
+     * @return String
      */
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
 }
