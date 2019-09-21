@@ -35,7 +35,7 @@ class Fitness implements CalculateScore {
     /**
      * Calculates the fitness.
      * @param phenotype Individual
-     * @return FitnessGA
+     * @return Objective
      */
     @Override
     public double calculateScore(MLMethod phenotype) {
