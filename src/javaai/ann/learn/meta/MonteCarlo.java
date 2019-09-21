@@ -94,10 +94,10 @@ public class MonteCarlo {
 
             // Test each sample in turn
             for(int k = 0; k < SAMPLE_SIZE; k++) {
-                // Compute y = f(x)
+                // Compute y = getFitness(x)
                 double x = samples[k];
 
-                y = f(x);
+                y = getFitness(x);
 
                 // If this y is better than the best, update the y and x
                 if(y < besty) {
@@ -119,9 +119,9 @@ public class MonteCarlo {
     /**
      * Objective function
      * @param x Parameter
-     * @return y=f(x)
+     * @return y=getFitness(x)
      */
-    protected double f(double x) {
+    protected double getFitness(double x) {
         return (x-3)*(x-3);
     }
 

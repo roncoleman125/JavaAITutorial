@@ -43,7 +43,7 @@ public class EntropyParabola extends Parabola {
 
     /**
      * Tests whether GA has converged.
-     * @param y Y value in y=f(x)
+     * @param y Y value in y=getFitness(x)
      * @param pop Population of individuals
      * @return True if the GA has converge, otherwise false
      */
@@ -89,6 +89,11 @@ public class EntropyParabola extends Parabola {
         return entropy;
     }
 
+    /**
+     * Computes log base 2.
+     * @param x Parameter
+     * @return logarithm base 2
+     */
     protected double log2(double x) {
         return Math.log10(x) / 0.30103;
     }

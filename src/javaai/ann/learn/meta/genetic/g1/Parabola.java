@@ -23,6 +23,7 @@
 package javaai.ann.learn.meta.genetic.g1;
 
 import org.encog.ml.CalculateScore;
+import org.encog.ml.MLMethod;
 import org.encog.ml.ea.genome.Genome;
 import org.encog.ml.ea.population.BasicPopulation;
 import org.encog.ml.ea.population.Population;
@@ -34,6 +35,7 @@ import org.encog.ml.genetic.genome.IntegerArrayGenome;
 import org.encog.ml.genetic.genome.IntegerArrayGenomeFactory;
 import org.encog.ml.genetic.mutate.MutateShuffle;
 import java.util.Random;
+import static javaai.util.Helper.asInt;
 import static javaai.util.Helper.asString;
 
 /**
@@ -86,7 +88,7 @@ public class Parabola {
         dump("before", pop);
 
         // Get the fitness measure
-        CalculateScore fitness = new Fitness();
+        CalculateScore fitness = new Objective();
 
         // Create the evolutionary training algorithm
         TrainEA genetic = new TrainEA(pop, fitness);
@@ -124,7 +126,7 @@ public class Parabola {
 
             genetic.iteration();
 
-            // Get the value of the best solution for f(x)
+            // Get the value of the best solution for getFitness(x)
             double y = genetic.getError();
 
             IntegerArrayGenome best = (IntegerArrayGenome) genetic.getBestGenome();
@@ -139,7 +141,7 @@ public class Parabola {
 
     /**
      * Tests whether GA has converged.
-     * @param y Y value in y=f(x)
+     * @param y Y value in y=getFitness(x)
      * @param pop Population of individuals
      * @return True if the GA has converge, otherwise false
      */
@@ -220,3 +222,51 @@ public class Parabola {
     }
 }
 
+/**
+ * This class calculates the fitness of an individual or phenotype.
+ */
+class Objective implements CalculateScore {
+
+    /**
+     * Calculates the fitness.
+     * @param phenotype Individual
+     * @return Objective
+     */
+    @Override
+    public double calculateScore(MLMethod phenotype) {
+        IntegerArrayGenome genome = (IntegerArrayGenome) phenotype;
+
+        int x = asInt(genome);
+
+        double y = f(x);
+
+        return y;
+    }
+
+    /**
+     * Specifies the objective
+     * @return True to minimize, false to maximize.
+     */
+    @Override
+    public boolean shouldMinimize() {
+        return true;
+    }
+
+    /**
+     * Specifies the threading approach.
+     * @return True to use single thread, false for multiple threads
+     */
+    @Override
+    public boolean requireSingleThreaded() {
+        return true;
+    }
+
+    /**
+     * Objective function
+     * @param x Domain parameter.
+     * @return y
+     */
+    protected double f(int x) {
+        return (x - 3)*(x - 3);
+    }
+}

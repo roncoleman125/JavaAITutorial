@@ -29,7 +29,7 @@ import java.util.Random;
  * @author Ron.Coleman
  * @see "<a href=https://www.amazon.com/Programming-Example-Wordware-Developers-Library-ebook/dp/B0029LCJXE>Buckland, M., Programming Game AI by Example, p.91</a>"
  */
-public class PSO {
+public class Pso {
     /** Want to try to find this point in the plane. */
     public final static double[] XY_GOAL = {5, 3};
 
@@ -54,7 +54,7 @@ public class PSO {
     /** Random number generator to initialize and shake the particles */
     Random ran = new Random(0);
 
-    /** Best z=f(x,y) found so far -- we are minimizing so... */
+    /** Best z=getFitness(x,y) found so far -- we are minimizing so... */
     double bestz = Double.MAX_VALUE;
 
     /** Last best z found */
@@ -71,7 +71,7 @@ public class PSO {
      * @param args Command line arguments
      */
     public static void main(String[] args) {
-        PSO pso = new PSO();
+        Pso pso = new Pso();
 
         pso.solve();
     }
@@ -192,7 +192,7 @@ public class PSO {
      * @param y Y coordinate
      * @return Distance to the goal
      */
-    protected double f(double x, double y) {
+    protected double getFitness(double x, double y) {
         double dx = (x - XY_GOAL[0]);
         double dy = (y - XY_GOAL[1]);
 
@@ -209,7 +209,8 @@ public class PSO {
         for(int k=0; k < SWARM_SIZE; k++) {
             double x = particles[k][0];
             double y = particles[k][1];
-            double z = f(x, y);
+
+            double z = getFitness(x, y);
 
             if(z < bestz) {
                 bestz = z;
