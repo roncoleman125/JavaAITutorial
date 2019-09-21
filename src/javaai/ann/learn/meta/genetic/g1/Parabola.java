@@ -42,6 +42,7 @@ import static javaai.util.Helper.asString;
  * This class uses a genetic algorithm for unsupervised learning to solve y = (x-3)^2.
  */
 public class Parabola {
+
     /** Stopping criteria as difference between best solution and last best one */
     public final double TOLERANCE = 1.0;
 
