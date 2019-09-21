@@ -28,7 +28,7 @@ import java.util.Random;
  * This class uses MC simulation for unsupervised learning to solve y = (x-3)^2.
  * @author Ron.Coleman
  */
-public class MCParabola {
+public class MonteCarlo {
     /** Convergence threshold */
     public final static double TOLERANCE = 0.01;
 
@@ -61,7 +61,7 @@ public class MCParabola {
      * @param args Command line arguments
      */
     public static void main(String[] args) {
-        MCParabola parabola = new MCParabola();
+        MonteCarlo parabola = new MonteCarlo();
 
         double best = parabola.solve();
         System.out.println("best = "+best);
