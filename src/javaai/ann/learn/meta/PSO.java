@@ -20,7 +20,7 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.pso;
+package javaai.ann.learn.meta;
 
 import java.util.Random;
 
@@ -29,7 +29,7 @@ import java.util.Random;
  * @author Ron.Coleman
  * @see "<a href=https://www.amazon.com/Programming-Example-Wordware-Developers-Library-ebook/dp/B0029LCJXE>Buckland, M., Programming Game AI by Example, p.91</a>"
  */
-public class Pso2D {
+public class PSO {
     /** Want to try to find this point in the plane. */
     public final static double[] XY_GOAL = {5, 3};
 
@@ -71,7 +71,7 @@ public class Pso2D {
      * @param args Command line arguments
      */
     public static void main(String[] args) {
-        Pso2D pso = new Pso2D();
+        PSO pso = new PSO();
 
         pso.solve();
     }

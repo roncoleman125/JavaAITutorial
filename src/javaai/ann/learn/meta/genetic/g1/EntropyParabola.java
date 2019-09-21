@@ -20,7 +20,7 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.genetic.g1;
+package javaai.ann.learn.meta.genetic.g1;
 
 import org.encog.ml.ea.genome.Genome;
 import org.encog.ml.ea.population.Population;

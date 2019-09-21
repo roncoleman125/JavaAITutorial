@@ -1,4 +1,4 @@
-package javaai.ann.metah;
+package javaai.ann.learn.meta;
 
 public class Hill {
     /** Want to try to find this point in the plane. */
