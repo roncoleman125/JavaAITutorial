@@ -54,7 +54,7 @@ public class Pso {
     /** Random number generator to initialize and shake the particles */
     Random ran = new Random(0);
 
-    /** Best z=getFitness(x,y) found so far -- we are minimizing so... */
+    /** Best z=predict(x,y) found so far -- we are minimizing so... */
     double bestz = Double.MAX_VALUE;
 
     /** Last best z found */

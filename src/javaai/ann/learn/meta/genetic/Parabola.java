@@ -20,7 +20,7 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.ann.learn.meta.genetic.g1;
+package javaai.ann.learn.meta.genetic;
 
 import org.encog.ml.CalculateScore;
 import org.encog.ml.MLMethod;
@@ -127,7 +127,7 @@ public class Parabola {
 
             genetic.iteration();
 
-            // Get the value of the best solution for getFitness(x)
+            // Get the value of the best solution for predict(x)
             double y = genetic.getError();
 
             IntegerArrayGenome best = (IntegerArrayGenome) genetic.getBestGenome();
@@ -142,7 +142,7 @@ public class Parabola {
 
     /**
      * Tests whether GA has converged.
-     * @param y Y value in y=getFitness(x)
+     * @param y Y value in y=predict(x)
      * @param pop Population of individuals
      * @return True if the GA has converge, otherwise false
      */
@@ -227,7 +227,6 @@ public class Parabola {
  * This class calculates the fitness of an individual or phenotype.
  */
 class Objective implements CalculateScore {
-
     /**
      * Calculates the fitness.
      * @param phenotype Individual

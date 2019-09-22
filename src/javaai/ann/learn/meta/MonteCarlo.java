@@ -94,7 +94,7 @@ public class MonteCarlo {
 
             // Test each sample in turn
             for(int k = 0; k < SAMPLE_SIZE; k++) {
-                // Compute y = getFitness(x)
+                // Compute y = predict(x)
                 double x = samples[k];
 
                 y = getFitness(x);
@@ -119,7 +119,7 @@ public class MonteCarlo {
     /**
      * Objective function
      * @param x Parameter
-     * @return y=getFitness(x)
+     * @return y=predict(x)
      */
     protected double getFitness(double x) {
         return (x-3)*(x-3);
