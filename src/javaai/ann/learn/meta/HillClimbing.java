@@ -24,9 +24,9 @@ package javaai.ann.learn.meta;
 
 /**
  * This class implements the hill climbing algorithm unsupervised learning to find base point (5, 3).
- * @see <a href="https://en.wikipedia.org/wiki/Hill_climbing">Hill climbing</a>
+ * @see <a href="https://en.wikipedia.org/wiki/Hill_climbing">HillClimbing climbing</a>
  */
-public class Hill {
+public class HillClimbing {
     // This is the tolerance below which hill climbing converges.
     public final double EPSILON = 0.01;
 
@@ -43,9 +43,11 @@ public class Hill {
     double[] candidates = {-acceleration, -1/acceleration, 0, 1/acceleration, acceleration};
 
     public static void main(String[] args) {
-        Hill hill = new Hill();
+        HillClimbing hill = new HillClimbing();
 
         double[] pt = hill.climb();
+
+        System.out.println("solution: x="+pt[0]+" y="+pt[1]);
     }
 
     /**
@@ -53,6 +55,7 @@ public class Hill {
      * @return Destination
      */
     public double[] climb() {
+        int iteration = 1;
         do {
             // Point before any changes
             double before = eval(curPt);
@@ -101,6 +104,8 @@ public class Hill {
             double curScore = eval(curPt);
 
             double improved = Math.abs(curScore - before);
+
+            System.out.println(iteration+": score="+curScore+" x="+curPt[0]+" y="+curPt[1]+" improved="+improved);
 
             if(improved < EPSILON)
                 return curPt;
