@@ -1,6 +1,5 @@
 package javaai.ann.basic;
 
-import javaai.util.Helper;
 import org.encog.Encog;
 import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.ml.data.MLData;
