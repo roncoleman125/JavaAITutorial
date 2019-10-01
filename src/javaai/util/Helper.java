@@ -331,7 +331,7 @@ public class Helper {
      * @param encodings Activation encodings
      * @return String
      */
-    protected static String asString(double[] encodings) {
+    public static String asString(double[] encodings) {
         String s = "(";
 
         int len = encodings.length;

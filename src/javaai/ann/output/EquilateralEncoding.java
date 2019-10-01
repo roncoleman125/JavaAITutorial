@@ -35,7 +35,7 @@ import java.util.logging.Logger;
  */
 public class EquilateralEncoding {
     /** Equilateral encoder */
-    static Equilateral eq = null;
+    public static Equilateral eq = null;
 
     /** Nominal subtypes */
     static List<String> subtypes = null;
