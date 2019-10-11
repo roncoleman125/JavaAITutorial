@@ -20,7 +20,7 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.ann.learn.meta.genetic;
+package javaai.ann.learn.meta.ga;
 
 import org.encog.ml.CalculateScore;
 import org.encog.ml.MLMethod;
@@ -86,7 +86,7 @@ public class Parabola {
     public IntegerArrayGenome solve() {
         // Initialize a population
         Population pop = initPop();
-        dump("before", pop);
+        output("before", pop);
 
         // Get the fitness measure
         CalculateScore fitness = new Objective();
@@ -107,7 +107,7 @@ public class Parabola {
         IntegerArrayGenome best = (IntegerArrayGenome)genetic.getBestGenome();
         pop = genetic.getPopulation();
 
-        dump("after", pop);
+        output("after", pop);
 
         return best;
     }
@@ -123,7 +123,7 @@ public class Parabola {
 
         // Loop until the best answer doesn't change for a while
         while(!converged) {
-            dump("iteration = "+iteration, genetic.getPopulation());
+            output("iteration = "+iteration, genetic.getPopulation());
 
             genetic.iteration();
 
@@ -206,7 +206,7 @@ public class Parabola {
      * @param title Title
      * @param pop Population
      */
-    protected void dump(final String title, final Population pop) {
+    protected void output(final String title, final Population pop) {
         final Species species = pop.getSpecies().get(0);
 
         System.out.println("----- "+title);
