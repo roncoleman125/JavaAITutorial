@@ -34,6 +34,7 @@ import org.encog.ml.genetic.crossover.Splice;
 import org.encog.ml.genetic.genome.IntegerArrayGenome;
 import org.encog.ml.genetic.genome.IntegerArrayGenomeFactory;
 import org.encog.ml.genetic.mutate.MutateShuffle;
+
 import java.util.Random;
 import static javaai.util.Helper.asInt;
 import static javaai.util.Helper.asString;
@@ -56,7 +57,7 @@ public class Parabola {
     public final static int GENOME_SIZE = 7;
 
     /** Mutation rate */
-    public final static double MUTATION_RATE = 0.10;
+    public final static double MUTATION_RATE = 0.01;
 
     /** Used to initialize an individual in population */
     protected Random ran = new Random(0);
@@ -85,29 +86,30 @@ public class Parabola {
      */
     public IntegerArrayGenome solve() {
         // Initialize a population
-        Population pop = initPop();
-        output("before", pop);
+        Population population = initPop();
+        output("before", population);
 
         // Get the fitness measure
-        CalculateScore fitness = new Objective();
+        CalculateScore objective = new Objective();
 
         // Create the evolutionary training algorithm
-        TrainEA genetic = new TrainEA(pop, fitness);
+        TrainEA ga = new TrainEA(population, objective);
 
-        // Set the mutation rate
-        genetic.addOperation(MUTATION_RATE, new MutateShuffle());
+        // Set the mutation rate: 2nd operation tends to give better results.
+        // ga.addOperation(MUTATION_RATE, new MutateShuffle());
+        ga.addOperation(0.01, new MutatePerturbInteger(2));
 
         // Set up to splice along the middle of the genome
-        genetic.addOperation(0.9, new Splice(GENOME_SIZE /2));
+        ga.addOperation(0.9, new Splice(GENOME_SIZE /2));
 
         // Do the learning algorithm
-        train(genetic);
+        train(ga);
 
         // Return the best individual
-        IntegerArrayGenome best = (IntegerArrayGenome)genetic.getBestGenome();
-        pop = genetic.getPopulation();
+        IntegerArrayGenome best = (IntegerArrayGenome)ga.getBestGenome();
+        population = ga.getPopulation();
 
-        output("after", pop);
+        output("after", population);
 
         return best;
     }
