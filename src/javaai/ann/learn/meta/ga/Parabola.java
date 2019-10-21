@@ -97,7 +97,7 @@ public class Parabola {
 
         // Set the mutation rate: 2nd operation tends to give better results.
         // ga.addOperation(MUTATION_RATE, new MutateShuffle());
-        ga.addOperation(0.01, new MutatePerturbInteger(2));
+        ga.addOperation(MUTATION_RATE, new MutatePerturbInteger(2));
 
         // Set up to splice along the middle of the genome
         ga.addOperation(0.9, new Splice(GENOME_SIZE /2));
@@ -116,29 +116,29 @@ public class Parabola {
 
     /**
      * Runs the learning algorithm.
-     * @param genetic
+     * @param ga
      */
-    protected void train(TrainEA genetic) {
+    protected void train(TrainEA ga) {
         int iteration = 0;
 
         boolean converged = false;
 
         // Loop until the best answer doesn't change for a while
         while(!converged) {
-            output("iteration = "+iteration, genetic.getPopulation());
+            output("iteration = "+iteration, ga.getPopulation());
 
-            genetic.iteration();
+            ga.iteration();
 
             // Get the value of the best solution for predict(x)
-            double y = genetic.getError();
+            double y = ga.getError();
 
-            IntegerArrayGenome best = (IntegerArrayGenome) genetic.getBestGenome();
+            IntegerArrayGenome best = (IntegerArrayGenome) ga.getBestGenome();
 
             System.out.printf("%d y=%4.2f same=%d >> %s\n",iteration, y, sameCount, asString(best));
 
             iteration++;
 
-            converged = didConverge(y,  genetic.getPopulation());
+            converged = didConverge(y,  ga.getPopulation());
         }
     }
 
@@ -225,50 +225,4 @@ public class Parabola {
     }
 }
 
-/**
- * This class calculates the fitness of an individual or phenotype.
- */
-class Objective implements CalculateScore {
-    /**
-     * Calculates the fitness.
-     * @param phenotype Individual
-     * @return Objective
-     */
-    @Override
-    public double calculateScore(MLMethod phenotype) {
-        IntegerArrayGenome genome = (IntegerArrayGenome) phenotype;
 
-        int x = asInt(genome);
-
-        double y = f(x);
-
-        return y;
-    }
-
-    /**
-     * Specifies the objective
-     * @return True to minimize, false to maximize.
-     */
-    @Override
-    public boolean shouldMinimize() {
-        return true;
-    }
-
-    /**
-     * Specifies the threading approach.
-     * @return True to use single thread, false for multiple threads
-     */
-    @Override
-    public boolean requireSingleThreaded() {
-        return true;
-    }
-
-    /**
-     * Objective function
-     * @param x Domain parameter.
-     * @return y
-     */
-    protected double f(int x) {
-        return (x - 3)*(x - 3);
-    }
-}
