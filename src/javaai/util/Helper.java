@@ -22,10 +22,7 @@
  */
 package javaai.util;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 import static javaai.util.Option.None;
@@ -348,7 +345,7 @@ public class Helper {
     }
 
     /**
-     * Converts a bitwise integer array genome to a integer where index 0 is the high-order bit.
+     * Decodes binary integer genome as an integer.
      * @param genome Bitwise genome only 0,1 permitted.
      * @return Integer
      */
@@ -366,6 +363,11 @@ public class Helper {
         return n;
     }
 
+    /**
+     * Decodes binary integer genome as a double.
+     * @param genome Bitwise genome only 0,1 permitted.
+     * @return Double
+     */
     public static double asDouble(IntegerArrayGenome genome) {
         int[] bits = genome.getData();
 
@@ -386,9 +388,9 @@ public class Helper {
     }
 
     /**
-     * Converts a bitwise int array genome to a string where index 0 is the high-order bit.
+     * Decodes binary integer genome as a string.
      * @param genome Bitwise genome only 0,1 permitted.
-     * @return
+     * @return String
      */
     public static String asString(IntegerArrayGenome genome) {
         String s = "";
@@ -404,6 +406,11 @@ public class Helper {
         return s;
     }
 
+    /**
+     * Decodes double-array genome as a string.
+     * @param genome Genome
+     * @return String
+     */
     public static String asString(DoubleArrayGenome genome) {
         String s = "";
 
@@ -413,5 +420,27 @@ public class Helper {
             s += String.format("%4.2f", w) + " ";
 
         return s;
+    }
+
+
+    /**
+     * Deep copies the object.
+     * @param object Object
+     * @param <T> Parameterized type.
+     * @return Specified type T
+     */
+    public static <T> T deepCopy(T object){
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(object);
+            ByteArrayInputStream bais = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+            ObjectInputStream objectInputStream = new ObjectInputStream(bais);
+            return (T) objectInputStream.readObject();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

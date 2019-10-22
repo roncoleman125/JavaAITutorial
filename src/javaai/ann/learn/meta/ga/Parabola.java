@@ -23,7 +23,6 @@
 package javaai.ann.learn.meta.ga;
 
 import org.encog.ml.CalculateScore;
-import org.encog.ml.MLMethod;
 import org.encog.ml.ea.genome.Genome;
 import org.encog.ml.ea.population.BasicPopulation;
 import org.encog.ml.ea.population.Population;
@@ -33,10 +32,9 @@ import org.encog.ml.ea.train.basic.TrainEA;
 import org.encog.ml.genetic.crossover.Splice;
 import org.encog.ml.genetic.genome.IntegerArrayGenome;
 import org.encog.ml.genetic.genome.IntegerArrayGenomeFactory;
-import org.encog.ml.genetic.mutate.MutateShuffle;
 
 import java.util.Random;
-import static javaai.util.Helper.asInt;
+
 import static javaai.util.Helper.asString;
 
 /**
@@ -97,7 +95,7 @@ public class Parabola {
 
         // Set the mutation rate: 2nd operation tends to give better results.
         // ga.addOperation(MUTATION_RATE, new MutateShuffle());
-        ga.addOperation(MUTATION_RATE, new MutatePerturbInteger(2));
+        ga.addOperation(MUTATION_RATE, new MutateIntegerArrayGenome(2));
 
         // Set up to splice along the middle of the genome
         ga.addOperation(0.9, new Splice(GENOME_SIZE /2));

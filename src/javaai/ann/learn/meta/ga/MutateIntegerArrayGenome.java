@@ -23,7 +23,7 @@
 package javaai.ann.learn.meta.ga;
 
 import java.util.Random;
-
+import javaai.util.Helper;
 import org.encog.ml.ea.genome.Genome;
 import org.encog.ml.ea.opp.EvolutionaryOperator;
 import org.encog.ml.ea.train.EvolutionaryAlgorithm;
@@ -34,36 +34,29 @@ import org.encog.ml.genetic.genome.IntegerArrayGenome;
  * @author Ron.Coleman
  * @see @see "<a href=https://github.com/encog/encog-java-core/blob/master/src/main/java/org/encog/ml/genetic/mutate/MutatePerturb.java>MutatePertub.java</a>
  */
-public class MutatePerturbInteger implements EvolutionaryOperator {
+public class MutateIntegerArrayGenome implements EvolutionaryOperator {
     protected int range;
 
     /**
      * Constructor
      * @param range Range of positive integer values, exclusive.
      */
-    public MutatePerturbInteger(int range) {
+    public MutateIntegerArrayGenome(int range) {
         this.range = range;
     }
 
     /**
-     * Does the operation
-     * @param ran Random number generator passed by Encog
-     * @param parents Parent genome
-     * @param parentIndex Index of parent in parents
-     * @param offsprings Offspring to return
-     * @param offspringIndex Offspring index to return
+     * {@inheritDoc}
      */
     @Override
     public void performOperation(Random ran, Genome[] parents, int parentIndex,Genome[] offsprings, int offspringIndex) {
-        // Get the parent
+        // Get a child genome as an identical copy of the parent.
         IntegerArrayGenome parent = (IntegerArrayGenome) parents[parentIndex];
 
         // The line below copied from MutatePertub.java crashes with NPE.
         // Genome offspring = parent.getPopulation().getGenomeFactory().factor();
 
-        // Copy initial child from parent -- not this should probably be a deep copy!
-        // See for deep copy: https://www.javadevjournal.com/java/java-deep-copy/
-        offsprings[offspringIndex] = parent;
+        offsprings[offspringIndex] = Helper.deepCopy(parent);
 
         IntegerArrayGenome child = (IntegerArrayGenome)offsprings[offspringIndex];
 
