@@ -32,6 +32,7 @@ import java.util.Random;
  * This class differs from Pso1 in that this one uses a separate particle class to be more extensible for
  * training a neural network.
  * @author Ron.Coleman
+ * @see "<a href=https://en.wikipedia.org/wiki/Particle_swarm_optimization>Particle swarm optimization</a>"
  * @see "<a href=https://www.amazon.com/Programming-Example-Wordware-Developers-Library-ebook/dp/B0029LCJXE>Buckland, M., Programming Game AI by Example, p.91</a>"
  */
 public class Pso {
