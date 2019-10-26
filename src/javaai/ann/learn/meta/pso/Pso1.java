@@ -20,7 +20,7 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.ann.learn.meta;
+package javaai.ann.learn.meta.pso;
 
 import java.util.Random;
 
@@ -29,7 +29,7 @@ import java.util.Random;
  * @author Ron.Coleman
  * @see "<a href=https://www.amazon.com/Programming-Example-Wordware-Developers-Library-ebook/dp/B0029LCJXE>Buckland, M., Programming Game AI by Example, p.91</a>"
  */
-public class Pso {
+public class Pso1 {
     /** Want to try to find this point in the plane. */
     public final static double[] XY_GOAL = {5, 3};
 
@@ -51,7 +51,7 @@ public class Pso {
     /** Particles in swarm in 2D */
     protected double[][] particles = new double[SWARM_SIZE][];
 
-    /** Random number generator to initialize and shake the particles */
+    /** Random number generator to initialize and agitate the particles */
     Random ran = new Random(0);
 
     /** Best z=predict(x,y) found so far -- we are minimizing so... */
@@ -71,7 +71,7 @@ public class Pso {
      * @param args Command line arguments
      */
     public static void main(String[] args) {
-        Pso pso = new Pso();
+        Pso1 pso = new Pso1();
 
         pso.solve();
     }
@@ -97,7 +97,7 @@ public class Pso {
             System.out.println(iteration+" best x="+bestxy[0]+" y="+bestxy[1]+" z="+bestz+" same count="+sameCount);
 
             // Disturb the particles
-            shake();
+            agitate();
 
             // Move them toward the best one
             move();
@@ -176,7 +176,7 @@ public class Pso {
     /**
      * Disturbs the particles.
      */
-    protected void shake() {
+    protected void agitate() {
         for(int k=0; k < SWARM_SIZE; k++) {
             double dx = ran.nextDouble();
             double dy = ran.nextDouble();
@@ -291,7 +291,6 @@ public class Pso {
     protected double getLength(double[] v) {
         return Math.sqrt(v[0]*v[0] + v[1]*v[1]);
     }
-
-
 }
+
 
