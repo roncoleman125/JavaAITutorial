@@ -24,30 +24,44 @@ package javaai.ann.learn.meta;
 
 /**
  * This class implements the hill climbing algorithm unsupervised learning to find base point (5, 3).
+ * The algorithm is slightly modified to include a convergence test.
+ * @author Ron.Coleman
  * @see <a href="https://en.wikipedia.org/wiki/Hill_climbing">HillClimbing climbing</a>
  */
 public class HillClimbing {
-    // This is the tolerance below which hill climbing converges.
-    public final double EPSILON = 0.01;
+    /** This is the tolerance below which hill climbing stops. */
+    public final double TOLERANCE = 0.01;
+
+    /** Same count below the tolerance threshold */
+    public final int MAX_SAME_COUNT = 5;
 
     /** Want to try to find this point in the plane. */
     public final static double[] XY_GOAL = {5, 3};
 
+    /** Current point updated as the climb progresses*/
     protected double[] curPt = {0, 0};
 
+    /** Step size in each dimension, X, Y, updated as the climb progresses */
     protected double[] stepSize = {1, 1};
 
-    double acceleration = 1.2;
+    /** Baseline acceleration */
+    final double acceleration = 1.2;
 
-    /** Candidate amounts we'll attempt to accelerate **/
-    double[] candidates = {-acceleration, -1/acceleration, 0, 1/acceleration, acceleration};
+    /** Candidate accelerations to explore **/
+    final double[] candidates = {-acceleration, -1/acceleration, 0, 1/acceleration, acceleration};
+
+    /** Current same count, updated as the climbing progresses. */
+    protected int sameCount = 0;
+
+    /** Improvement updated as climb progresses */
+    protected double improvement = Double.MAX_VALUE;
 
     public static void main(String[] args) {
         HillClimbing hill = new HillClimbing();
 
         double[] pt = hill.climb();
 
-        System.out.println("solution: x="+pt[0]+" y="+pt[1]);
+        System.out.println("CONVERED best: x="+pt[0]+" y="+pt[1]+" fitness="+hill.getFitness(pt));
     }
 
     /**
@@ -55,17 +69,18 @@ public class HillClimbing {
      * @return Destination
      */
     public double[] climb() {
+        System.out.printf("%3s %7s %7s %7s %7s %s\n","#","fitness","x","y","improve","same");
         int iteration = 1;
         do {
             // Point before any changes
-            double before = eval(curPt);
+            double priorFitness = getFitness(curPt);
 
             // Test each dimension of the current point.
             for(int i=0; i < curPt.length; i++) {
-                // Best candidate index so far
+                // Best candidate index so far -- unknown
                 int best = -1;
 
-                // If we're minimizing, we should be descending from here
+                // If minimizing, we should be descending from here
                 double bestScore = Double.MAX_VALUE;
 
                 // Try each candidate acceleration
@@ -73,64 +88,82 @@ public class HillClimbing {
                     // Update the point in the ith direction we're moving
                     curPt[i] += stepSize[i]* candidates[j];
 
-                    // Get its score
-                    double newScore = eval(curPt);
+                    // Get its fitness
+                    double newScore = getFitness(curPt);
 
                     // Move the point back
                     curPt[i] -= stepSize[i]* candidates[j];
 
-                    // If we improved, remember this acceleration
+                    // If we improvement, remember this acceleration
                     if(newScore < bestScore) {
                         bestScore = newScore;
-
                         best = j;
                     }
                 }
 
                 // If we didn't improve, reduce the step size in this ith dimension
+                // Note: best != -1 guaranteed since the best score (see above) is initially infinite.
                 if(candidates[best] == 0)
                     stepSize[i] /= acceleration;
 
-                // If we improved, use the best acceleration we identified and
-                // increase the step in that ith dimension.
+                // If we improvement, use the best acceleration we identified and
+                // update the step in that ith dimension.
                 else {
                     curPt[i] += stepSize[i]* candidates[best];
-
                     stepSize[i] *= candidates[best];
                 }
             }
 
             // Test for convergence
-            double curScore = eval(curPt);
+            double curFitness = getFitness(curPt);
 
-            double improved = Math.abs(curScore - before);
+            improvement = Math.abs(curFitness - priorFitness);
 
-            System.out.println(iteration+": score="+curScore+" x="+curPt[0]+" y="+curPt[1]+" improved="+improved);
+            System.out.printf("%3d %7.4f %7.4f %7.4f %7.4f %d\n",iteration,curFitness,curPt[0],curPt[1], improvement,sameCount);
+//            System.out.println(iteration+": score="+curScore+" x="+curPt[0]+" y="+curPt[1]+" improvement="+improvement+" same="+sameCount);
 
-            if(improved < EPSILON)
-                return curPt;
+            if(didConverge())
+                break;
+
+            iteration++;
 
         } while(true);
+
+        return curPt;
     }
 
     /**
      * Implements the objective function.
      * @param pt Point in N-space we're testing
-     * @return RMSE
+     * @return Distance squared
      */
-    public double eval(double[] pt) {
+    public double getFitness(double[] pt) {
         // Compute the um of square error
-        double sse = 0;
+        double dist2 = 0;
 
         for(int k=0; k < pt.length; k++) {
             double delta = pt[k] - XY_GOAL[k];
 
-            sse += (delta * delta);
+            dist2 += (delta * delta);
         }
 
-        // Compute the RMSE
-        double rmse = Math.sqrt(sse / pt.length);
+        return dist2;
+    }
 
-        return rmse;
+    /**
+     * Tests whether the climb converged.
+     * @return True if we converged, false otherwise
+     */
+    public boolean didConverge() {
+
+        if(improvement < TOLERANCE) {
+            if(sameCount >= MAX_SAME_COUNT)
+                return true;
+            sameCount++;
+        }
+        else
+            sameCount = 1;
+
+        return false;
     }
 }

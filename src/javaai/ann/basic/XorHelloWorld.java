@@ -85,7 +85,7 @@ public class XorHelloWorld {
         MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUTS, XOR_IDEALS);
 
         // Train the neural network.
-        // Use a training object to train the network, in this case, an improved
+        // Use a training object to train the network, in this case, an improvement
         // back propagation. For details on what this does see the javadoc.
         final ResilientPropagation train = new ResilientPropagation(network, trainingSet);
 

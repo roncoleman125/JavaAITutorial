@@ -93,9 +93,12 @@ public class Pso {
         // Intializa the iteration count
         int iteration = 1;
 
-        // Do the following until we converge
+        // Repeat until we converge
+        System.out.printf("%3s %7s %7s %7s %s\n","#","x","y","fitness","same");
+
         while (!converged) {
-            System.out.println(iteration + " best = " + best + " fitness=" + best.fitness + " same count=" + sameCount);
+            System.out.printf("%3d %7.4f %7.4f %7.4f %d\n",iteration,best.getX(),best.getY(),best.fitness,sameCount);
+            //System.out.println(iteration + " best = " + best + " fitness=" + best.fitness + " same count=" + sameCount);
 
             // Disturb the particles
             agitate();
@@ -307,6 +310,22 @@ class Particle implements Serializable {
         double dist = Math.sqrt(dx*dx + dy*dy);
 
         return dist;
+    }
+
+    /**
+     * Gets the x component.
+     * @return X
+     */
+    public double getX() {
+        return x;
+    }
+
+    /**
+     * Gets the y component.
+     * @return Y
+     */
+    public double getY() {
+        return x;
     }
 
     /**
