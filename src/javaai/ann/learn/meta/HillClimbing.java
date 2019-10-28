@@ -23,8 +23,8 @@
 package javaai.ann.learn.meta;
 
 /**
- * This class implements the hill climbing algorithm unsupervised learning to find base point (5, 3).
- * The algorithm is slightly modified to include a convergence test.
+ * This class implements the hill climbing unsupervised learning algorithm to find base point (5, 3).
+ * I modified it from the Wikipedia algorithm to include an enhanced convergence test.
  * @author Ron.Coleman
  * @see <a href="https://en.wikipedia.org/wiki/Hill_climbing">HillClimbing climbing</a>
  */
@@ -32,13 +32,13 @@ public class HillClimbing {
     /** This is the tolerance below which hill climbing stops. */
     public final double TOLERANCE = 0.01;
 
-    /** Same count below the tolerance threshold */
+    /** Maximum same count below the tolerance threshold */
     public final int MAX_SAME_COUNT = 5;
 
-    /** Want to try to find this point in the plane. */
+    /** Goal point */
     public final static double[] XY_GOAL = {5, 3};
 
-    /** Current point updated as the climb progresses*/
+    /** Current point updated as the climb progresses */
     protected double[] curPt = {0, 0};
 
     /** Step size in each dimension, X, Y, updated as the climb progresses */
