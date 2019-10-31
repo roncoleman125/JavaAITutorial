@@ -325,7 +325,7 @@ class Particle implements Serializable {
      * @return Y
      */
     public double getY() {
-        return x;
+        return y;
     }
 
     /**
