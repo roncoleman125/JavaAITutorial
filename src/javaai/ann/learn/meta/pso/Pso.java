@@ -46,7 +46,7 @@ public class Pso {
     public final static double SPEED = 1.0;
 
     /** Convergence test */
-    public final static double TOLERANCE = 0.01;
+    public final static double TOLERANCE = 0.001;
 
     /** Search upper range in 2D */
     public final static double MAX = 10.0;
@@ -94,7 +94,8 @@ public class Pso {
         int iteration = 1;
 
         // Repeat until we converge
-        System.out.printf("%3s %7s %7s %7s %s\n","#","x","y","fitness","same");
+        System.out.println("PSO");
+        System.out.printf("%3s %7s %7s %7s %s\n","#","x","y","RMSE","same");
 
         while (!converged) {
             System.out.printf("%3d %7.4f %7.4f %7.4f %d\n",iteration,best.getX(),best.getY(),best.fitness,sameCount);
@@ -115,7 +116,7 @@ public class Pso {
             iteration++;
         }
 
-        System.out.println("CONVERGED: best = " + best + " fitness = " + best.fitness + " same count=" + sameCount);
+        System.out.println("CONVERGED: best = " + best + " RMSE = " + best.fitness + " same count=" + sameCount);
     }
 
     /** Initializes the swarm. */
@@ -301,13 +302,13 @@ class Particle implements Serializable {
     /**
      * Gets distance to that particle.
      * @param that Particle
-     * @return Euclidean distance
+     * @return RMSE
      */
     public double getDistanceTo(Particle that) {
         double dx = this.x - that.x;
         double dy = this.y - that.y;
 
-        double dist = Math.sqrt(dx*dx + dy*dy);
+        double dist = Math.sqrt((dx*dx + dy*dy)/2.0);
 
         return dist;
     }

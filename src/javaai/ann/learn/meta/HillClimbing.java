@@ -22,6 +22,8 @@
  */
 package javaai.ann.learn.meta;
 
+import java.util.Random;
+
 /**
  * This class implements the hill climbing unsupervised learning algorithm to find base point (5, 3).
  * I modified it from the Wikipedia algorithm to include an enhanced convergence test.
@@ -30,10 +32,16 @@ package javaai.ann.learn.meta;
  */
 public class HillClimbing {
     /** This is the tolerance below which hill climbing stops. */
-    public final double TOLERANCE = 0.01;
+    public final double TOLERANCE = 0.001;
 
     /** Maximum same count below the tolerance threshold */
     public final int MAX_SAME_COUNT = 5;
+
+    /** Constraint on search space upper limit */
+    public final double MAX = 10.0;
+
+    /** Constraint on search space lower limit */
+    public final double MIN = -10.0;
 
     /** Goal point */
     public final static double[] XY_GOAL = {5, 3};
@@ -61,7 +69,7 @@ public class HillClimbing {
 
         double[] pt = hill.climb();
 
-        System.out.println("CONVERED best: x="+pt[0]+" y="+pt[1]+" fitness="+hill.getFitness(pt));
+        System.out.println("CONVERED best: x="+pt[0]+" y="+pt[1]+" RMSE="+hill.getFitness(pt));
     }
 
     /**
@@ -69,8 +77,12 @@ public class HillClimbing {
      * @return Destination
      */
     public double[] climb() {
-        System.out.printf("%3s %7s %7s %7s %7s %s\n","#","fitness","x","y","improve","same");
+        System.out.println("Hill climbing");
+        System.out.printf("%3s %7s %7s %7s %7s %s\n","#","RMSE","x","y","improve","same");
         int iteration = 1;
+
+        curPt = getStart();
+
         do {
             // Fitness before any moves
             double priorFitness = getFitness(curPt);
@@ -120,7 +132,6 @@ public class HillClimbing {
             improvement = Math.abs(curFitness - priorFitness);
 
             System.out.printf("%3d %7.4f %7.4f %7.4f %7.4f %d\n",iteration,curFitness,curPt[0],curPt[1], improvement,sameCount);
-//            System.out.println(iteration+": score="+curScore+" x="+curPt[0]+" y="+curPt[1]+" improvement="+improvement+" same="+sameCount);
 
             if(didConverge())
                 break;
@@ -135,7 +146,7 @@ public class HillClimbing {
     /**
      * Implements the objective function.
      * @param pt Point in N-space we're testing
-     * @return Distance squared
+     * @return RMSE
      */
     public double getFitness(double[] pt) {
         // Compute the um of square error
@@ -147,7 +158,7 @@ public class HillClimbing {
             dist2 += (delta * delta);
         }
 
-        return dist2;
+        return Math.sqrt(dist2/pt.length);
     }
 
     /**
@@ -165,5 +176,20 @@ public class HillClimbing {
             sameCount = 1;
 
         return false;
+    }
+
+    /**
+     * Gets a random start point.
+     * @return
+     */
+    protected double[] getStart() {
+        Random ran = new Random(0);
+
+        double[] pt = new double[curPt.length];
+
+        for(int k=0; k < curPt.length; k++)
+            pt[k] = ran.nextDouble() *(MAX-MIN) + MIN;
+
+        return pt;
     }
 }
