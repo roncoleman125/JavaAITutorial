@@ -35,7 +35,7 @@ abstract public class MLPChecker {
      * This method implements the feedforward equations.
      * @param xs X inputs
      * @param ws Interneuron weights
-     * @return Result
+     * @return Double
      */
     abstract public double feedforward(double[] xs, double[] ws);
 
@@ -69,7 +69,7 @@ abstract public class MLPChecker {
             else if(fields.length == 10)
                 checker = new Circuit1Checker();
             else
-                throw new Exception("insufficient number of interneuron weights");
+                throw new Exception("invalid number of interneuron weights");
 
             // Analyze the weights
             checker.analyze(ws);
@@ -85,7 +85,7 @@ abstract public class MLPChecker {
      * @return Double
      */
     protected double sigmoid(double z) {
-        double y = 1.0 / (1+ Math.exp(-z));
+        double y = 1.0 / (1.0 + Math.exp(-z));
 
         return y;
     }
