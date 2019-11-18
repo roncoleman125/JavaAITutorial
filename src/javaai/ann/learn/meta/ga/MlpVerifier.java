@@ -24,13 +24,14 @@ package javaai.ann.learn.meta.ga;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.function.Function;
 
 /**
  * This class checks the MLP learning for XOR and Circuit 1 given the interneuron weights.
- * As this class is abstract, it cannot be instantiated directly.
+ * As this class is abstract, it cannot be instantiated directly but can only be subclassed.
  * @author Ron.Coleman
  */
-abstract public class MLPChecker {
+abstract public class MlpVerifier {
     /**
      * This method implements the feedforward equations.
      * @param xs X inputs
@@ -38,6 +39,16 @@ abstract public class MLPChecker {
      * @return Double
      */
     abstract public double feedforward(double[] xs, double[] ws);
+
+    /**
+     * Outputs the interneuron weights.
+     * @param ws Interneuron weights
+     */
+    abstract public void output(double[] ws);
+
+
+    public final static int XOR_SIZE = 8;
+    public final static int CIRCUIT1_SIZE = 10;
 
     /** Inputs */
     protected double[][] inputs;
@@ -48,31 +59,36 @@ abstract public class MLPChecker {
     public static void main(String[] args)
     {
         try {
-            // Read a line from the console
+            // Read in the weights from the console
+            System.out.print("Input weights: ");
+
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
             String line = reader.readLine();
 
             String[] fields = line.split(" +");
 
-            // Parse the console input into the weights
-            double[] ws = new double[fields.length];
+            if(fields.length < 8 || fields.length > 10)
+                throw new Exception("invalid input");
+
+            double[] weights = new double[fields.length];
 
             for(int k=0; k < fields.length; k++)
-                ws[k] = Double.parseDouble(fields[k]);
+                weights[k] = Double.parseDouble(fields[k]);
 
-            // Instantiate the appropriate checker
-            MLPChecker checker;
-            if(fields.length == 8)
-                checker = new XorChecker();
+            // Instantiate and invoke the verifier
+            MlpVerifier verifier = null;
 
-            else if(fields.length == 10)
-                checker = new Circuit1Checker();
+            if(verifying(XOR, weights))
+                verifier = new XorVerifier();
+
+            else if(verifying(CIRCUIT1, weights))
+                verifier = new Circuit1Verifier();
+
             else
                 throw new Exception("invalid number of interneuron weights");
 
-            // Analyze the weights
-            checker.analyze(ws);
+            verifier.analyze(weights);
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -95,11 +111,7 @@ abstract public class MLPChecker {
      * @param ws Interneuron weights
      */
     public void analyze(double[] ws) {
-        for(int k=0; k < ws.length; k++)
-            System.out.printf("%s%d = %7.3f\n",
-                    (k<6)?"w":"b",
-                    (k<6)?(k+1):(k-6+1),
-                    ws[k]);
+        output(ws);
 
         for(int k=0; k < inputs[0].length; k++)
             System.out.printf("x%-3s",(k+1));
@@ -125,12 +137,29 @@ abstract public class MLPChecker {
 
         System.out.printf("RMSE = %f\n",rmse);
     }
+
+    /** Verifying for XOR */
+    static Function<double[], Boolean> XOR = (weights) -> weights.length == 8;
+
+    /** Verifying for circuit 1 */
+    static Function<double[], Boolean> CIRCUIT1 = (weights) -> weights.length == 10;
+
+    /**
+     * Verifies the interneuron choice.
+     * @param function
+     * @param ws
+     * @return
+     */
+    public static Boolean verifying(Function<double[], Boolean> function, double[] ws) {
+        return function.apply(ws);
+    }
+
 }
 
 /**
- * Checks the XOR circuit.
+ * Verifies the XOR circuit.
  */
-class XorChecker extends MLPChecker {
+class XorVerifier extends MlpVerifier {
     public final static double INPUTS[][] = {
             {0.0, 0.0},
             {0.0, 1.0},
@@ -148,9 +177,20 @@ class XorChecker extends MLPChecker {
     /**
      * Constructor
      */
-    public XorChecker() {
+    public XorVerifier() {
         this.inputs = INPUTS;
         this.ideals = IDEALS;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void output(double[] ws) {
+        for(int k=0; k < ws.length; k++)
+            System.out.printf("%s%d = %7.3f\n",
+                    (k<6)?"w":"b",
+                    (k<6)?(k+1):(k-6+1),
+                    ws[k]);
     }
 
     /**
@@ -181,9 +221,9 @@ class XorChecker extends MLPChecker {
 }
 
 /**
- * Checks circuit 1.
+ * Verifies circuit 1.
  */
-class Circuit1Checker extends MLPChecker {
+class Circuit1Verifier extends MlpVerifier {
     public static double INPUTS[][] = {
             {0.0, 0.0, 0.0},
             {0.0, 0.0, 1.0},
@@ -209,9 +249,20 @@ class Circuit1Checker extends MLPChecker {
     /**
      * Constructor
      */
-    public Circuit1Checker() {
+    public Circuit1Verifier() {
         this.inputs = INPUTS;
         this.ideals = IDEALS;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void output(double[] ws) {
+        for(int k=0; k < ws.length; k++)
+            System.out.printf("%s%d = %7.3f\n",
+                    (k<8)?"w":"b",
+                    (k<8)?(k+1):(k-8+1),
+                    ws[k]);
     }
 
     /**
