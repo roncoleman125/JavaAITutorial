@@ -350,14 +350,14 @@ public class Helper {
      * @return Integer
      */
     public static int asInt(IntegerArrayGenome genome) {
-        int[] bits = genome.getData();
+        int[] genes = genome.getData();
 
         int n = 0;
 
-        for(int k=0; k < bits.length; k++) {
+        for(int k=0; k < genes.length; k++) {
             n = n << 1;
 
-            n = n | bits[k];
+            n = n | genes[k];
         }
 
         return n;
@@ -394,9 +394,9 @@ public class Helper {
      */
     public static String asString(IntegerArrayGenome genome) {
         String s = "";
-        int[] bits = genome.getData();
-        for(int bit: bits)
-            s += bit + " ";
+        int[] genes = genome.getData();
+        for(int gene: genes)
+            s += gene + " ";
 
         s += "| ";
         int x = asInt(genome);
