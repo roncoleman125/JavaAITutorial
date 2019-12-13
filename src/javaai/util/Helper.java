@@ -369,17 +369,17 @@ public class Helper {
      * @return Double
      */
     public static double asDouble(IntegerArrayGenome genome) {
-        int[] bits = genome.getData();
+        int[] genes = genome.getData();
 
         double n = 0.0;
 
         double sign = 1;
-        if(bits[0] == 1)
+        if(genes[0] == 1)
             sign = -1;
 
         double adder = 0.5;
-        for(int k=1; k < bits.length; k++) {
-            if(bits[k] == 1)
+        for(int k=1; k < genes.length; k++) {
+            if(genes[k] == 1)
                 n += adder;
             adder /= 2;
         }
