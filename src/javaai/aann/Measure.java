@@ -23,7 +23,7 @@
 package javaai.aann;
 
 /**
- * Represents flower measurement.
+ * Represents a flower measurement.
  * @author Ron Coleman
  */
 public class Measure {

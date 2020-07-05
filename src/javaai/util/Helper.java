@@ -26,7 +26,6 @@ import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 import static javaai.util.Option.None;
-
 import org.encog.ml.genetic.genome.DoubleArrayGenome;
 import org.encog.ml.genetic.genome.IntegerArrayGenome;
 

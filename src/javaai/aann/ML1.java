@@ -31,7 +31,7 @@ import java.util.List;
  * This class reads the iris csv file and outputs it.
  * @author Ron Coleman
  */
-public class IrisReader {
+public class ML1 {
     /** Container of flower species */
     protected static List<Species> flowers = new ArrayList<>();
 
@@ -42,7 +42,7 @@ public class IrisReader {
         load();
 
         for(int k=0; k < flowers.size(); k++)
-            System.out.println(flowers.get(k)+""+measures.get(k));
+            System.out.println(k+" "+flowers.get(k)+""+measures.get(k));
     }
 
     /**
