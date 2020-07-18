@@ -22,25 +22,52 @@
  */
 package javaai.aann;
 
+import java.util.Random;
+
 /**
  * Represents a flower measurement.
  * @author Ron Coleman
  */
 public class Measure {
-    /** Sepal length index */
     public final static int SEP_LENGTH = 0;
-
-    /** Sepal width index */
     public final static int SEP_WIDTH = 1;
-
-    /** Petal length index */
     public final static int PET_LENGTH = 2;
-
-    /** Petal width index */
     public final static int PET_WIDTH = 3;
 
-    /** Measurement values */
     public double[] values = {0, 0, 0, 0};
+    protected static Random ran = null;
+
+    // These ranges were learned from NormalizedIris.java
+    double[][] ranges = {
+            {4.30, 7.50},  // Sepal length
+            {2.00, 4.40},  // Sepal width
+            {1.00, 6.90},  // Petal length
+            {0.10, 2.50}   // Petal width
+    } ;
+
+    /**
+     * Constructor
+     */
+    public Measure() {
+        ran = new Random();
+        init();
+    }
+
+    public Measure(long seed) {
+       ran = new Random(seed);
+       init();
+    }
+
+    protected final void init() {
+        // Generate plausible random values.
+        for(int k=0; k < values.length; k++) {
+            double[] range = ranges[k];
+
+            // See https://stackoverflow.com/questions/3680637/generate-a-random-double-in-a-range
+            double randomValue = range[0] + (range[1] - range[0]) * ran.nextDouble();
+            values[k] = randomValue;
+        }
+    }
 
     /**
      * Constructor
@@ -62,6 +89,12 @@ public class Measure {
      */
     @Override
     public String toString() {
-        return "("+ values[SEP_LENGTH]+", "+ values[SEP_WIDTH]+", "+ values[PET_LENGTH]+", "+ values[PET_WIDTH]+")";
+        String s = String.format("(%4.2f, %4.2f, %4.2f, %4.2f)",
+                values[SEP_LENGTH],
+                values[SEP_WIDTH],
+                values[PET_LENGTH],
+                values[PET_WIDTH]);
+//        return "("+ values[SEP_LENGTH]+", "+ values[SEP_WIDTH]+", "+ values[PET_LENGTH]+", "+ values[PET_WIDTH]+")";
+        return s;
     }
 }

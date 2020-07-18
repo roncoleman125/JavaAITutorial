@@ -45,7 +45,7 @@ public class EquilateralDecoding {
             {}    // Versicolor
     };
 
-    /** Specie names -- order MUST correspond to ideals */
+    /** Specie names -- order MUST correspond to measures */
     static final List<String> species =
             new ArrayList<>(Arrays.asList("viginica", "setosa", "versicolor"));
 
@@ -62,10 +62,10 @@ public class EquilateralDecoding {
 
         for(int n=0; n < NUM_TESTS; n++) {
             // Pick a species randomly
-            int actualIndex = ran.nextInt(ideals.length);
+            int idealIndex = ran.nextInt(ideals.length);
 
             // TODO:
-            // 1. Get a random encoding with the actual index.
+            // 1. Get a random encoding from ideals using idealIndex.
             // 2. Create a new array of activations perturbed by the tolerance divided by 100.
             // 3. Decode these perturbed activations.
             // 4. If the predicted index equals the actual index, update success count.

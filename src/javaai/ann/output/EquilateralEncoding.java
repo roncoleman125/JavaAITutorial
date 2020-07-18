@@ -52,7 +52,7 @@ public class EquilateralEncoding {
         for (int index = 0; index < subtypes.size(); index++) {
             String subtype = subtypes.get(index);
 
-            System.out.print(subtype + ": ");
+            System.out.print(subtype + ": {");
 
             double[] encoding = eq.encode(index);
 
@@ -63,7 +63,7 @@ public class EquilateralEncoding {
                 System.out.printf("%5.4f", encoding[k]);
             }
 
-            System.out.println();
+            System.out.println("}");
         }
     }
 

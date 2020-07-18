@@ -47,7 +47,7 @@ public class EquilateralDecoding {
             {0.0000, 1.0000}     // Versicolor
     };
 
-    /** Specie names -- order MUST correspond to ideals */
+    /** Specie names -- order MUST correspond to measures */
     static final List<String> species =
             new ArrayList<>(Arrays.asList("viginica", "setosa", "versicolor"));
 

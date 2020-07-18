@@ -31,7 +31,7 @@ import java.util.List;
  * This class reads the iris csv file and outputs it.
  * @author Ron Coleman
  */
-public class ML1 {
+public class BaseML {
     /** Container of flower species */
     protected static List<Species> flowers = new ArrayList<>();
 
@@ -42,7 +42,7 @@ public class ML1 {
         load();
 
         for(int k=0; k < flowers.size(); k++)
-            System.out.println(k+" "+flowers.get(k)+""+measures.get(k));
+            System.out.println(k+" "+flowers.get(k)+""+ measures.get(k));
     }
 
     /**
@@ -58,6 +58,9 @@ public class ML1 {
      */
     public static void load(String path) {
         try {
+            measures.clear();
+            flowers.clear();
+
             // Load data in column-oriented format preferred for normalization, missing values, etc.
             Helper.loadCsv(path, Ontology.parsers);
 
