@@ -100,16 +100,16 @@ public class XorHelloWorld {
 
             long now = System.nanoTime();
 
-            long dt = now - then;
+            long elapsed = now - then;
 
-            System.out.println("dt: "+dt+ " epoch #" + epoch + " error: " + train.getError());
+            System.out.println("dt: "+elapsed+ " epoch #" + epoch + " error: " + train.getError());
 
             epoch++;
         } while (train.getError() > TOLERANCE);
 
         train.finishTraining();
 
-        // test the neural network
+        // Test the neural network
         System.out.println("Neural Network Results:");
 
         for (MLDataPair pair : trainingSet) {
