@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 
 /**
  * This code demonstrates how to use equilateral encoding with the Iris data.
- * See Heaton (2011), p.25-27 for more details.
+ * See Heaton (2011), d.25-27 for more details.
  * @author Ron.Coleman
  */
 public class EquilateralEncoding {

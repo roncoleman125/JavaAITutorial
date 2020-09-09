@@ -24,7 +24,7 @@ import org.encog.neural.networks.training.propagation.resilient.ResilientPropaga
  * The original version of this code does not appear to converge. I fixed this
  * problem by using two neurons in the hidden layer and instead of ramped activation,
  * sigmoid activation. This makes the network reflect the model in figure 1.1
- * in the book, p. 11. I also added more comments to make the code more
+ * in the book, d. 11. I also added more comments to make the code more
  * explanatory.
  * @author Ron Coleman
  * @date 24 Oct 2017

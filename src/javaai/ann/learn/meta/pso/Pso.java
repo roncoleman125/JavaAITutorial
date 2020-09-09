@@ -33,7 +33,7 @@ import java.util.Random;
  * training a neural network.
  * @author Ron.Coleman
  * @see "<a href=https://en.wikipedia.org/wiki/Particle_swarm_optimization>Particle swarm optimization</a>"
- * @see "<a href=https://www.amazon.com/Programming-Example-Wordware-Developers-Library-ebook/dp/B0029LCJXE>Buckland, M., Programming Game AI by Example, p.91</a>"
+ * @see "<a href=https://www.amazon.com/Programming-Example-Wordware-Developers-Library-ebook/dp/B0029LCJXE>Buckland, M., Programming Game AI by Example, d.91</a>"
  */
 public class Pso {
     /** Want to try to find this point in the plane. */
@@ -300,7 +300,7 @@ class Particle implements Serializable {
     }
 
     /**
-     * Gets distance to that particle.
+     * Gets distanceTo to that particle.
      * @param that Particle
      * @return RMSE
      */

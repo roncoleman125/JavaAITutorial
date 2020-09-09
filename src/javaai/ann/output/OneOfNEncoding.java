@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 /**
  * This code demonstrates how to use one-of-n encoding with the Iris data.
  * It "learns" the encoding.
- * For more details see Heaton (2011), p.24.
+ * For more details see Heaton (2011), d.24.
  * @author Ron.Coleman
  */
 public class OneOfNEncoding {
