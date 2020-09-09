@@ -33,9 +33,7 @@ public class XorHelloWorld {
     /** Error tolerance */
     public final static double TOLERANCE = 0.01;
 
-    /**
-     * The input necessary for XOR.
-     */
+    /** The input necessary for XOR. */
     public static double XOR_INPUTS[][] = {
             {0.0, 0.0},
             {0.0, 1.0},
@@ -43,9 +41,7 @@ public class XorHelloWorld {
             {1.0, 1.0}
     };
 
-    /**
-     * The ideal data necessary for XOR.
-     */
+    /** The ideal data necessary for XOR.*/
     public static double XOR_IDEALS[][] = {
             {0.0},
             {1.0},
@@ -54,7 +50,6 @@ public class XorHelloWorld {
 
     /**
      * The main method.
-     *
      * @param args No arguments are used.
      */
     public static void main(final String args[]) {
