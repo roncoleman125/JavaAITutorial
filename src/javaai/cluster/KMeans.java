@@ -83,15 +83,15 @@ public class KMeans {
 
     /**
      * Gets the hi-lo range for a list.
-     * @param list List
+     * @param points Points
      * @return 2-tuple of doubles for hi and low
      */
-    protected static Point[] getRange(List<Point> list) {
+    protected static Point[] getRange(List<Point> points) {
         // Current high and low values
         Point[] range = {Point.getHi(), Point.getLo()};
 
         // Go through each value in the list
-        for(Point point: list) {
+        for(Point point: points) {
             // If value above current high, update the high
             if(point.gt( range[HI]))
                 range[HI] = point;

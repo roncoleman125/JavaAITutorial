@@ -53,11 +53,18 @@ public class Measure {
         init();
     }
 
+    /**
+     * Constructor for a random seeded measure.
+     * @param seed Random seed
+     */
     public Measure(long seed) {
        ran = new Random(seed);
        init();
     }
 
+    /**
+     * Initializes a measure.
+     */
     protected final void init() {
         // Generate plausible random values.
         for(int k=0; k < values.length; k++) {
@@ -94,7 +101,26 @@ public class Measure {
                 values[SEP_WIDTH],
                 values[PET_LENGTH],
                 values[PET_WIDTH]);
-//        return "("+ values[SEP_LENGTH]+", "+ values[SEP_WIDTH]+", "+ values[PET_LENGTH]+", "+ values[PET_WIDTH]+")";
         return s;
+    }
+
+    /**
+     * Compares this measure with another.
+     * @param obj Measure to be compared with this one.
+     * @return True if measures are equal.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        // Make sure the object is a measure.
+        if(obj == null || !(obj instanceof Measure))
+            return false;
+
+        // Two measures are equal only if all their values are equal.
+        Measure other = (Measure) obj;
+
+        return values[SEP_LENGTH] == other.values[SEP_LENGTH] &&
+               values[SEP_WIDTH] == other.values[SEP_WIDTH] &&
+               values[PET_LENGTH] == other.values[PET_LENGTH] &&
+               values[PET_WIDTH] == other.values[PET_WIDTH];
     }
 }
