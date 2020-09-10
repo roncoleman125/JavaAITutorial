@@ -22,71 +22,72 @@
  */
 package javaai.cluster;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Container of cluster info by type.
- * @param <T> Type
+ * Represents a 1D point.
  * @author Ron.Coleman
  */
-public class Cluster<T> {
-    public List<T> buffer = new ArrayList<>();
-    public T centroid;
+public class Point1D {
+    public Double d;
+
+    /**
+     * Gets the highest point.
+     * @return High point
+     */
+    static Point1D getHi() {
+        return new Point1D(Double.MAX_VALUE);
+    }
+
+    /**
+     * Gets the lowest point.
+     * @return Low point
+     */
+    static Point1D getLo() {
+        return new Point1D(Double.MIN_VALUE);
+    }
 
     /**
      * Constructor
-     * @param buffer Initial buffer.
-     * @param centroid Centroid for cluster
+     * @param d One point.
      */
-    public Cluster(List<T> buffer,T centroid) {
-        this.buffer = buffer;
-        this.centroid = centroid;
+    public Point1D(Double d) {
+        this.d = d;
     }
 
     /**
-     * Updates the centroid.
-     * @param centroid Centroid
+     * Copy constructor
+     * @param pt Point to copy
      */
-    public void update(T centroid) {
-        this.centroid = centroid;
+    public Point1D(Point1D pt) {
+        this.d = d;
     }
 
     /**
-     * Adds a datum to the cluster.
-     * @param datum Datum
+     * Calculates distance between this point and another.
+     * @param other Other point
+     * @return Distance metric.
      */
-    public void add(T datum) {
-        buffer.add(datum);
+    public Double distanceTo(Point1D other) {
+        return (d - other.d) * (d - other.d);
     }
 
-    /**
-     * Gets the size of the cluster.
-     * @return Cluster size
-     */
-    public int size() {
-        return buffer.size();
+    public Point1D add(Point1D other) {
+        return new Point1D(d + other.d);
     }
 
-    /**
-     * Clears the cluster of all its members.
-     */
-    public void clear() {
-        buffer.clear();
+    public Point1D div(Double divisor) {
+        return new Point1D(this.d/divisor);
     }
 
-    /**
-     * Converts cluster to a string.
-     * @return
-     */
-    @Override
+    public Boolean gt(Point1D other) {
+        return d > other.d;
+    }
+
+    public Boolean lt(Point1D other) {
+        return d < other.d;
+    }
+
     public String toString() {
-        int min = Math.min(5,buffer.size());
-        String str = "centroid: "+centroid+" sz: "+buffer.size() + " [";
-        for(int k=0; k < min; k++)
-            str += buffer.get(k) + " ";
-
-        str += "...]";
-        return str;
+        return String.format("%6.4f",d);
     }
+
 }

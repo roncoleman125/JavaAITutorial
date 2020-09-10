@@ -15,7 +15,7 @@ public class KMeans {
     /** Low index */
     public final static int LO = 0;
 
-    protected List<Point> points = null;
+    protected List<Point1D> points = null;
 
     public static void main(final String[] args) {
         if(args.length < 2) {
@@ -26,16 +26,16 @@ public class KMeans {
         Integer num = Integer.parseInt(args[1]);
 
         List<Double> list = load(path);
-        List<Point> points = asPoints(list);
+        List<Point1D> points = asPoints(list);
 
         KMeans km = new KMeans(points);
-        List<Cluster<Point>> clusters = km.getClusters(num);
+        List<Cluster<Point1D>> clusters = km.getClusters(num);
     }
 
-    private static List<Point> asPoints(List<Double> list) {
-        List<Point> points = new ArrayList<>();
+    private static List<Point1D> asPoints(List<Double> list) {
+        List<Point1D> points = new ArrayList<>();
         for(Double datum: list) {
-            points.add(new Point(datum));
+            points.add(new Point1D(datum));
         }
         return points;
     }
@@ -56,36 +56,36 @@ public class KMeans {
         return list;
     }
 
-    public KMeans(List<Point> points) {
+    public KMeans(List<Point1D> points) {
         this.points = points;
     }
 
-    public List<Cluster<Point>> getClusters(Integer n) {
+    public List<Cluster<Point1D>> getClusters(Integer n) {
         return getClusters(n,true);
     }
 
-    public List<Cluster<Point>> getClusters(Integer n, Boolean details) {
-        Point[] range = getRange(points);
+    public List<Cluster<Point1D>> getClusters(Integer n, Boolean details) {
+        Point1D[] range = getRange(points);
 
         // TODO: make step a point if we have operator overloading
         double step = (range[HI].d - range[LO].d) / n;
 
-        List<Cluster<Point>> clusters = new ArrayList<>();
+        List<Cluster<Point1D>> clusters = new ArrayList<>();
         for(int k=0; k < n; k++) {
-            clusters.add(new Cluster<Point>(new ArrayList<Point>(), new Point(range[HI].d - step*k)));
+            clusters.add(new Cluster<Point1D>(new ArrayList<Point1D>(), new Point1D(range[HI].d - step*k)));
         }
 
         int epoch = 0;
-        Long oldHash = hash(clusters);
+        double oldEntropy = getEntropy(clusters);
 
         while(epoch < MAX_ITERATIONS) {
             for(int dataIndex=0; dataIndex < points.size(); dataIndex++) {
                 Double shortest = Double.MAX_VALUE;
 
-                Point datum = points.get(dataIndex);
+                Point1D datum = points.get(dataIndex);
                 Cluster nearest = clusters.get(0);
 
-                for(Cluster<Point> cluster: clusters) {
+                for(Cluster<Point1D> cluster: clusters) {
                     Double dist = cluster.centroid.distanceTo(datum);
 
                     if (dist < shortest) {
@@ -98,12 +98,12 @@ public class KMeans {
             }
 
 
-            Long newHash = hash(clusters);
+            double newEntropy = getEntropy(clusters);
 
-            if(newHash == oldHash)
+            if(newEntropy == oldEntropy)
                 break;
 
-            oldHash = newHash;
+            oldEntropy = newEntropy;
 
             recenter(clusters);
 
@@ -113,22 +113,37 @@ public class KMeans {
         return clusters;
     }
 
-    protected void recenter(List<Cluster<Point>> clusters) {
-        for(Cluster<Point> cluster: clusters) {
-            Point sum = new Point(0.0);
-            for(Point pt: cluster.buffer) {
+    protected void recenter(List<Cluster<Point1D>> clusters) {
+        for(Cluster<Point1D> cluster: clusters) {
+            Point1D sum = new Point1D(0.0);
+            for(Point1D pt: cluster.buffer) {
                 sum = sum.add(pt);
             }
-            Point centroid = sum.div((double)cluster.size());
+            Point1D centroid = sum.div((double)cluster.size());
             cluster.update(centroid);
             cluster.clear();
         }
     }
 
-    protected Long hash(List<Cluster<Point>> clusters) {
+    protected long hash(List<Cluster<Point1D>> clusters) {
         Long h = 1L;
         for(Cluster cluster: clusters)
             h = h * cluster.size();
+        return h;
+    }
+
+    protected double getEntropy(List<Cluster<Point1D>> clusters) {
+        double total = 0;
+        for(Cluster cluster: clusters)
+            total += cluster.size();
+
+        double h = 0;
+        final double c = 3.32192809489;
+        for(Cluster cluster: clusters) {
+            double p = cluster.size() / total;
+            h += -p * c * Math.log10(p);
+        }
+
         return h;
     }
 
@@ -137,12 +152,12 @@ public class KMeans {
      * @param points Points
      * @return 2-tuple of doubles for hi and low
      */
-    protected static Point[] getRange(List<Point> points) {
+    protected static Point1D[] getRange(List<Point1D> points) {
         // Current high and low values
-        Point[] range = {Point.getHi(), Point.getLo()};
+        Point1D[] range = {Point1D.getHi(), Point1D.getLo()};
 
         // Go through each value in the list
-        for(Point point: points) {
+        for(Point1D point: points) {
             // If value above current high, update the high
             if(point.gt( range[HI]))
                 range[HI] = point;
