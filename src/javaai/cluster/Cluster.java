@@ -27,4 +27,15 @@ public class Cluster<T> {
     public void clear() {
         buffer.clear();
     }
+
+    @Override
+    public String toString() {
+        int min = Math.max(5,buffer.size());
+        String str = "centroid: "+centroid+" sz: "+buffer.size() + "[";
+        for(int k=0; k < min; k++)
+            str += buffer.get(k) + " ";
+
+        str += "...]";
+        return str;
+    }
 }

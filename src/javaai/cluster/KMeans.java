@@ -1,5 +1,8 @@
 package javaai.cluster;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,14 +15,63 @@ public class KMeans {
     /** Low index */
     public final static int LO = 0;
 
-    public List<Cluster<Point>> getClusters(List<Point> points, Integer numClusters, Boolean details) {
+    protected List<Point> points = null;
+
+    public static void main(final String[] args) {
+        if(args.length < 2) {
+            System.out.println("usage: KMeans data-path num-clusters");
+            System.exit(0);
+        }
+        String path = args[0];
+        Integer num = Integer.parseInt(args[1]);
+
+        List<Double> list = load(path);
+        List<Point> points = asPoints(list);
+
+        KMeans km = new KMeans(points);
+        List<Cluster<Point>> clusters = km.getClusters(num);
+    }
+
+    private static List<Point> asPoints(List<Double> list) {
+        List<Point> points = new ArrayList<>();
+        for(Double datum: list) {
+            points.add(new Point(datum));
+        }
+        return points;
+    }
+
+    private static List<Double> load(String path) {
+        List<Double> list = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(new File(path)));
+            String line = null;
+            while((line = br.readLine()) != null) {
+                Double value = Double.parseDouble(line);
+                list.add(value);
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public KMeans(List<Point> points) {
+        this.points = points;
+    }
+
+    public List<Cluster<Point>> getClusters(Integer n) {
+        return getClusters(n,true);
+    }
+
+    public List<Cluster<Point>> getClusters(Integer n, Boolean details) {
         Point[] range = getRange(points);
 
         // TODO: make step a point if we have operator overloading
-        double step = (range[HI].d - range[LO].d) / numClusters;
+        double step = (range[HI].d - range[LO].d) / n;
 
         List<Cluster<Point>> clusters = new ArrayList<>();
-        for(int k=0; k < numClusters; k++) {
+        for(int k=0; k < n; k++) {
             clusters.add(new Cluster<Point>(new ArrayList<Point>(), new Point(range[HI].d - step*k)));
         }
 
@@ -43,7 +95,6 @@ public class KMeans {
                 }
 
                 nearest.add(datum);
-
             }
 
 

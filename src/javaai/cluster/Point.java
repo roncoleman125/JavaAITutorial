@@ -5,9 +5,19 @@ public class Point {
     public Point(Point pt) {
         this.d = d;
     }
+
+    static Point getHi() {
+        return new Point(Double.MAX_VALUE);
+    }
+
+    static Point getLo() {
+        return new Point(Double.MIN_VALUE);
+    }
+
     public Point(Double d) {
         this.d = d;
     }
+
     public Double distanceTo(Point other) {
         return (d - other.d) * (d - other.d);
     }
@@ -28,11 +38,8 @@ public class Point {
         return d < other.d;
     }
 
-    static Point getHi() {
-        return new Point(Double.MAX_VALUE);
+    public String toString() {
+        return "" + d;
     }
 
-    static Point getLo() {
-        return new Point(Double.MIN_VALUE);
-    }
 }
