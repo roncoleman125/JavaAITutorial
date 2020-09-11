@@ -153,13 +153,13 @@ public class Pso {
             Particle current = particles[k];
 
             // This is the difference between where we want to go and where we are
-            Particle delta = target.subtract(current);
+            Particle delta = target.sub(current);
 
             // Make the difference a unit vector
-            delta = delta.normalize();
+            delta = delta.norm();
 
             // Set the speed of movement
-            delta = delta.multiply(SPEED);
+            delta = delta.mult(SPEED);
 
             // Get the new vector
             Particle newCurrent = current.add(delta);
@@ -260,7 +260,7 @@ class Particle implements Serializable {
      * @param c Constant
      * @return A new particle
      */
-    public Particle multiply(double c) {
+    public Particle mult(double c) {
         Particle result = new Particle(c*this.x, c*this.y);
 
         return result;
@@ -271,7 +271,7 @@ class Particle implements Serializable {
      * @param that Particle
      * @return A new particle
      */
-    public Particle subtract(Particle that) {
+    public Particle sub(Particle that) {
         Particle result = new Particle(this.x-that.x,this.y-that.y);
 
         return result;
@@ -281,7 +281,7 @@ class Particle implements Serializable {
      * Normalizes this particle.
      * @return A new normalized particle
      */
-    public Particle normalize() {
+    public Particle norm() {
         double length = getLength();
 
         Particle result = new Particle(this.x/length, this.y/length);
