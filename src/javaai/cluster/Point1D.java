@@ -27,7 +27,7 @@ package javaai.cluster;
  * @author Ron.Coleman
  */
 public class Point1D {
-    public Double d;
+    public Double x;
 
     /**
      * Gets the highest point.
@@ -47,10 +47,10 @@ public class Point1D {
 
     /**
      * Constructor
-     * @param d One point.
+     * @param x One point.
      */
-    public Point1D(Double d) {
-        this.d = d;
+    public Point1D(Double x) {
+        this.x = x;
     }
 
     /**
@@ -58,7 +58,7 @@ public class Point1D {
      * @param pt Point to copy
      */
     public Point1D(Point1D pt) {
-        this.d = d;
+        this.x = pt.x;
     }
 
     /**
@@ -67,27 +67,39 @@ public class Point1D {
      * @return Distance metric.
      */
     public Double distanceTo(Point1D other) {
-        return (d - other.d) * (d - other.d);
+        return (x - other.x) * (x - other.x);
     }
 
     public Point1D add(Point1D other) {
-        return new Point1D(d + other.d);
+        return new Point1D(x + other.x);
     }
 
+    public Point1D sub(Point1D other) {
+        return new Point1D(x - other.x);
+    }
+
+    public Point1D sub(double k) { return new Point1D(x-k);}
+
+    public Point1D mult(double k) { return new Point1D(x*k);}
+
     public Point1D div(Double divisor) {
-        return new Point1D(this.d/divisor);
+        return new Point1D(this.x /divisor);
+    }
+
+    public Point1D div(int divisor) {
+        return div((double)divisor);
     }
 
     public Boolean gt(Point1D other) {
-        return d > other.d;
+        return x > other.x;
     }
 
     public Boolean lt(Point1D other) {
-        return d < other.d;
+        return x < other.x;
     }
 
     public String toString() {
-        return String.format("%6.4f",d);
+        return String.format("%6.4f", x);
     }
 
 }
