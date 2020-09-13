@@ -25,7 +25,7 @@ package javaai.ann.learn.meta.pso;
 import java.util.Random;
 
 /**
- * This class uses particle swarm optimization unsupervised learning to find base point (5, 3).
+ * This class uses particle swarm optimization reinforcement learning to find base point (5, 3).
  * @author Ron.Coleman
  * @see "<a href=https://www.amazon.com/Programming-Example-Wordware-Developers-Library-ebook/dp/B0029LCJXE>Buckland, M., Programming Game AI by Example, d.91</a>"
  */

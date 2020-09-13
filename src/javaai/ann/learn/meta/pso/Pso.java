@@ -28,7 +28,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 /**
- * This class uses particle swarm optimization unsupervised learning to find base point (5, 3).
+ * This class uses particle swarm optimization reinforcment learning to find base point (5, 3).
  * This class differs from Pso1 in that this one uses a separate particle class to be more extensible for
  * training a neural network.
  * @author Ron.Coleman
@@ -90,7 +90,7 @@ public class Pso {
         // Initialize convergence state
         boolean converged = false;
 
-        // Intializa the iteration count
+        // Intialize the iteration count
         int iteration = 1;
 
         // Repeat until we converge
