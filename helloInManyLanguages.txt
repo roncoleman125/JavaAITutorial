@@ -1,0 +1,70 @@
+Afrikaans	Hallo
+Albanian	Mirë dita
+Amharic	ታዲያስ   tadiyas
+Arabic	مرحبا or مَرْحَبًا   marhaban or Marhabaa
+Azerbaijani	Салам or سلام   Salam
+Bengali	নমস্কার   nomoshkaar or namaskar
+Bosnian	Zdravo
+Bulgarian (Formal)	Здравей   zdravey
+Bulgarian (Informal)	Здрасти   zdrasti
+Croatian	Bok
+Czech	ahoj
+Danish	Hej
+Dutch	Hallo
+English	Hello	howdy
+Esperanto	Saluton
+Estonian	Tere
+Farsi	سلام or درود بر تو or درود بر شما   Salaam or Dorood bar to or D orood bar shoma
+Fijian	Bula
+Finnish	Terve
+French (Informal)	Salut
+Greek	Γεια σου   yiassoo
+Hawaiian	Aloha
+Hebrew	שלום   Shalom
+Hindi	नमस्ते   Namaste
+Hungarian (Plural)	Sziasztok
+Hungarian (Singular)	Szia
+Indonesian	Halo or Hai
+Irish (Plural)	Dia dhaoibh
+Italian (Formal)	Salve
+Italian (Informal)	Ciao
+Japanese	こんにちは   Kon'nichiwa
+Kannada	ನಮಸ್ಕಾರ   namaskār
+Korean (Formal)	안녕하세요   an-nyeong-ha-se-yo
+Korean (Informal)	안녕   annyeong
+Latin (Plural)	Salvete
+Latin (Singular)	Salve
+Latvian	Sveiki
+Limburgish	Hallau
+Lithuanian	Sveiki
+Macedonian	Добар ден   Dobar den
+Malaysian (Noon to 2pm)	Selamat tengahari
+Malaysian (2pm to sunset)	Selamat petang
+Maltese	Ħelow
+Mandarin Chinese	你好   nǐ hǎo
+Maori	Kia ora
+Norwegian	Hei
+Odia	ନମସ୍କାର   Namaskār
+Polish	Cześć or Hej
+Portuguese	Oi
+Romanian	alo or salut
+Russian	Здравствуйте   Zdrahstvootye or Привет   Preevyet
+Scottish Gaelic	Haló
+Serbian	Здраво   Zdravo
+Shanghainese	侬好   noŋ hɔ
+Slovak	ahoj
+Spanish	Hola
+Swabian	Grüss Gott
+Swahili	Hujambo
+Swedish	Hej or Hallá
+Swiss German (Informal)	Hoi
+Swiss German (Plural, Formal)	Grüezi mitenand
+Swiss German (Singular, Formal)	Grüezi
+Tamil	வனக்கம்   vanakkam
+Telugu	నమస్కారం   namaskāram
+Thai (Female)	สวัสดีค่ะ   sawatdeekha
+Thai (Male)	สวัสดีครับ   sawatdeekhrap
+Turkish	Merhaba
+Vietnamese	Xin chào
+Woiworung	Womenjeka
+Yiddish	שלום   Sholem

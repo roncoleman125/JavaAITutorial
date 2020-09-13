@@ -1,0 +1,2 @@
+positive	 I love this. I like this. I really love this product. We like this.
+negative	 I hate this. I dislike this. We absolutely hate this. I really hate this product.

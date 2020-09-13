@@ -1,0 +1,3 @@
+This is one example of tokenizer.
+I<SPLIT>, you<SPLIT>, everyone can tokenize.
+Triangle<SPLIT>, rectangle<SPLIT>, circle<SPLIT>, line are shapes.
