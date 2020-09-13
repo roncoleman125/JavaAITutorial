@@ -62,44 +62,29 @@ public class Point1D {
     }
 
     /**
-     * Calculates distance between this point and another.
+     * Calculates distance between this point and other.
      * @param other Other point
      * @return Distance metric.
      */
-    public Double distanceTo(Point1D other) {
-        return (x - other.x) * (x - other.x);
-    }
+    public Double distanceTo(Point1D other) { return (x-other.x) * (x-other.x); }
 
     public Point1D add(Point1D other) {
         return new Point1D(x + other.x);
     }
 
-    public Point1D sub(Point1D other) {
-        return new Point1D(x - other.x);
-    }
+    public Point1D sub(Point1D other) { return sub(other.x); };
 
     public Point1D sub(double k) { return new Point1D(x-k);}
 
     public Point1D mult(double k) { return new Point1D(x*k);}
 
-    public Point1D div(Double divisor) {
-        return new Point1D(this.x /divisor);
-    }
+    public Point1D div(Double divisor) { return new Point1D(this.x /divisor); }
 
-    public Point1D div(int divisor) {
-        return div((double)divisor);
-    }
+    public Point1D div(int divisor) { return div((double)divisor); }
 
-    public Boolean gt(Point1D other) {
-        return x > other.x;
-    }
+    public Boolean gt(Point1D other) { return x > other.x; }
 
-    public Boolean lt(Point1D other) {
-        return x < other.x;
-    }
+    public Boolean lt(Point1D other) { return x < other.x; }
 
-    public String toString() {
-        return String.format("%6.4f", x);
-    }
-
+    public String toString() { return String.format("%6.4f", x); }
 }
