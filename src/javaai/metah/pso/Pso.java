@@ -20,11 +20,10 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.ann.learn.meta.pso;
+package javaai.metah.pso;
 
 import javaai.util.Helper;
 
-import java.io.Serializable;
 import java.util.Random;
 
 /**
