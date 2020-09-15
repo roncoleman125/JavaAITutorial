@@ -56,14 +56,14 @@ public class Pso {
     /** Swarm */
     protected Particle[] particles = new Particle[SWARM_SIZE];
 
-    /** Random number generator to initialize and agitate swarm */
-    Random ran = new Random(0);
-
     /** Initial best particle */
     Particle best = new Particle(Double.MAX_VALUE);
 
     /** Initial old best particle */
     Particle oldBest = best;
+
+    /** Target */
+    Particle target = null;
 
     /** Same count of times best has not changed within the tolerance */
     int sameCount = 0;
@@ -73,13 +73,21 @@ public class Pso {
      * @param args Command line arguments
      */
     public static void main(String[] args) {
-        Pso pso = new Pso();
+        Pso pso = new Pso(GOAL);
 
-        pso.solve();
+        pso.learn();
+    }
+
+    /**
+     * Constructor
+     * @param target Unknown target.
+     */
+    public Pso(Particle target) {
+        this.target = target;
     }
 
     /** Solves the learning problem. */
-    public void solve() {
+    public void learn() {
         // Initialize the ensemble
         init();
 
@@ -121,6 +129,8 @@ public class Pso {
     /** Initializes the swarm. */
     private void init() {
         // Randomly initialize every particle within the search space
+        Random ran = new Random();
+
         for (int k = 0; k < SWARM_SIZE; k++) {
             double x = ran.nextDouble() * (MAX - MIN) + MIN;
             double y = ran.nextDouble() * (MAX - MIN) + MIN;
@@ -151,7 +161,7 @@ public class Pso {
         for (int k = 0; k < SWARM_SIZE; k++) {
             Particle current = particles[k];
 
-            // This is the difference between where we want to go and where we are
+            // Steer particle in this direction
             Particle delta = target.sub(current);
 
             // Make the difference a unit vector
@@ -170,21 +180,20 @@ public class Pso {
 
     /** Agitates the particles */
     private void agitate() {
-        for (int k = 0; k < SWARM_SIZE; k++) {
-            double dx = ran.nextDouble();
-            double dy = ran.nextDouble();
-
-            particles[k].perturb(dx, dy);
+        for(Particle particle: particles) {
+            particle.agitate();
         }
     }
 
     /**
      * Runs the objective function.
+     * This function will be different for different problems.
      * @param that Particle
-     * @return Distance to the goal
+     * @return Distance to target
      */
     private double evaluate(Particle that) {
-        double dist = that.getDistanceTo(GOAL);
+        // Allowed only to know how far away that is to target
+        double dist = that.getDistanceTo(target);
 
         return dist;
     }
@@ -193,9 +202,7 @@ public class Pso {
     private void updateBest() {
         oldBest = best;
 
-        for (int k = 0; k < SWARM_SIZE; k++) {
-            Particle that = particles[k];
-
+        for (Particle that: particles) {
             that.fitness = evaluate(that);
 
             if (that.fitness < best.fitness)

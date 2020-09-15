@@ -23,14 +23,18 @@
 package javaai.metah.pso;
 
 import java.io.Serializable;
+import java.util.Random;
 
 /**
  * Particle class
  * @author Ron.Coleman
  */
 class Particle implements Serializable {
+    /** For agitating the particle */
+    final private static Random ran = new Random();
+
     /** Particle fitness */
-    public double fitness;
+    public double fitness = Double.MAX_VALUE;
 
     /** Particle's x component */
     protected double x = 0.0;
@@ -109,11 +113,12 @@ class Particle implements Serializable {
     }
 
     /**
-     * Perturbs this particle.
-     * @param dx Amount in X component
-     * @param dy Amount in Y component
+     * Agitates this particle.
      */
-    public void perturb(double dx, double dy) {
+    public void agitate() {
+        double dx = ran.nextDouble();
+        double dy = ran.nextDouble();
+
         this.x += dx;
         this.y += dy;
     }
