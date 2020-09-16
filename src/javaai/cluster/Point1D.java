@@ -86,5 +86,7 @@ public class Point1D {
 
     public Boolean lt(Point1D other) { return x < other.x; }
 
+    public static Point1D zero() { return new Point1D(0.0); }
+
     public String toString() { return String.format("%6.4f", x); }
 }

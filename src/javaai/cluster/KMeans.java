@@ -206,7 +206,8 @@ public class KMeans {
      * @return Cluster centroid
      */
     protected Point1D recenter(Cluster<Point1D> cluster) {
-        Point1D sum = new Zero();
+        Point1D sum = Point1D.zero();
+
         for(Point1D pt: cluster.buffer) {
             sum = sum.add(pt);
         }
