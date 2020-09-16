@@ -52,7 +52,7 @@ public class KMeans {
     public static void main(final String[] args) {
         // Validate inputs
         if(args.length < 2) {
-            System.out.println("usage: "+KMeans.class.getSimpleName()+" data-path num-clusters");
+            System.out.println("usage: "+KMeans.class.getSimpleName()+" num path");
             System.exit(0);
         }
 
