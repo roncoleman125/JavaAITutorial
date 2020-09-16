@@ -67,7 +67,7 @@ public class KMeans {
         // Do the cluster analysis
         KMeans km = new KMeans(points);
 
-        km.learn(num);
+        km.train(num);
 
         km.report();
     }
@@ -119,8 +119,8 @@ public class KMeans {
      * @param n Number of clusters
      * @return List of clusters
      */
-    public void learn(Integer n) {
-        learn(n,true);
+    public void train(Integer n) {
+        train(n,true);
     }
 
     /**
@@ -129,7 +129,7 @@ public class KMeans {
      * @param details Toggle for details.
      * @return List of clusters
      */
-    public void learn(Integer n, Boolean details) {
+    public void train(Integer n, Boolean details) {
         Point1D[] range = getRange(points);
 
         Point1D step = range[HI].sub(range[LO]).div(n);

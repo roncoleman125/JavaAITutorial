@@ -75,7 +75,7 @@ public class Pso {
     public static void main(String[] args) {
         Pso pso = new Pso(GOAL);
 
-        pso.learn();
+        pso.train();
     }
 
     /**
@@ -87,7 +87,7 @@ public class Pso {
     }
 
     /** Solves the learning problem. */
-    public void learn() {
+    public void train() {
         // Initialize the ensemble
         init();
 
