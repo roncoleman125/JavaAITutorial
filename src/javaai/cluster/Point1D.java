@@ -68,25 +68,67 @@ public class Point1D {
      */
     public Double distanceTo(Point1D other) { return (x-other.x) * (x-other.x); }
 
+    /**
+     * Functionally adds particle to this one.
+     * @param other Other particle
+     * @return New particle.
+     */
     public Point1D add(Point1D other) {
         return new Point1D(x + other.x);
     }
 
+    /**
+     * Functionally adds particle to this one.
+     * @param other Other particle
+     * @return New particle.
+     */
     public Point1D sub(Point1D other) { return sub(other.x); };
 
-    public Point1D sub(double k) { return new Point1D(x-k);}
+    /**
+     * Functionally subtracts scalar from this particle.
+     * @param d Scalar
+     * @return New particle.
+     */
+    public Point1D sub(double d) { return new Point1D(x-d);}
 
-    public Point1D mult(double k) { return new Point1D(x*k);}
+    /**
+     * Functionally multiplies particle by scalar.
+     * @param d Scalar.
+     * @return New particle.
+     */
+    public Point1D mult(double d) { return new Point1D(x*d);}
 
-    public Point1D div(Double divisor) { return new Point1D(this.x /divisor); }
+    /**
+     * Functionally divides particle by scalar.
+     * @param d Scalar.
+     * @return New particle.
+     */
+    public Point1D div(Double d) { return new Point1D(this.x /d); }
 
-    public Point1D div(int divisor) { return div((double)divisor); }
-
+    /**
+     * Tests if this particle is grater than another.
+     * @param other Other particle
+     * @return True if this particle greater than other.
+     */
     public Boolean gt(Point1D other) { return x > other.x; }
 
+    /**
+     * Tests if this particle is less than another.
+     * @param other Other particle
+     * @return True if this particle less than other.
+     */
     public Boolean lt(Point1D other) { return x < other.x; }
 
+    /**
+     * Makes a zero point.
+     * @return New particle.
+     */
     public static Point1D zero() { return new Point1D(0.0); }
 
+    /**
+     * Converts particle to a string.
+     * @return String
+     */
+    @Override
     public String toString() { return String.format("%6.4f", x); }
 }
