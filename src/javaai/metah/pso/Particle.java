@@ -132,7 +132,7 @@ class Particle implements Serializable {
         double dx = x - other.x;
         double dy = y - other.y;
 
-        double dist = Math.sqrt((dx*dx + dy*dy)/2.0);
+        double dist = dx*dx + dy*dy;
 
         return dist;
     }

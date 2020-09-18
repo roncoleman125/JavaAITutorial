@@ -132,7 +132,7 @@ public class KMeans {
     public void train(Integer n, Boolean details) {
         Point1D[] range = getRange(points);
 
-        Point1D step = range[HI].sub(range[LO]).div(n);
+        Point1D step = range[HI].sub(range[LO]).div((double)n);
 
         for(int k=0; k < n; k++) {
             clusters.add(new Cluster<Point1D>(new ArrayList<Point1D>(), new Point1D(range[HI].sub(step.mult(k)))));

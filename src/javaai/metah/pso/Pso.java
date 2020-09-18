@@ -47,6 +47,9 @@ public class Pso {
     /** Convergence test */
     public final static double TOLERANCE = 0.001;
 
+    /** Converges if we're at tolerance for this long */
+    final static int MAX_SAME = 5;
+
     /** Search upper range in 2D */
     public final static double MAX = 10.0;
 
@@ -64,6 +67,7 @@ public class Pso {
 
     /** Target */
     Particle target = null;
+
 
     /** Same count of times best has not changed within the tolerance */
     int sameCount = 0;
@@ -98,14 +102,14 @@ public class Pso {
         boolean converged = false;
 
         // Intialize the iteration count
-        int iteration = 1;
+        int iter = 1;
 
         // Repeat until we converge
-        System.out.println("PSO");
-        System.out.printf("%3s %7s %7s %7s %s\n","#","x","y","RMSE","same");
+        System.out.println(Pso.class.getSimpleName());
+        System.out.printf("%3s %7s %7s %7s %s\n","#","x","y","err","same");
 
         while (!converged) {
-            System.out.printf("%3d %7.4f %7.4f %7.4f %d\n",iteration,best.getX(),best.getY(),best.fitness,sameCount);
+            System.out.printf("%3d %7.4f %7.4f %7.4f %d\n",iter,best.getX(),best.getY(),best.fitness,sameCount);
             //System.out.println(iteration + " best = " + best + " fitness=" + best.fitness + " same count=" + sameCount);
 
             // Disturb the particles
@@ -120,7 +124,7 @@ public class Pso {
             // Check for convergence
             converged = didConverge();
 
-            iteration++;
+            iter++;
         }
 
         System.out.println("CONVERGED: best = " + best + " RMSE = " + best.fitness + " same count=" + sameCount);
@@ -149,7 +153,7 @@ public class Pso {
         else
             sameCount = 1;
 
-        return sameCount >= 5;
+        return sameCount >= MAX_SAME;
     }
 
     /** Moves the particles toward the best particle. */
