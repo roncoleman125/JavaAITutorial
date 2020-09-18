@@ -41,13 +41,15 @@ public class KMeans {
     /** Low index */
     public final static int LO = 0;
 
+    /** Reference to points algorithm uses */
     protected List<Point1D> points = null;
 
+    /** Reference to clusters */
     protected List<Cluster<Point1D>> clusters = new ArrayList<>();
 
     /**
      * Drives the k-means test.
-     * @param args Arguments
+     * @param args Command line arguments
      */
     public static void main(final String[] args) {
         // Validate inputs
@@ -64,7 +66,7 @@ public class KMeans {
         List<Double> list = load(path);
         List<Point1D> points = asPoints(list);
 
-        // Do the cluster analysis
+        // Do the cluster analysis and report results
         KMeans km = new KMeans(points);
 
         km.train(num);
@@ -130,6 +132,7 @@ public class KMeans {
      * @return List of clusters
      */
     public void train(Integer n, Boolean details) {
+        // Initialize the clusters.
         Point1D[] range = getRange(points);
 
         Point1D step = range[HI].sub(range[LO]).div((double)n);
@@ -144,17 +147,19 @@ public class KMeans {
         // Since clusters might not converge, limit the number of iterations
         int iter = 0;
         while(iter < MAX_ITERATIONS) {
-            // Place every point into a cluster
+            // Place every point into a cluster.
             for(int k=0; k < points.size(); k++) {
-                // Shortest distance & cluster so far
+                // Shortest distance & nearest cluster so far
                 Double shortest = Double.MAX_VALUE;
 
-                Point1D datum = points.get(k);
                 Cluster nearest = clusters.get(0);
+
+                // Point to analyze
+                Point1D pt = points.get(k);
 
                 // Test distance to centroid of every cluster
                 for(Cluster<Point1D> cluster: clusters) {
-                    Double dist = cluster.centroid.distanceTo(datum);
+                    Double dist = cluster.centroid.distanceTo(pt);
 
                     if (dist < shortest) {
                         shortest = dist;
@@ -162,8 +167,8 @@ public class KMeans {
                     }
                 }
 
-                // Put this datum in the nearest cluster
-                nearest.add(datum);
+                // Put this point in the nearest cluster
+                nearest.add(pt);
             }
 
             // If the entropy has not changed, the clusters have settled.
@@ -180,7 +185,7 @@ public class KMeans {
                 report();
             }
 
-            // Recenter clusters for data we just added to them.
+            // Recenter clusters for points we just added to them.
             recenter();
 
             iter++;
