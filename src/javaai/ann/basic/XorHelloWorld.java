@@ -88,6 +88,10 @@ public class XorHelloWorld {
         // back propagation. For details on what this does see the javadoc.
         final ResilientPropagation train = new ResilientPropagation(network, trainingSet);
 
+        // Set learning batch: 0 = batch, 1 = online, n = batch size
+        // See org.encog.neural.networks.training.BatchSize
+        train.setBatchSize(0);
+
         int epoch = 0;
 
         report(epoch, train,false);
@@ -132,7 +136,7 @@ public class XorHelloWorld {
             double ideal = pair.getIdeal().getData(0);
             double actual = output.getData(0);
 
-            System.out.printf("%3.1f   %3.1f   %3.1f   %6.4f\n",x1,x2,ideal,actual);
+            System.out.printf("%5.1f %5.1f %5.1f %8.4f\n",x1,x2,ideal,actual);
         }
     }
 
@@ -178,21 +182,30 @@ public class XorHelloWorld {
 
         for(int layerNum=0; layerNum < layerCount; layerNum++) {
             if(layerNum+1 < layerCount) {
+                // Nodes not including bias
                 int fromNeuronCount = network.getLayerNeuronCount(layerNum);
+
+                // Account for bias node
+                if(network.isLayerBiased(layerNum))
+                    fromNeuronCount += 1;
 
                 int toNeuronCount = network.getLayerNeuronCount(layerNum+1);
 
                 for (int fromNeuron = 0; fromNeuron < fromNeuronCount; fromNeuron++) {
                     for (int toNeuron = 0; toNeuron < toNeuronCount; toNeuron++) {
                         double wt = network.getWeight(layerNum, fromNeuron, toNeuron);
-                        System.out.printf("%5d %5d %5d %10.4f\n",layerNum,fromNeuron,toNeuron,wt);
+                        System.out.printf("%5d %5d %5d %10.4f ",layerNum,fromNeuron,toNeuron,wt);
+                        if(network.isLayerBiased(layerNum) && fromNeuron == fromNeuronCount-1)
+                            System.out.println("BIAS");
+                        else
+                            System.out.println("");
                     }
                 }
 
-                if(network.isLayerBiased(layerNum)) {
-                    double bias = network.getLayerBiasActivation(layerNum);
-                    System.out.printf("%5d %5d %5d %10.4f BIAS\n",layerNum,layerNum,layerNum+1,bias);
-                }
+//                if(network.isLayerBiased(layerNum)) {
+//                    double bias = network.getLayerBiasActivation(layerNum);
+//                    System.out.printf("%5d %5d %5d %10.4f BIAS\n",layerNum,layerNum,layerNum+1,bias);
+//                }
             }
         }
     }
