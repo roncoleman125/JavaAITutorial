@@ -1,4 +1,4 @@
-package javaai.nlp.maxent.demo;
+package javaai.nlp.maxent.itsallbinary;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;

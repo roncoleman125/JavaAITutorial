@@ -18,7 +18,7 @@ import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
 
-public class TrainingANeuralNetworkToPerformSBDWithSpecializedText {
+public class TrainingAMaximumEntropyModelForSBDWithSpecializedText {
 
 	public static void main(String[] args) {
 		// Training a neural network to perform SBD with specialized text
