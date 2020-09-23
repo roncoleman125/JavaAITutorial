@@ -31,9 +31,6 @@ public class XorHelloWorld {
     /** Error tolerance */
     public final static double TOLERANCE = 0.01;
 
-    /** Maximum number of iterations to run */
-    public final static long MAX_EPOCHS = 100000L;
-
     /** The input necessary for XOR. */
     public static double XOR_INPUTS[][] = {
             {0.0, 0.0},
@@ -100,12 +97,12 @@ public class XorHelloWorld {
 
             Helper.log(epoch, train,false);
 
-        } while (train.getError() > TOLERANCE && epoch < MAX_EPOCHS);
+        } while (train.getError() > TOLERANCE && epoch < Helper.MAX_EPOCHS);
 
         train.finishTraining();
 
         Helper.log(epoch, train,true);
-        Helper.decribe(trainingSet, network);
+        Helper.describe(trainingSet, network);
         Helper.describe(network);
 
         Encog.getInstance().shutdown();

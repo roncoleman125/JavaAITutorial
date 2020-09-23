@@ -26,7 +26,6 @@ import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 import static javaai.util.Option.None;
-
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.MLDataPair;
 import org.encog.ml.data.MLDataSet;
@@ -40,24 +39,25 @@ import org.encog.neural.networks.BasicNetwork;
  * @author Ron.Coleman
  */
 public class Helper {
-    public final static int MAX_EPOCHS = 1000;
+    /** Maximum iterations to run */
+    public final static long MAX_EPOCHS = 100000L;
 
-    public final static boolean DEBUGGING = false;
+    public final static boolean DEBUG = Boolean.parseBoolean(System.getProperty("debug","false"));
 
-    // Respective data, not including headers
+    /** Respective data, not including headers */
     public final static HashMap<String, List> data = new HashMap<>();
 
-    // Respective headers
+    /** Respective headers */
     public final static List<String> headers = new ArrayList<>();
 
-    // 1 of N encoding
+    /** 1 of N encoding */
     static HashMap<String, List<Integer>> oneofn = new HashMap<>();
 
     /**
      * Loads a CSV file -- column must be of same ontology.
-     * @param path Path in system to file
+     * @param path    Path in system to file
      * @param parsers Parsers to interpret the column
-     * @param ran Randoum number generator to randomize the rows prior to parsing.
+     * @param ran     Randoum number generator to randomize the rows prior to parsing.
      * @throws FileNotFoundException
      * @throws IOException
      * @throws Exception
@@ -72,9 +72,9 @@ public class Helper {
 
         ArrayList<String> lines = preload(path, ran);
 
-        for(int row=0; row < lines.size(); row++) {
-            if(DEBUGGING)
-                System.out.println(row+": "+lines.get(row));
+        for (int row = 0; row < lines.size(); row++) {
+            if (DEBUG)
+                System.out.println(row + ": " + lines.get(row));
 
             String[] fields = lines.get(row).split(",");
 
@@ -108,12 +108,12 @@ public class Helper {
 
                     Object obj = parse(parser, fields[col].trim());
 
-                    if(obj == null)
+                    if (obj == null)
                         System.out.println(lines.get(row));
 
-                        // Note: == is normally a bad idea but None is static in this case
-                        if(obj == None) {
-                            continue;
+                    // Note: == is normally a bad idea but None is static in this case
+                    if (obj == None) {
+                        continue;
                     }
 
                     list.add(obj);
@@ -125,12 +125,12 @@ public class Helper {
         // First we have to get the don't care columns then delete them because Java list collection
         // does not permit updating the list while traversing it at the same time.
         ArrayList<String> trash = new ArrayList<>();
-        for(String title: headers) {
-            if(data.get(title).size() == 0)
+        for (String title : headers) {
+            if (data.get(title).size() == 0)
                 trash.add(title);
         }
 
-        for(String title: trash) {
+        for (String title : trash) {
             data.remove(title);
             headers.remove(title);
         }
@@ -138,8 +138,9 @@ public class Helper {
 
     /**
      * Parses a string object.
+     *
      * @param function Parser
-     * @param input Data we're going to parse
+     * @param input    Data we're going to parse
      * @return Object result of parsing
      */
     private static Object parse(Function<String, Object> function, String input) {
@@ -149,7 +150,8 @@ public class Helper {
     /**
      * Loads the data from a CSV file.
      * Assumes first row is the header row.
-     * @param path File path
+     *
+     * @param path    File path
      * @param parsers Parsers of data
      * @throws Exception
      */
@@ -159,19 +161,20 @@ public class Helper {
 
     /**
      * Gets the subtypes for
+     *
      * @param col Column index
      * @return Names of the subtypes
      */
     public static List<String> getNominalSubtypes(int col) {
-        if(oneofn.isEmpty())
+        if (oneofn.isEmpty())
             oneofn = encodeOneOfN(col);
 
         Object[] keys = oneofn.keySet().toArray();
 
         ArrayList<String> subtypes = new ArrayList<>();
 
-        for(Object key: keys) {
-            subtypes.add((String)key);
+        for (Object key : keys) {
+            subtypes.add((String) key);
         }
 
         return subtypes;
@@ -179,11 +182,12 @@ public class Helper {
 
     /**
      * Gets the number of subtypes for the nominal.
+     *
      * @param col Column index
      * @return Number of subtypes
      */
     public static int getNominalSubtypeCount(int col) {
-        if(!oneofn.isEmpty())
+        if (!oneofn.isEmpty())
             oneofn = encodeOneOfN(col);
 
         return getNominalSubtypes(col).size();
@@ -192,11 +196,12 @@ public class Helper {
     /**
      * Gets an encoded hash map of nominal types and their 1-of-n values as 1 or -1.
      * Assumes there's exactly one nominal type.
+     *
      * @param col Column of nominals
      * @return Hash map of nominal and its 1-of-n encoding
      */
     public static HashMap<String, List<Integer>> encodeOneOfN(int col) {
-        if(!oneofn.isEmpty())
+        if (!oneofn.isEmpty())
             return oneofn;
 
         // Hash map to return: nominal name -> 1-of-n encoding
@@ -226,7 +231,7 @@ public class Helper {
         // Here are the keys we're going to use and in this sequence
         Object[] keys = counter.keySet().toArray();
 
-        for(int j = 0; j < size; j++) {
+        for (int j = 0; j < size; j++) {
             ArrayList<Integer> encoding = new ArrayList<>();
 
             for (int k = 0; k < size; k++) {
@@ -245,8 +250,9 @@ public class Helper {
 
     /**
      * Pre-loads the data into memory buffer and if necessary, randomizes it.
+     *
      * @param path Path to the file
-     * @param ran Whether or not to randomize the buffer
+     * @param ran  Whether or not to randomize the buffer
      * @return Buffer of lines
      * @throws FileNotFoundException
      * @throws IOException
@@ -268,7 +274,7 @@ public class Helper {
             String line = br.readLine();
 
             // If we get to the end, return the buffer
-            if(line == null) {
+            if (line == null) {
                 // Shuffle the lines but make the first line the header
                 Collections.shuffle(lines, ran);
 
@@ -279,49 +285,52 @@ public class Helper {
                 break;
             }
 
-            if(row == 0)
+            if (row == 0)
                 firstLine = line;
             else
                 lines.add(line);
 
             row++;
-        } while(true);
+        } while (true);
 
         return lines;
     }
 
     /**
      * Gets the title for a column.
+     *
      * @param col Column
      * @return Title
      */
     public static String getTitle(int col) {
-        assert(col >= 0 && col < headers.size());
+        assert (col >= 0 && col < headers.size());
 
         return headers.get(col);
     }
 
     /**
      * Gets the loaded data for a given row across all ontologies.
+     *
      * @param row Row number
      * @return Map of header title to object for each row
      */
     public static HashMap<String, Object> asMap(int row) {
         HashMap<String, Object> map = new HashMap<>();
 
-        for(String header: headers)
-            map.put(header,data.get(header).get(row));
+        for (String header : headers)
+            map.put(header, data.get(header).get(row));
 
         return map;
     }
 
     /**
      * Gets the row count of loaded data.
+     *
      * @return Row count
      */
     public static int getRowCount() {
         // Validate data has been loaded
-        if(headers == null || headers.size() == 0)
+        if (headers == null || headers.size() == 0)
             return 0;
 
         // Pick an arbitrary column and return it's size since data assumed rectangular.
@@ -332,6 +341,7 @@ public class Helper {
 
     /**
      * Gets the activation encodings as a string.
+     *
      * @param encodings Activation encodings
      * @return String
      */
@@ -340,9 +350,9 @@ public class Helper {
 
         int len = encodings.length;
 
-        for(int k=0; k < len; k++) {
-            s += String.format("%6.4f",encodings[k]);
-            if(k == len-1)
+        for (int k = 0; k < len; k++) {
+            s += String.format("%6.4f", encodings[k]);
+            if (k == len - 1)
                 s += ")";
 
             else
@@ -353,6 +363,7 @@ public class Helper {
 
     /**
      * Decodes binary integer genome as an integer.
+     *
      * @param genome Bitwise genome only 0,1 permitted.
      * @return Integer
      */
@@ -361,7 +372,7 @@ public class Helper {
 
         int n = 0;
 
-        for(int k=0; k < genes.length; k++) {
+        for (int k = 0; k < genes.length; k++) {
             n = n << 1;
 
             n = n | genes[k];
@@ -372,6 +383,7 @@ public class Helper {
 
     /**
      * Decodes binary integer genome as a double.
+     *
      * @param genome Bitwise genome only 0,1 permitted.
      * @return Double
      */
@@ -381,12 +393,12 @@ public class Helper {
         double n = 0.0;
 
         double sign = 1;
-        if(genes[0] == 1)
+        if (genes[0] == 1)
             sign = -1;
 
         double adder = 0.5;
-        for(int k=1; k < genes.length; k++) {
-            if(genes[k] == 1)
+        for (int k = 1; k < genes.length; k++) {
+            if (genes[k] == 1)
                 n += adder;
             adder /= 2;
         }
@@ -396,13 +408,14 @@ public class Helper {
 
     /**
      * Decodes binary integer genome as a string.
+     *
      * @param genome Bitwise genome only 0,1 permitted.
      * @return String
      */
     public static String asString(IntegerArrayGenome genome) {
         String s = "";
         int[] genes = genome.getData();
-        for(int gene: genes)
+        for (int gene : genes)
             s += gene + " ";
 
         s += "| ";
@@ -415,6 +428,7 @@ public class Helper {
 
     /**
      * Decodes double-array genome as a string.
+     *
      * @param genome Genome
      * @return String
      */
@@ -423,20 +437,20 @@ public class Helper {
 
         double[] ws = genome.getData();
 
-        for(double w: ws)
+        for (double w : ws)
             s += String.format("%7.3f", w) + " ";
 
         return s;
     }
 
-
     /**
-     * Deep copies the object.
-     * @param object Object
-     * @param <T> Parameterized type.
+     * Deep copies an object.
+     *
+     * @param object Serializabl bbject
+     * @param <T>    Object type.
      * @return Specified type T
      */
-    public static <T> T deepCopy(T object){
+    public static <T> T deepCopy(T object) {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
@@ -444,8 +458,7 @@ public class Helper {
             ByteArrayInputStream bais = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
             ObjectInputStream objectInputStream = new ObjectInputStream(bais);
             return (T) objectInputStream.readObject();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -453,6 +466,7 @@ public class Helper {
 
     /**
      * Reads lines from a file.
+     *
      * @param path File path
      * @return Collection of lines.
      */
@@ -462,11 +476,10 @@ public class Helper {
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             String line = null;
-            while((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 lines.add(line);
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -475,30 +488,31 @@ public class Helper {
 
     /**
      * Makes a single string from a collection of strings.
+     *
      * @param lines Lines
-     * @param pad Padding string between lines
+     * @param pad   Padding string between lines
      * @return String
      */
-    public static String mkstring(List<String> lines,String pad) {
+    public static String mkstring(List<String> lines, String pad) {
         String str = "";
-        for(String line: lines) {
-            str += line.replaceAll("\n"," ") + pad;
+        for (String line : lines) {
+            str += line.replaceAll("\n", " ") + pad;
         }
 
         return str;
     }
 
-
     /**
-     * Reports results.
+     * Describes training results.
+     *
      * @param trainingSet Training set of data
-     * @param network Network
+     * @param network     Network
      */
-    public static void decribe(MLDataSet trainingSet, BasicNetwork network) {
-        // Test the neural network
+    public static void describe(MLDataSet trainingSet, BasicNetwork network) {
+        // TODO: only works for XOR, needs to be generalized for more complex data.
         System.out.println("Neural Network Results:");
 
-        System.out.printf("%3s   %3s   %3s   %6s\n","x1","x2","t1","y1");
+        System.out.printf("  %3s   %3s   %3s   %6s\n", "x1", "x2", "t1", "y1");
         for (MLDataPair pair : trainingSet) {
 
             final MLData output = network.compute(pair.getInput());
@@ -508,76 +522,76 @@ public class Helper {
             double ideal = pair.getIdeal().getData(0);
             double actual = output.getData(0);
 
-            System.out.printf("%5.1f %5.1f %5.1f %8.4f\n",x1,x2,ideal,actual);
+            System.out.printf("%5.1f %5.1f %5.1f %8.4f\n", x1, x2, ideal, actual);
         }
     }
 
     /**
-     * Reports each epoch.
+     * Logs statistics for each epoch.
+     *
      * @param epoch Epoch number
      * @param train Training results
-     * @param done True if the training is done
+     * @param done  True if the training is done
      */
     public static void log(int epoch, BasicTraining train, boolean done) {
+        if(DEBUG)
+            return;
+
         final int FREQUENCY = 10;
 
         // Report only the header
-        if(epoch == 0)
-            System.out.printf("%8s %6s\n","epoch","error");
+        if (epoch == 0)
+            System.out.printf("%8s %6s\n", "epoch", "error");
 
-        else if(epoch == 1 || (!done && (epoch % FREQUENCY) == 0)) {
+        else if (epoch == 1 || (!done && (epoch % FREQUENCY) == 0)) {
             System.out.printf("%8d %6.4f\n", epoch, train.getError());
         }
         // Report only if we haven't just reported
-        else if(done && (epoch % FREQUENCY) != 0)
+        else if (done && (epoch % FREQUENCY) != 0)
             System.out.printf("%8d %6.4f\n", epoch, train.getError());
 
-        if(epoch >= MAX_EPOCHS)
-            System.out.println("--- DO NOT CONVERGE!");
+        if (epoch >= MAX_EPOCHS && done)
+            System.out.println("--- DID NOT CONVERGE!");
     }
 
     /**
-     * Reports summary of network weights.
-     * @param network
+     * Describes details of a network.
+     *
+     * @param network Network
      */
     public static void describe(BasicNetwork network) {
         int layerCount = network.getLayerCount();
 
         int neuronCount = 0;
-        for(int layerNum=0; layerNum < layerCount; layerNum++) {
+        for (int layerNum = 0; layerNum < layerCount; layerNum++) {
             // int neuronCount = network.calculateNeuronCount();  // Should work but doesn't appear to
             neuronCount += network.getLayerTotalNeuronCount(layerNum);
         }
 
-        System.out.println("total layers: "+layerCount+" neurons: "+neuronCount);
-        System.out.printf("%5s %5s %5s %10s\n","layer","from","to","wt");
+        System.out.println("total layers: " + layerCount + " neurons: " + neuronCount);
+        System.out.printf("%5s %5s %5s %10s\n", "layer", "from", "to", "wt");
 
-        for(int layerNum=0; layerNum < layerCount; layerNum++) {
-            if(layerNum+1 < layerCount) {
+        for (int layerNum = 0; layerNum < layerCount; layerNum++) {
+            if (layerNum + 1 < layerCount) {
                 // Nodes not including bias
                 int fromNeuronCount = network.getLayerNeuronCount(layerNum);
 
                 // Account for bias node
-                if(network.isLayerBiased(layerNum))
+                if (network.isLayerBiased(layerNum))
                     fromNeuronCount += 1;
 
-                int toNeuronCount = network.getLayerNeuronCount(layerNum+1);
+                int toNeuronCount = network.getLayerNeuronCount(layerNum + 1);
 
                 for (int fromNeuron = 0; fromNeuron < fromNeuronCount; fromNeuron++) {
                     for (int toNeuron = 0; toNeuron < toNeuronCount; toNeuron++) {
                         double wt = network.getWeight(layerNum, fromNeuron, toNeuron);
-                        System.out.printf("%5d %5d %5d %10.4f ",layerNum,fromNeuron,toNeuron,wt);
-                        if(network.isLayerBiased(layerNum) && fromNeuron == fromNeuronCount-1)
+                        System.out.printf("%5d %5d %5d %10.4f ", layerNum, fromNeuron, toNeuron, wt);
+                        if (network.isLayerBiased(layerNum) && fromNeuron == fromNeuronCount - 1)
                             System.out.println("BIAS");
                         else
                             System.out.println("");
                     }
                 }
-
-//                if(network.isLayerBiased(layerNum)) {
-//                    double bias = network.getLayerBiasActivation(layerNum);
-//                    System.out.printf("%5d %5d %5d %10.4f BIAS\n",layerNum,layerNum,layerNum+1,bias);
-//                }
             }
         }
     }
