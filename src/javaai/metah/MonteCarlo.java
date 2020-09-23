@@ -91,7 +91,7 @@ public class MonteCarlo {
         // Current best
         double[] best = {sample[X], sample[Y], evaluate(sample)};
 
-        // Write report header.
+        // Write describe header.
         System.out.printf("%-3s  %6s  %6s  %6s  %5s\n","#", "X", "Y", "Z", "same");
 
         // Loop until solution converges

@@ -26,14 +26,22 @@ import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 import static javaai.util.Option.None;
+
+import org.encog.ml.data.MLData;
+import org.encog.ml.data.MLDataPair;
+import org.encog.ml.data.MLDataSet;
 import org.encog.ml.genetic.genome.DoubleArrayGenome;
 import org.encog.ml.genetic.genome.IntegerArrayGenome;
+import org.encog.ml.train.BasicTraining;
+import org.encog.neural.networks.BasicNetwork;
 
 /**
  * This is a helper convenience class which implements convenience methods.
  * @author Ron.Coleman
  */
 public class Helper {
+    public final static int MAX_EPOCHS = 1000;
+
     public final static boolean DEBUGGING = false;
 
     // Respective data, not including headers
@@ -478,5 +486,99 @@ public class Helper {
         }
 
         return str;
+    }
+
+
+    /**
+     * Reports results.
+     * @param trainingSet Training set of data
+     * @param network Network
+     */
+    public static void decribe(MLDataSet trainingSet, BasicNetwork network) {
+        // Test the neural network
+        System.out.println("Neural Network Results:");
+
+        System.out.printf("%3s   %3s   %3s   %6s\n","x1","x2","t1","y1");
+        for (MLDataPair pair : trainingSet) {
+
+            final MLData output = network.compute(pair.getInput());
+
+            double x1 = pair.getInput().getData(0);
+            double x2 = pair.getInput().getData(1);
+            double ideal = pair.getIdeal().getData(0);
+            double actual = output.getData(0);
+
+            System.out.printf("%5.1f %5.1f %5.1f %8.4f\n",x1,x2,ideal,actual);
+        }
+    }
+
+    /**
+     * Reports each epoch.
+     * @param epoch Epoch number
+     * @param train Training results
+     * @param done True if the training is done
+     */
+    public static void log(int epoch, BasicTraining train, boolean done) {
+        final int FREQUENCY = 10;
+
+        // Report only the header
+        if(epoch == 0)
+            System.out.printf("%8s %6s\n","epoch","error");
+
+        else if(epoch == 1 || (!done && (epoch % FREQUENCY) == 0)) {
+            System.out.printf("%8d %6.4f\n", epoch, train.getError());
+        }
+        // Report only if we haven't just reported
+        else if(done && (epoch % FREQUENCY) != 0)
+            System.out.printf("%8d %6.4f\n", epoch, train.getError());
+
+        if(epoch >= MAX_EPOCHS)
+            System.out.println("--- DO NOT CONVERGE!");
+    }
+
+    /**
+     * Reports summary of network weights.
+     * @param network
+     */
+    public static void describe(BasicNetwork network) {
+        int layerCount = network.getLayerCount();
+
+        int neuronCount = 0;
+        for(int layerNum=0; layerNum < layerCount; layerNum++) {
+            // int neuronCount = network.calculateNeuronCount();  // Should work but doesn't appear to
+            neuronCount += network.getLayerTotalNeuronCount(layerNum);
+        }
+
+        System.out.println("total layers: "+layerCount+" neurons: "+neuronCount);
+        System.out.printf("%5s %5s %5s %10s\n","layer","from","to","wt");
+
+        for(int layerNum=0; layerNum < layerCount; layerNum++) {
+            if(layerNum+1 < layerCount) {
+                // Nodes not including bias
+                int fromNeuronCount = network.getLayerNeuronCount(layerNum);
+
+                // Account for bias node
+                if(network.isLayerBiased(layerNum))
+                    fromNeuronCount += 1;
+
+                int toNeuronCount = network.getLayerNeuronCount(layerNum+1);
+
+                for (int fromNeuron = 0; fromNeuron < fromNeuronCount; fromNeuron++) {
+                    for (int toNeuron = 0; toNeuron < toNeuronCount; toNeuron++) {
+                        double wt = network.getWeight(layerNum, fromNeuron, toNeuron);
+                        System.out.printf("%5d %5d %5d %10.4f ",layerNum,fromNeuron,toNeuron,wt);
+                        if(network.isLayerBiased(layerNum) && fromNeuron == fromNeuronCount-1)
+                            System.out.println("BIAS");
+                        else
+                            System.out.println("");
+                    }
+                }
+
+//                if(network.isLayerBiased(layerNum)) {
+//                    double bias = network.getLayerBiasActivation(layerNum);
+//                    System.out.printf("%5d %5d %5d %10.4f BIAS\n",layerNum,layerNum,layerNum+1,bias);
+//                }
+            }
+        }
     }
 }

@@ -66,7 +66,7 @@ public class KMeans {
         List<Double> list = load(path);
         List<Point1D> points = asPoints(list);
 
-        // Do the cluster analysis and report results
+        // Do the cluster analysis and describe results
         KMeans km = new KMeans(points);
 
         km.train(num);
