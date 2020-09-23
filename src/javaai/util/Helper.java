@@ -442,4 +442,41 @@ public class Helper {
             return null;
         }
     }
+
+    /**
+     * Reads lines from a file.
+     * @param path File path
+     * @return Collection of lines.
+     */
+    public static List<String> loadText(String path) {
+        ArrayList<String> lines = new ArrayList<>();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            String line = null;
+            while((line = br.readLine()) != null) {
+                lines.add(line);
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return lines;
+    }
+
+    /**
+     * Makes a single string from a collection of strings.
+     * @param lines Lines
+     * @param pad Padding string between lines
+     * @return String
+     */
+    public static String mkstring(List<String> lines,String pad) {
+        String str = "";
+        for(String line: lines) {
+            str += line.replaceAll("\n"," ") + pad;
+        }
+
+        return str;
+    }
 }

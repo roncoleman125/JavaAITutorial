@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+
+import javaai.util.Helper;
 import opennlp.tools.sentdetect.SentenceDetectorFactory;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
@@ -18,8 +20,11 @@ import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
 
+/**
+ * Trains and tests SBD.
+ * See Reese, R.M., Natural Language Processing with Java, Packt, 2019
+ */
 public class TrainingAMaximumEntropyModelForSBDWithSpecializedText {
-
 	public static void main(String[] args) {
 		// Training a neural network to perform SBD with specialized text
 		String terminators[] = { ".", "!", "?", "..." };
@@ -46,17 +51,30 @@ public class TrainingAMaximumEntropyModelForSBDWithSpecializedText {
 			OutputStream modelOutputStream = new BufferedOutputStream(new FileOutputStream("modelFile"));
 			sentenceModel.serialize(modelOutputStream);
 
-			String text = "We will start with a simple sentence. However, is it possible for "
-					+ "a sentence to end with a question mark? Obviously that is possible! "
-					+ "Another complication is the use of a number such as 56.32 or "
-					+ "ellipses such as ... Ellipses may be found ... with a sentence! "
-					+ "Of course, we may also find the use of abbreviations such as " + "Mr. Smith or Dr. Jones.";
+			String text = "";
+			if(args.length == 0)
+				text = "We will start with a simple sentence. However, is it possible for " +
+						"a sentence to end with a question mark? Obviously that is possible! " +
+						"Another complication is the use of a number such as 56.32 or " +
+						"ellipses such as ... Ellipses may be found ... with a sentence! " +
+						"Of course, we may also find the use of abbreviations such as " +
+						"Mr. Smith or Dr. Jones.";
+			else {
+				// For further testing use fallback1.txt
+				String path = args[0];
+				text = Helper.mkstring(Helper.loadText(path), " ");
+			}
 
 			SentenceDetectorME sentenceDetector = null;
+
 			InputStream inputStrean = new FileInputStream("modelFile");
+
 			sentenceModel = new SentenceModel(inputStrean);
+
 			sentenceDetector = new SentenceDetectorME(sentenceModel);
+
 			String sentences[] = sentenceDetector.sentDetect(text);
+
 			for (String sentence : sentences) {
 				System.out.println("[" + sentence + "]");
 			}
