@@ -12,7 +12,7 @@ import org.encog.neural.networks.training.propagation.resilient.ResilientPropaga
 /**
  * XOR: This example is essentially the "Hello World" of neural network
  * programming. This example shows how to construct an Encog neural network to
- * predict the describe from the XOR operator. This example uses backpropagation
+ * predict the report from the XOR operator. This example uses backpropagation
  * to train the neural network.
  *
  * This example attempts to use a minimum of Encog values to create and train
@@ -64,7 +64,7 @@ public class XorHelloWorld {
         // Add hidden layer with sigmoid activation, bias enabled, and two neurons
         network.addLayer(new BasicLayer(new ActivationSigmoid(), true, 2));
 
-        // Add describe layer with sigmoid activation, bias disable, and one neuron
+        // Add report layer with sigmoid activation, bias disable, and one neuron
         network.addLayer(new BasicLayer(new ActivationSigmoid(), false, 1));
 
         // No more layers to be added
@@ -102,7 +102,7 @@ public class XorHelloWorld {
         train.finishTraining();
 
         Helper.log(epoch, train,true);
-        Helper.describe(trainingSet, network);
+        Helper.report(trainingSet, network);
         Helper.describe(network);
 
         Encog.getInstance().shutdown();

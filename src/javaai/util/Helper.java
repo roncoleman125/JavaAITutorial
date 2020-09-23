@@ -466,7 +466,6 @@ public class Helper {
 
     /**
      * Reads lines from a file.
-     *
      * @param path File path
      * @return Collection of lines.
      */
@@ -503,60 +502,59 @@ public class Helper {
     }
 
     /**
-     * Describes training results.
-     *
+     * Reports training results.
      * @param trainingSet Training set of data
      * @param network     Network
      */
-    public static void describe(MLDataSet trainingSet, BasicNetwork network) {
-        // TODO: only works for XOR, needs to be generalized for more complex data.
+    public static void report(MLDataSet trainingSet, BasicNetwork network) {
         System.out.println("Neural Network Results:");
 
-        System.out.printf("  %3s   %3s   %3s   %6s\n", "x1", "x2", "t1", "y1");
-        for (MLDataPair pair : trainingSet) {
-
-            final MLData output = network.compute(pair.getInput());
-
-            double x1 = pair.getInput().getData(0);
-            double x2 = pair.getInput().getData(1);
-            double ideal = pair.getIdeal().getData(0);
-            double actual = output.getData(0);
-
-            System.out.printf("%5.1f %5.1f %5.1f %8.4f\n", x1, x2, ideal, actual);
-        }
-    }
-
-    /**
-     * Logs statistics for each epoch.
-     *
-     * @param epoch Epoch number
-     * @param train Training results
-     * @param done  True if the training is done
-     */
-    public static void log(int epoch, BasicTraining train, boolean done) {
-        if(DEBUG)
+        int sz = trainingSet.size();
+        if(sz == 0)
             return;
 
-        final int FREQUENCY = 10;
+        MLDataPair first = trainingSet.get(0);
 
-        // Report only the header
-        if (epoch == 0)
-            System.out.printf("%8s %6s\n", "epoch", "error");
+        // Output xs header
+        int szInputs = first.getInputArray().length;
+        for(int k=0; k < szInputs; k++)
+            System.out.printf("%6s ","x"+(k+1));
 
-        else if (epoch == 1 || (!done && (epoch % FREQUENCY) == 0)) {
-            System.out.printf("%8d %6.4f\n", epoch, train.getError());
+        // Output ts (ideals) header
+        int szOutputs = first.getIdealArray().length;
+        for(int k=0; k < szOutputs; k++)
+            System.out.printf("%6s ","t"+(k+1));
+
+        // Output ys (actuals) header
+        for(int k=0; k < szOutputs; k++)
+            System.out.printf("%6s ","y"+(k+1));
+
+        System.out.println();
+
+        // Report inputs and ideals vs. outputs.
+        for (MLDataPair pair : trainingSet) {
+            final MLData inputs = pair.getInput();
+            final MLData outputs = network.compute(inputs);
+
+            final double input[] = inputs.getData();
+            for(double d: input)
+                System.out.printf("%6.4f ",d);
+
+            final MLData ideals = pair.getIdeal();
+            final double ideal[] = ideals.getData();
+            for(double d: ideal)
+                System.out.printf("%6.4f ",d);
+
+            final double actual[] = outputs.getData();
+            for(double d: actual)
+                System.out.printf("%6.4f ",d);
+
+            System.out.println("");
         }
-        // Report only if we haven't just reported
-        else if (done && (epoch % FREQUENCY) != 0)
-            System.out.printf("%8d %6.4f\n", epoch, train.getError());
-
-        if (epoch >= MAX_EPOCHS && done)
-            System.out.println("--- DID NOT CONVERGE!");
     }
 
     /**
      * Describes details of a network.
-     *
      * @param network Network
      */
     public static void describe(BasicNetwork network) {
@@ -594,5 +592,32 @@ public class Helper {
                 }
             }
         }
+    }
+
+    /**
+     * Logs statistics for each epoch.
+     * @param epoch Epoch number
+     * @param train Training results
+     * @param done  True if the training is done
+     */
+    public static void log(int epoch, BasicTraining train, boolean done) {
+        if(DEBUG)
+            return;
+
+        final int FREQUENCY = 10;
+
+        // Report only the header
+        if (epoch == 0)
+            System.out.printf("%8s %6s\n", "epoch", "error");
+
+        else if (epoch == 1 || (!done && (epoch % FREQUENCY) == 0)) {
+            System.out.printf("%8d %6.4f\n", epoch, train.getError());
+        }
+        // Report only if we haven't just reported
+        else if (done && (epoch % FREQUENCY) != 0)
+            System.out.printf("%8d %6.4f\n", epoch, train.getError());
+
+        if (epoch >= MAX_EPOCHS && done)
+            System.out.println("--- DID NOT CONVERGE!");
     }
 }
