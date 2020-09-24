@@ -518,16 +518,16 @@ public class Helper {
         // Output xs header
         int szInputs = first.getInputArray().length;
         for(int k=0; k < szInputs; k++)
-            System.out.printf("%6s ","x"+(k+1));
+            System.out.printf("%7s ","x"+(k+1));
 
         // Output ts (ideals) header
         int szOutputs = first.getIdealArray().length;
         for(int k=0; k < szOutputs; k++)
-            System.out.printf("%6s ","t"+(k+1));
+            System.out.printf("%7s ","t"+(k+1));
 
         // Output ys (actuals) header
         for(int k=0; k < szOutputs; k++)
-            System.out.printf("%6s ","y"+(k+1));
+            System.out.printf("%7s ","y"+(k+1));
 
         System.out.println();
 
@@ -538,16 +538,16 @@ public class Helper {
 
             final double input[] = inputs.getData();
             for(double d: input)
-                System.out.printf("%6.4f ",d);
+                System.out.printf("%7.4f ",d);
 
             final MLData ideals = pair.getIdeal();
             final double ideal[] = ideals.getData();
             for(double d: ideal)
-                System.out.printf("%6.4f ",d);
+                System.out.printf("%7.4f ",d);
 
             final double actual[] = outputs.getData();
             for(double d: actual)
-                System.out.printf("%6.4f ",d);
+                System.out.printf("%7.4f ",d);
 
             System.out.println("");
         }
@@ -604,7 +604,7 @@ public class Helper {
         if(DEBUG)
             return;
 
-        final int FREQUENCY = 10;
+        final int FREQUENCY = 100;
 
         // Report only the header
         if (epoch == 0)

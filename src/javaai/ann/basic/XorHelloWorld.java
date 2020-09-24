@@ -51,20 +51,16 @@ public class XorHelloWorld {
      * @param args No arguments are used.
      */
     public static void main(final String args[]) {
-        // Create a neural network, without using a factory
+        // Build the network
         BasicNetwork network = new BasicNetwork();
 
-        // Add input layer with no activation function, bias enabled, and two neurons
+        // Input layer plus bias node
         network.addLayer(new BasicLayer(null, true, 2));
 
-        // Add hidden layer with ramped activation, bias enabled, and five neurons
-        // NOTE: ActivationReLU is not in javadoc but can be found here http://bit.ly/2zyxk7A.
-        // network.addLayer(new BasicLayer(new ActivationReLU(), true, 5));
-
-        // Add hidden layer with sigmoid activation, bias enabled, and two neurons
+        // Hidden layer plus bias node
         network.addLayer(new BasicLayer(new ActivationSigmoid(), true, 2));
 
-        // Add report layer with sigmoid activation, bias disable, and one neuron
+        // Output layer
         network.addLayer(new BasicLayer(new ActivationSigmoid(), false, 1));
 
         // No more layers to be added
@@ -78,12 +74,11 @@ public class XorHelloWorld {
         // Create training data
         MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUTS, XOR_IDEALS);
 
-        // Train the neural network.
-        // Use a training object to train the network, in this case, an improved
-        // back propagation. For details on what this does see the javadoc.
+        // Use a training object for the learning algorithm, in this case, an improved
+        // backpropagation. For details on what this does see the javadoc.
         final ResilientPropagation train = new ResilientPropagation(network, trainingSet);
 
-        // Set learning batch: 0 = batch, 1 = online, n = batch size
+        // Set learning batch size: 0 = batch, 1 = online, n = batch size
         // See org.encog.neural.networks.training.BatchSize
         // train.setBatchSize(0);
 
