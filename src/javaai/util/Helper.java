@@ -516,6 +516,8 @@ public class Helper {
         MLDataPair first = trainingSet.get(0);
 
         // Output xs header
+        System.out.printf("%4s ","#");
+
         int szInputs = first.getInputArray().length;
         for(int k=0; k < szInputs; k++)
             System.out.printf("%7s ","x"+(k+1));
@@ -532,7 +534,10 @@ public class Helper {
         System.out.println();
 
         // Report inputs and ideals vs. outputs.
+        int n = 1;
         for (MLDataPair pair : trainingSet) {
+            System.out.printf("%4d ",n);
+
             final MLData inputs = pair.getInput();
             final MLData outputs = network.compute(inputs);
 
@@ -550,6 +555,8 @@ public class Helper {
                 System.out.printf("%7.4f ",d);
 
             System.out.println("");
+
+            n += 1;
         }
     }
 
