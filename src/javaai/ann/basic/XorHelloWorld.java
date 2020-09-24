@@ -85,7 +85,7 @@ public class XorHelloWorld {
 
         // Set learning batch: 0 = batch, 1 = online, n = batch size
         // See org.encog.neural.networks.training.BatchSize
-        train.setBatchSize(0);
+        // train.setBatchSize(0);
 
         int epoch = 0;
 
