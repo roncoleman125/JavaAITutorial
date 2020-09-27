@@ -56,7 +56,7 @@ public class EquilateralDecoding {
     public static void main(String[] args) {
         EquilateralEncoding.load();
 
-        Random ran = new Random();
+        Random ran = new Random(0);
 
         int success = 0;
 
