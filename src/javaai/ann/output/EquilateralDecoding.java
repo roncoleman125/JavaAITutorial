@@ -36,7 +36,7 @@ public class EquilateralDecoding {
     public final static int NUM_TESTS = 10;
 
     /** Tolerance as a percent, e.g., 1.0 == 1% */
-    public final static double PETURBANCE = 100.0;
+    public final static double PERTURBANCE = 100.0;
 
     /** TODO: Copy in the values from running EquilateralEncoding */
     static double ideals[][] = {
@@ -74,7 +74,7 @@ public class EquilateralDecoding {
 
         double rate = (double)success / NUM_TESTS;
 
-        System.out.printf("%d of %d or %4.2f%% tolerance = %5.2f%%\n",success, NUM_TESTS, rate, PETURBANCE);
+        System.out.printf("%d of %d or %4.2f%% perturbance = %5.2f%%\n",success, NUM_TESTS, rate, PERTURBANCE);
     }
 
 
