@@ -74,7 +74,7 @@ public class EquilateralDecoding {
 
         double rate = (double)success / NUM_TESTS;
 
-        System.out.printf("%d of %d or %4.2f%% perturbance = %5.2f%%\n",success, NUM_TESTS, rate, PERTURBANCE);
+        System.out.printf("accuracy = %d of %d or %4.2f%% perturbance = %5.2f%%\n",success, NUM_TESTS, rate, PERTURBANCE);
     }
 
 
