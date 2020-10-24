@@ -507,7 +507,7 @@ public class Helper {
      * @param network     Network
      */
     public static void report(MLDataSet trainingSet, BasicNetwork network) {
-        System.out.println("Neural Network Results:");
+        System.out.println("Network training results:");
 
         int sz = trainingSet.size();
         if(sz == 0)
