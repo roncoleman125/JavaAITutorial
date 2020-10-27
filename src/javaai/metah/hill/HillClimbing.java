@@ -108,7 +108,7 @@ public class HillClimbing {
             double priorFitness = getFitness(curPt);
 
             // Test each dimension of the current point.
-            for(int i=0; i < curPt.length; i++) {
+            for(int dim=0; dim < curPt.length; dim++) {
                 // Best candidate index so far -- unknown
                 int bestIndex = -1;
 
@@ -116,34 +116,34 @@ public class HillClimbing {
                 double bestFitness = direction == MINIMIZE ? Double.MAX_VALUE : -Double.MAX_VALUE;
 
                 // Try each candidate acceleration
-                for(int j=0; j < candidates.length; j++) {
+                for(int idx=0; idx < candidates.length; idx++) {
                     // Update the point in the ith direction we're moving
-                    curPt[i] += stepSize[i]* candidates[j];
+                    curPt[dim] += stepSize[dim]* candidates[idx];
 
                     // Get its fitness
                     double newFitness = getFitness(curPt);
 
                     // Move the point back
-                    curPt[i] -= stepSize[i]* candidates[j];
+                    curPt[dim] -= stepSize[dim]* candidates[idx];
 
                     // If we improvement, remember this acceleration
                     if((direction == Direction.MINIMIZE && newFitness < bestFitness) ||
                        (direction == Direction.MAXIMIZE && newFitness > bestFitness)) {
                         bestFitness = newFitness;
-                        bestIndex = j;
+                        bestIndex = idx;
                     }
                 }
 
                 // If we didn't improve, reduce the step size in this ith dimension
                 // Note: best != -1 guaranteed since the best score (see above) is initially infinite.
                 if(candidates[bestIndex] == 0)
-                    stepSize[i] /= acceleration;
+                    stepSize[dim] /= acceleration;
 
                 // If we improvement, use the best acceleration we identified and
                 // update the step in that ith dimension.
                 else {
-                    curPt[i] += stepSize[i]* candidates[bestIndex];
-                    stepSize[i] *= candidates[bestIndex];
+                    curPt[dim] += stepSize[dim]* candidates[bestIndex];
+                    stepSize[dim] *= candidates[bestIndex];
                 }
             }
 
