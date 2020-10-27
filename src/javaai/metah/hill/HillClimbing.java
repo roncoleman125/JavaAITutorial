@@ -22,11 +22,9 @@
  */
 package javaai.metah.hill;
 
-import javaai.metah.Direction;
-
 import java.util.Random;
-import static javaai.metah.Direction.NONE;
-import static javaai.metah.Direction.MINIMIZE;
+import static javaai.metah.hill.Direction.NONE;
+import static javaai.metah.hill.Direction.MINIMIZE;
 
 /**
  * This class implements the hill climbing reinforcement learning algorithm to find base point (5, 3).

@@ -60,10 +60,10 @@ public class Pso {
     protected Particle[] particles = new Particle[SWARM_SIZE];
 
     /** Initial best particle */
-    Particle best = new Particle(Double.MAX_VALUE);
+    protected Particle best = new Particle(Double.MAX_VALUE);
 
     /** Initial old best particle */
-    Particle oldBest = best;
+    protected Particle oldBest = best;
 
     /** Target */
     Particle target = null;
@@ -90,6 +90,10 @@ public class Pso {
         this.target = target;
     }
 
+    public Pso() {
+
+    }
+
     /** Solves the learning problem. */
     public void train() {
         // Initialize the ensemble
@@ -106,10 +110,10 @@ public class Pso {
 
         // Repeat until we converge
         System.out.println(Pso.class.getSimpleName());
-        System.out.printf("%3s %7s %7s %7s %s\n","#","x","y","err","same");
+        System.out.printf("%3s %7s %7s %7s %s\n","#","x","y","fit","same");
 
         while (!converged) {
-            System.out.printf("%3d %7.4f %7.4f %7.4f %d\n",iter,best.getX(),best.getY(),best.fitness,sameCount);
+            System.out.printf("%3d %7.4f %7.4f %7.4f %d\n",iter,this.best.getX(),this.best.getY(),best.fitness,sameCount);
             //System.out.println(iteration + " best = " + best + " fitness=" + best.fitness + " same count=" + sameCount);
 
             // Disturb the particles
@@ -127,7 +131,7 @@ public class Pso {
             iter++;
         }
 
-        System.out.println("CONVERGED: best = " + best + " RMSE = " + best.fitness + " same count=" + sameCount);
+        System.out.println("CONVERGED: best = " + best + " fit = " + best.fitness + " same count=" + sameCount);
     }
 
     /** Initializes the swarm. */
@@ -195,7 +199,7 @@ public class Pso {
      * @param that Particle
      * @return Distance to target
      */
-    private double evaluate(Particle that) {
+    protected double evaluate(Particle that) {
         // Allowed only to know how far away that is to target
         double dist = that.getDistanceTo(target);
 
@@ -203,7 +207,7 @@ public class Pso {
     }
 
     /** Updates all the particles */
-    private void updateBest() {
+    protected void updateBest() {
         oldBest = best;
 
         for (Particle that: particles) {

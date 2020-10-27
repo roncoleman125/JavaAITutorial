@@ -22,20 +22,18 @@
  */
 package javaai.metah.hill;
 
-import javaai.metah.Direction;
-
 /**
- * This class implements the hill climbing reinforcement learning algorithm to find base point
+ * This class implements the hill climbing reinforcement learning algorithm to find max point
  * for f(x,y)=e^-(x^2+y^2) + 2*e^-((x-1.7)^2+(y-1.7)^2).
  * @author Ron.Coleman
  */
-public class DifficultHillClimbing extends HillClimbing {
+public class NonlinearHillClimbing extends HillClimbing {
     /**
      * Launch point
      * @param args Command line args not used.
      */
     public static void main(String[] args) {
-        HillClimbing hill = new DifficultHillClimbing(Direction.MAXIMIZE);
+        HillClimbing hill = new NonlinearHillClimbing(Direction.MAXIMIZE);
 
         double[] pt = hill.climb();
 
@@ -46,7 +44,7 @@ public class DifficultHillClimbing extends HillClimbing {
      * Constructor
      * @param direction Direction
      */
-    public DifficultHillClimbing(Direction direction) {
+    public NonlinearHillClimbing(Direction direction) {
         super(direction);
     }
 
