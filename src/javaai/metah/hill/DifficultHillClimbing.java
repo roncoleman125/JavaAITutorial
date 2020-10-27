@@ -20,7 +20,9 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.metah.hc;
+package javaai.metah.hill;
+
+import javaai.metah.Direction;
 
 /**
  * This class implements the hill climbing reinforcement learning algorithm to find base point
