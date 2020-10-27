@@ -20,12 +20,14 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.metah;
+package javaai.metah.hc;
 
 import java.util.Random;
+import static javaai.metah.hc.Direction.NONE;
+import static javaai.metah.hc.Direction.MINIMIZE;
 
 /**
- * This class implements the hill climbing unsupervised learning algorithm to find base point (5, 3).
+ * This class implements the hill climbing reinforcement learning algorithm to find base point (5, 3).
  * I modified it from the Wikipedia algorithm to include an enhanced convergence test.
  * @author Ron.Coleman
  * @see <a href="https://en.wikipedia.org/wiki/Hill_climbing">HillClimbing climbing</a>
@@ -38,10 +40,10 @@ public class HillClimbing {
     public final int MAX_SAME_COUNT = 5;
 
     /** Constraint on search space upper limit */
-    public final double MAX = 10.0;
+    public final double CONSTRAINT_MAX = 10.0;
 
     /** Constraint on search space lower limit */
-    public final double MIN = -10.0;
+    public final double CONSTRAINT_MIN = -10.0;
 
     /** Goal point */
     public final static double[] XY_GOAL = {5, 3};
@@ -64,8 +66,15 @@ public class HillClimbing {
     /** Improvement updated as climb progresses */
     protected double improvement = Double.MAX_VALUE;
 
+    /** Direction of climbing */
+    protected Direction direction = NONE;
+
+    /**
+     * Launch point
+     * @param args Command line args not used.
+     */
     public static void main(String[] args) {
-        HillClimbing hill = new HillClimbing();
+        HillClimbing hill = new HillClimbing(MINIMIZE);
 
         double[] pt = hill.climb();
 
@@ -73,12 +82,23 @@ public class HillClimbing {
     }
 
     /**
+     * Constructor
+     * @param direction Climb direction, MINIMIZE minimize, MAXIMIZE maximize
+     */
+    public HillClimbing(Direction direction) {
+        this.direction = direction;
+    }
+
+    /**
      * Climbs the hill.
      * @return Destination
      */
     public double[] climb() {
+        assert(direction != NONE);
+
         System.out.println("Hill climbing");
-        System.out.printf("%3s %7s %7s %7s %7s %s\n","#","RMSE","x","y","improve","same");
+        System.out.printf("%3s %7s %7s %7s %7s %s\n","#","Fitness","x","y","improve","same");
+
         int iteration = 1;
 
         curPt = getStart();
@@ -93,7 +113,7 @@ public class HillClimbing {
                 int bestIndex = -1;
 
                 // If minimizing, we should be descending from here
-                double bestFitness = Double.MAX_VALUE;
+                double bestFitness = direction == MINIMIZE ? Double.MAX_VALUE : -Double.MAX_VALUE;
 
                 // Try each candidate acceleration
                 for(int j=0; j < candidates.length; j++) {
@@ -107,7 +127,8 @@ public class HillClimbing {
                     curPt[i] -= stepSize[i]* candidates[j];
 
                     // If we improvement, remember this acceleration
-                    if(newFitness < bestFitness) {
+                    if((direction == Direction.MINIMIZE && newFitness < bestFitness) ||
+                       (direction == Direction.MAXIMIZE && newFitness > bestFitness)) {
                         bestFitness = newFitness;
                         bestIndex = j;
                     }
@@ -183,12 +204,12 @@ public class HillClimbing {
      * @return
      */
     protected double[] getStart() {
-        Random ran = new Random(0);
+        Random ran = new Random();
 
         double[] pt = new double[curPt.length];
 
         for(int k=0; k < curPt.length; k++)
-            pt[k] = ran.nextDouble() *(MAX-MIN) + MIN;
+            pt[k] = ran.nextDouble() *(CONSTRAINT_MAX - CONSTRAINT_MIN) + CONSTRAINT_MIN;
 
         return pt;
     }
