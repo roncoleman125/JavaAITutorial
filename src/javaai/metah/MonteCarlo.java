@@ -25,7 +25,7 @@ package javaai.metah;
 import java.util.Random;
 
 /**
- * This class uses Monte Carlo simulation for unsupervised learning to maximize:
+ * This class uses Monte Carlo simulation for reinforcement learning to maximize:
  * f(x,y)=e^-(x^2 + y^2) + 2 * e^-((x-1.7)^2 + (y-1.7)^2).
  * @see "<a href=https://en.wikipedia.org/wiki/Hill_climbing>Hill climbing</a>"
  * @see "<a href=http://modelai.gettysburg.edu/2014/mc1/index.html>An Introduction to Monte Carlo Techniques in Artificial Intelligence - Part I</a>"
