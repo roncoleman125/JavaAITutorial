@@ -1,5 +1,10 @@
 # JavaAITutorial
-This project is an introduction to AI using Java.
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
+
+This project is an introduction to AI using Java,
 Encog, and Apache OpenNLP.
 
 ## Installation
