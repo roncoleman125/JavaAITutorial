@@ -7,7 +7,7 @@ There's just no way around it, we argue.
 Thus, we put forward two pedagogical principles as the antidote:
 1. Students create their own knowledge
    through hands-on exercises (this is Piaget's
-   [constructivist] (https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_education)) theory of education).
+   [constructivist](https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_education)) theory of education).
    
 2. In doing so, it is more effective
    to start with basic concepts which can then be scaled up in sophistication
