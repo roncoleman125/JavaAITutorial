@@ -1,6 +1,11 @@
 # Java AI Tutorial
-![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white) ![Java](https://img.shields.io/badge/Encog-2962FF?style=for-the-badge&logo=hashnode&logoColor=white)
-![](https://img.shields.io/badge/Apache&nbsp;OpenNLP-404D59?style=for-the-badge)
+
+![](https://badgen.net/badge/Java/1.6/FF0000?icon=github)
+![](https://badgen.net/badge/Encog/1.6/6E86FF?icon=github)
+![](https://badgen.net/badge/OpenNLP/1.9.3/1ED760)
+![](https://badgen.net/badge/Maven/1.9.3/FF00FF)
+![](https://badgen.net/badge/Maintained/YES/FFFF00)
+
 
 AI and Java are, by their very nature, complex.
 Even the simplest ideas and implementations are fraught with layers of
