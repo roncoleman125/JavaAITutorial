@@ -7,16 +7,16 @@ There's just no way around it, we argue.
 Thus, we put forward two pedagogical principles as the antidote:
 1. Students create their own knowledge
    through hands-on exercises (this is Piaget's
-   [constructivist] (https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_education)) philosophy of education).
+   [constructivist] (https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_education)) theory of education).
    
 2. In doing so, it is more effective
    to start with basic concepts which can then be scaled up in sophistication
    and applied to more real-world problems, if necessary (this is the so-called
-   "crawl-before-you-can-walk" philosophy of education).
+   "crawl-before-you-can-walk" theory of education).
 
-Our point of view is we favor simplicity over completeness.
+In other words, we prefer to trade completeness for simplicity when the two are in conflict.
 
-This project is an original introduction to AI using Java and the above philosophies.
+This project is an original introduction to AI using Java founded on Piaget's model.
 The main emphasis is on learning algorithms for
 artificial neural networks (ANNs) using [Encog](https://www.heatonresearch.com/encog/) and
 natural language processing (NLP) using [Apache OpenNLP](https://opennlp.apache.org/).
