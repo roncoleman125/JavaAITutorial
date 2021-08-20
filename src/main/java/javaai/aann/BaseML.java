@@ -49,7 +49,7 @@ public class BaseML {
      * Loads the iris csv file from the default path.
      */
     public static void load() {
-        load("iris.csv");
+        load("data/iris.csv");
     }
 
     /**
