@@ -18,9 +18,7 @@ Thus, we put forward two pedagogical hypotheses as the antidote:
    and applied to more real-world problems, if necessary -- this is our
    [crawl-before-one-walks](https://en.wiktionary.org/wiki/crawl_before_one_walks) theory of education.
 
-In other words, we prefer to trade completeness for simplicity when the two are in conflict.
-
-This project is an original introduction to AI using Java founded on Piaget's model.
+This project is an original introduction to AI using Java following Piaget's model.
 The main emphasis is on learning algorithms for
 artificial neural networks (ANNs) using [Encog](https://www.heatonresearch.com/encog/) and
 natural language processing (NLP) using [Apache OpenNLP](https://opennlp.apache.org/).
