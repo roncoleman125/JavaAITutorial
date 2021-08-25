@@ -1,18 +1,13 @@
 # Java AI Tutorial
 
-![](https://badgen.net/badge/Java/1.6/FF0000?icon=github)
-![](https://badgen.net/badge/Encog/1.6/6E86FF?icon=github)
+![](https://badgen.net/badge/Java/1.16/FF0000?icon=github)
+![](https://badgen.net/badge/Encog/3.4/6E86FF?icon=github)
 ![](https://badgen.net/badge/OpenNLP/1.9.3/1ED760)
 ![](https://badgen.net/badge/Maven/Bundled/FF00FF)
 ![](https://badgen.net/badge/Maintained/YES/FFFF00)
 
 
-AI and Java are, by their very nature, complex.
-Even the simplest ideas and implementations are fraught with layers of
-details necessary to getting anything working
-but also complications that are enemies of transparency and reliability
-even for seasoned professionals, not to mentions newcomers.
-
+AI and Java by their nature are complex.
 Thus, we put forward two pedagogical hypotheses as the antidote:
 1. Students create their own knowledge
    through hands-on exercises -- this is Piaget's
