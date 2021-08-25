@@ -7,8 +7,8 @@
 ![](https://badgen.net/badge/Maintained/YES/FFFF00)
 
 
-AI and Java by their nature are complex.
-Thus, we put forward two pedagogical hypotheses as the antidote:
+We argue AI and Java by their nature are complex.
+Thus, we put forward two hypotheses as the antidote:
 1. Students create their own knowledge -- this is Piaget's
    [constructivist](https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_education)) theory of education.
    
