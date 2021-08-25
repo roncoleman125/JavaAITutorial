@@ -9,8 +9,7 @@
 
 AI and Java by their nature are complex.
 Thus, we put forward two pedagogical hypotheses as the antidote:
-1. Students create their own knowledge
-   through hands-on exercises -- this is Piaget's
+1. Students create their own knowledge -- this is Piaget's
    [constructivist](https://en.wikipedia.org/wiki/Constructivism_(philosophy_of_education)) theory of education.
    
 2. In doing so, it is more effective
