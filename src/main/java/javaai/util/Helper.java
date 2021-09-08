@@ -51,13 +51,13 @@ public class Helper {
     public final static List<String> headers = new ArrayList<>();
 
     /** 1 of N encoding */
-    static HashMap<String, List<Integer>> oneofn = new HashMap<>();
+    static HashMap<String, List<Integer>> oneOfN = new HashMap<>();
 
     /**
      * Loads a CSV file -- column must be of same ontology.
      * @param path    Path in system to file
      * @param parsers Parsers to interpret the column
-     * @param ran     Randoum number generator to randomize the rows prior to parsing.
+     * @param ran Random number generator to randomize the rows prior to parsing.
      * @throws FileNotFoundException
      * @throws IOException
      * @throws Exception
@@ -68,7 +68,7 @@ public class Helper {
 
         headers.clear();
 
-        oneofn.clear();
+        oneOfN.clear();
 
         ArrayList<String> lines = preload(path, ran);
 
@@ -121,7 +121,7 @@ public class Helper {
             }
         }
 
-        // Delete the don't care columns in header and data.
+        // Delete don't care columns in header and data.
         // First we have to get the don't care columns then delete them because Java list collection
         // does not permit updating the list while traversing it at the same time.
         ArrayList<String> trash = new ArrayList<>();
@@ -138,7 +138,6 @@ public class Helper {
 
     /**
      * Parses a string object.
-     *
      * @param function Parser
      * @param input    Data we're going to parse
      * @return Object result of parsing
@@ -150,7 +149,6 @@ public class Helper {
     /**
      * Loads the data from a CSV file.
      * Assumes first row is the header row.
-     *
      * @param path    File path
      * @param parsers Parsers of data
      * @throws Exception
@@ -161,15 +159,14 @@ public class Helper {
 
     /**
      * Gets the subtypes for
-     *
      * @param col Column index
      * @return Names of the subtypes
      */
     public static List<String> getNominalSubtypes(int col) {
-        if (oneofn.isEmpty())
-            oneofn = encodeOneOfN(col);
+        if (oneOfN.isEmpty())
+            oneOfN = encodeOneOfN(col);
 
-        Object[] keys = oneofn.keySet().toArray();
+        Object[] keys = oneOfN.keySet().toArray();
 
         ArrayList<String> subtypes = new ArrayList<>();
 
@@ -182,13 +179,12 @@ public class Helper {
 
     /**
      * Gets the number of subtypes for the nominal.
-     *
      * @param col Column index
      * @return Number of subtypes
      */
     public static int getNominalSubtypeCount(int col) {
-        if (!oneofn.isEmpty())
-            oneofn = encodeOneOfN(col);
+        if (!oneOfN.isEmpty())
+            oneOfN = encodeOneOfN(col);
 
         return getNominalSubtypes(col).size();
     }
@@ -196,16 +192,15 @@ public class Helper {
     /**
      * Gets an encoded hash map of nominal types and their 1-of-n values as 1 or -1.
      * Assumes there's exactly one nominal type.
-     *
      * @param col Column of nominals
      * @return Hash map of nominal and its 1-of-n encoding
      */
     public static HashMap<String, List<Integer>> encodeOneOfN(int col) {
-        if (!oneofn.isEmpty())
-            return oneofn;
+        if (!oneOfN.isEmpty())
+            return oneOfN;
 
         // Hash map to return: nominal name -> 1-of-n encoding
-        oneofn = new HashMap<String, List<Integer>>();
+        oneOfN = new HashMap<String, List<Integer>>();
 
         // Use this title to retrieve the nominal column
         String title = Helper.headers.get(col);
@@ -242,15 +237,14 @@ public class Helper {
                 }
             }
 
-            oneofn.put((String) keys[j], encoding);
+            oneOfN.put((String) keys[j], encoding);
         }
 
-        return oneofn;
+        return oneOfN;
     }
 
     /**
      * Pre-loads the data into memory buffer and if necessary, randomizes it.
-     *
      * @param path Path to the file
      * @param ran  Whether or not to randomize the buffer
      * @return Buffer of lines
@@ -298,7 +292,6 @@ public class Helper {
 
     /**
      * Gets the title for a column.
-     *
      * @param col Column
      * @return Title
      */
@@ -310,7 +303,6 @@ public class Helper {
 
     /**
      * Gets the loaded data for a given row across all ontologies.
-     *
      * @param row Row number
      * @return Map of header title to object for each row
      */
@@ -325,7 +317,6 @@ public class Helper {
 
     /**
      * Gets the row count of loaded data.
-     *
      * @return Row count
      */
     public static int getRowCount() {
@@ -341,7 +332,6 @@ public class Helper {
 
     /**
      * Gets the activation encodings as a string.
-     *
      * @param encodings Activation encodings
      * @return String
      */
@@ -363,7 +353,6 @@ public class Helper {
 
     /**
      * Decodes binary integer genome as an integer.
-     *
      * @param genome Bitwise genome only 0,1 permitted.
      * @return Integer
      */
@@ -383,7 +372,6 @@ public class Helper {
 
     /**
      * Decodes binary integer genome as a double.
-     *
      * @param genome Bitwise genome only 0,1 permitted.
      * @return Double
      */
@@ -408,7 +396,6 @@ public class Helper {
 
     /**
      * Decodes binary integer genome as a string.
-     *
      * @param genome Bitwise genome only 0,1 permitted.
      * @return String
      */
@@ -428,7 +415,6 @@ public class Helper {
 
     /**
      * Decodes double-array genome as a string.
-     *
      * @param genome Genome
      * @return String
      */
@@ -445,7 +431,6 @@ public class Helper {
 
     /**
      * Deep copies an object.
-     *
      * @param object Serializabl bbject
      * @param <T>    Object type.
      * @return Specified type T
@@ -487,7 +472,6 @@ public class Helper {
 
     /**
      * Makes a single string from a collection of strings.
-     *
      * @param lines Lines
      * @param pad   Padding string between lines
      * @return String
