@@ -5,8 +5,10 @@ import org.encog.Encog;
 import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.ml.data.MLDataSet;
 import org.encog.ml.data.basic.BasicMLDataSet;
+import org.encog.ml.train.BasicTraining;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
+import org.encog.neural.networks.training.propagation.back.Backpropagation;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
 
 /**
@@ -30,6 +32,8 @@ import org.encog.neural.networks.training.propagation.resilient.ResilientPropaga
 public class XorHelloWorld {
     /** Error tolerance */
     public final static double TOLERANCE = 0.01;
+    public final static double LEARNING_RATE = 0.25;
+    public final static double LEARNING_MOMENTUM = 0.25;
 
     /** The input necessary for XOR. */
     public static double XOR_INPUTS[][] = {
@@ -74,9 +78,8 @@ public class XorHelloWorld {
         // Create training data
         MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUTS, XOR_IDEALS);
 
-        // Use a training object for the learning algorithm, in this case, an improved
-        // backpropagation. For details on what this does see the javadoc.
-        final ResilientPropagation train = new ResilientPropagation(network, trainingSet);
+        // Use a training object for the learning algorithm, backpropagation.
+        final BasicTraining training = new Backpropagation(network, trainingSet,LEARNING_RATE,LEARNING_MOMENTUM);
 
         // Set learning batch size: 0 = batch, 1 = online, n = batch size
         // See org.encog.neural.networks.training.BatchSize
@@ -84,19 +87,19 @@ public class XorHelloWorld {
 
         int epoch = 0;
 
-        Helper.log(epoch, train,false);
+        Helper.log(epoch, training,false);
         do {
-            train.iteration();
+            training.iteration();
 
             epoch++;
 
-            Helper.log(epoch, train,false);
+            Helper.log(epoch, training,false);
 
-        } while (train.getError() > TOLERANCE && epoch < Helper.MAX_EPOCHS);
+        } while (training.getError() > TOLERANCE && epoch < Helper.MAX_EPOCHS);
 
-        train.finishTraining();
+        training.finishTraining();
 
-        Helper.log(epoch, train,true);
+        Helper.log(epoch, training,true);
         Helper.report(trainingSet, network);
         Helper.describe(network);
 
