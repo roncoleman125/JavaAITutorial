@@ -30,12 +30,17 @@ import org.encog.neural.networks.training.propagation.resilient.ResilientPropaga
  * @date 24 Oct 2017
  */
 public class XorHelloWorld {
-    /** Error tolerance */
-    public final static double TOLERANCE = 0.01;
+    /**
+     * These learning parameters generally give good results according to literature,
+     * that is, the training algorithm converges with the tolerance below.
+     * */
     public final static double LEARNING_RATE = 0.25;
     public final static double LEARNING_MOMENTUM = 0.25;
 
-    /** The input necessary for XOR. */
+    /** Error tolerance: 1% */
+    public final static double TOLERANCE = 0.01;
+
+    /** Inputs necessary for XOR. */
     public static double XOR_INPUTS[][] = {
             {0.0, 0.0},
             {0.0, 1.0},
@@ -43,7 +48,7 @@ public class XorHelloWorld {
             {1.0, 1.0}
     };
 
-    /** The ideal data necessary for XOR.*/
+    /** Ideals necessary for XOR.*/
     public static double XOR_IDEALS[][] = {
             {0.0},
             {1.0},
@@ -55,7 +60,7 @@ public class XorHelloWorld {
      * @param args No arguments are used.
      */
     public static void main(final String args[]) {
-        // Build the network
+        // Instantiate the network
         BasicNetwork network = new BasicNetwork();
 
         // Input layer plus bias node
@@ -105,5 +110,4 @@ public class XorHelloWorld {
 
         Encog.getInstance().shutdown();
     }
-
 }

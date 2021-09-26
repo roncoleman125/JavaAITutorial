@@ -30,7 +30,7 @@ import static javaai.util.Helper.loadCsv;
 import static javaai.util.Helper.headers;
 
 /**
- * This class loads real-world" iris data to be normalized.
+ * This class loads "real-world" iris data to be normalized.
  */
 public class RealWorld {
     /** Contains real-world data */
