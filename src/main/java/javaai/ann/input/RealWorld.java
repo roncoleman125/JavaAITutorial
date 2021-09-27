@@ -49,7 +49,7 @@ public class RealWorld {
      */
     protected static void load() {
         try {
-            loadCsv("iris.csv", parsers);
+            loadCsv("data/iris.csv", parsers);
 
             for(String title: headers) {
                 List list = Helper.data.get(title);
