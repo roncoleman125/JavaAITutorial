@@ -40,7 +40,7 @@ public class OneOfNEncoding {
     public static void main(String[] args) {
         try {
             // Load the data
-            Helper.loadCsv("iris.csv", Ontology.parsers);
+            Helper.loadCsv("data/iris.csv", Ontology.parsers);
 
             // If we get here without an exception, then get title of last column
             String title = Helper.getTitle(4);

@@ -81,7 +81,7 @@ public class EquilateralEncoding {
     public static void load(String path) {
         try {
             // Load the data
-            Helper.loadCsv("iris.csv", Ontology.parsers);
+            Helper.loadCsv("data/iris.csv", Ontology.parsers);
 
             // Use equilateral encoding for [-1, 1] range for TANH activation function.
             subtypes = Helper.getNominalSubtypes(4);
