@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * This class reads the iris csv file and outputs it.
- * @author Ron Coleman
+ * @author Ron.Coleman
  */
 public class BaseML {
     /** Container of flower species */
