@@ -47,8 +47,8 @@ public class Tsp {
         for (double t = temperature; t > 1; t *= coolingFactor, epoch++) {
             Tour neighbor = current.duplicate();
 
-            int i = (int) (neighbor.noCities() * Math.random());
-            int j = (int) (neighbor.noCities() * Math.random());
+            int i = (int) (neighbor.getNumCities() * Math.random());
+            int j = (int) (neighbor.getNumCities() * Math.random());
 
 //            Collections.swap(next.getCities(), index1, index2);
             Collections.swap(cities, i, j);

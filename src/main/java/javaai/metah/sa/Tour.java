@@ -21,9 +21,9 @@ public class Tour {
 
         distance = 0;
 
-        for (int i = 0; i < noCities(); i++) {
+        for (int i = 0; i < getNumCities(); i++) {
             City start = getCity(i);
-            City end = getCity(i + 1 < noCities() ? i + 1 : 0);
+            City end = getCity(i + 1 < getNumCities() ? i + 1 : 0);
             distance += City.distance(start, end);
         }
 
@@ -34,7 +34,7 @@ public class Tour {
         return new Tour(new ArrayList<>(cities));
     }
 
-    public int noCities() {
+    public int getNumCities() {
         return cities.size();
     }
 
