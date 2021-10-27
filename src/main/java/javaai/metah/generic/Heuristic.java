@@ -23,25 +23,46 @@
 package javaai.metah.generic;
 
 /**
- * This construct is a generic interface for reinforcement learning.
+ * This is an interface for reinforcement learning with a feedforward multilayer perceptron.
  * @author Ron.Coleman
  */
 public interface Heuristic {
     /**
-     * Invokes all cycles of the heuristic.
-     * @return Solution
+     * Runs the learning the heuristic over all generations (or epochs).
+     * @param n Maximum number of generations
+     * @return Interneuron weights
      */
-    public double[] solve();
+    public double[] learn(int n);
 
     /**
      * Runs one cycle of the heuristic.
      * @return Error
      */
-    public double cycle();
+    public double evolve();
 
     /**
      * Tests if the heuristic has converged.
-     * @return True if converged, false otherwise.
+     * @return True if converged, false if max generations exceeded.
      */
     public boolean didConverge();
+
+    /**
+     * Gets the best interneuron weights for generations so far.
+     * @return Interneuron weights
+     */
+    public double[] getBest();
+
+    /**
+     * Get the best interneuron weights for the most recent generation.
+     * @return Interneuron weights
+     */
+    public double[] getCurrent();
+
+    /**
+     * Sets the batch training size.
+     * <p>0 == batch all inputs</p>
+     * <p>n == batch n inputs</p>
+     * @param size Batch size
+     */
+    public void setBatch(int size);
 }

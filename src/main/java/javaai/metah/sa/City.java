@@ -101,4 +101,16 @@ public class City {
             return getCity(cities);
         return city;
     }
+
+    /**
+     * Gets the distance between two cities "as the crow flies".
+     * @param city1 City 1
+     * @param city2 City 2
+     * @return Distance
+     */
+    public static double distance(City city1, City city2) {
+        int xDist = Math.abs(city1.getX() - city2.getX());
+        int yDist = Math.abs(city1.getY() - city2.getY());
+        return Math.sqrt(xDist * xDist + yDist * yDist);
+    }
 }

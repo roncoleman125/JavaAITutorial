@@ -47,11 +47,11 @@ public class Tsp {
         for (double t = temperature; t > 1; t *= coolingFactor, epoch++) {
             Tour neighbor = current.duplicate();
 
-            int index1 = (int) (neighbor.noCities() * Math.random());
-            int index2 = (int) (neighbor.noCities() * Math.random());
+            int i = (int) (neighbor.noCities() * Math.random());
+            int j = (int) (neighbor.noCities() * Math.random());
 
 //            Collections.swap(next.getCities(), index1, index2);
-            Collections.swap(cities, index1, index2);
+            Collections.swap(cities, i, j);
 
             int currentLength = current.getTourLength();
             int neighborLength = neighbor.getTourLength();

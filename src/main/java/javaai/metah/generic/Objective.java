@@ -23,19 +23,19 @@
 package javaai.metah.generic;
 
 /**
- * This construct is a generic interface for the objective function.
+ * This is an interface to the objective function for a feedforward multilayer perceptron.
  * @author Ron.Coleman
  */
 public interface Objective {
     /**
      * Gets the fitness of the weights.
-     * @param ws Weights
+     * @param ws Interneuron weights
      * @return Fitness
      */
     public double getFitness(double[] ws);
 
     /**
-     * Invokes the feedfoward equations.
+     * Invokes the feedforward equations.
      * @param xs X inputs
      * @return ys outputs
      */

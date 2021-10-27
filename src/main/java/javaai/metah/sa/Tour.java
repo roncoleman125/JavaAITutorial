@@ -19,16 +19,15 @@ public class Tour {
     public int getTourLength() {
         if (distance != 0) return distance;
 
-        int totalDistance = 0;
+        distance = 0;
 
         for (int i = 0; i < noCities(); i++) {
             City start = getCity(i);
             City end = getCity(i + 1 < noCities() ? i + 1 : 0);
-            totalDistance += Util.distance(start, end);
+            distance += City.distance(start, end);
         }
 
-        distance = totalDistance;
-        return totalDistance;
+        return distance;
     }
 
     public Tour duplicate() {
@@ -48,5 +47,4 @@ public class Tour {
         s += "@";
         return s;
     }
-    // Getters and toString()
 }
