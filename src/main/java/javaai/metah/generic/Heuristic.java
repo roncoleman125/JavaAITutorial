@@ -29,14 +29,13 @@ package javaai.metah.generic;
 public interface Heuristic {
     /**
      * Runs the learning the heuristic over all generations (or epochs).
-     * @param n Maximum number of generations
      * @return Interneuron weights
      */
-    public double[] learn(int n);
+    public double[] learn();
 
     /**
      * Runs one cycle of the heuristic.
-     * @return Error
+     * @return Error between the current solution and the ideal solution
      */
     public double evolve();
 
@@ -47,13 +46,13 @@ public interface Heuristic {
     public boolean didConverge();
 
     /**
-     * Gets the best interneuron weights for generations so far.
+     * Gets the best interneuron weights over all generations so far.
      * @return Interneuron weights
      */
     public double[] getBest();
 
     /**
-     * Get the best interneuron weights for the most recent generation.
+     * Gets the current interneuron weights for the most recent generation.
      * @return Interneuron weights
      */
     public double[] getCurrent();
