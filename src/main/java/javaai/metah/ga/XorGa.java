@@ -73,7 +73,7 @@ public class XorGa {
         Population pop = initPop();
 
         // Get the fitness measure
-        XorObjective objective = new XorObjective();
+        XorGaObjective objective = new XorGaObjective();
 
         // Create the evolutionary training algorithm
         TrainEA ga = new TrainEA(pop, objective);
@@ -91,13 +91,13 @@ public class XorGa {
         // Output the best results
 
         System.out.printf("%3s  %3s  %3s  %s\n","x1","x2","t1","y1");
-        for(int k = 0; k < XorObjective.XOR_INPUTS.length; k++) {
-            double x1 = XorObjective.XOR_INPUTS[k][0];
-            double x2 = XorObjective.XOR_INPUTS[k][1];
+        for(int k = 0; k < XorGaObjective.XOR_INPUTS.length; k++) {
+            double x1 = XorGaObjective.XOR_INPUTS[k][0];
+            double x2 = XorGaObjective.XOR_INPUTS[k][1];
 
             double actual = objective.feedforward(x1, x2, best.getData());
 
-            double ideal = XorObjective.XOR_IDEALS[k][0];
+            double ideal = XorGaObjective.XOR_IDEALS[k][0];
 
 //            System.out.println(x1+" "+x2+" ideal = "+ideal+" actual = "+actual);
             System.out.printf("%3.1f  %3.1f  %3.1f  %f\n", x1, x2, ideal, actual);
@@ -193,7 +193,7 @@ public class XorGa {
         final double[] organism = genome.getData();
 
         for(int k=0; k < organism.length; k++) {
-            organism[k] = XorObjective.getRandomWeight();
+            organism[k] = XorGaObjective.getRandomWeight();
         }
 
         return genome;

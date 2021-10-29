@@ -31,7 +31,7 @@ import java.util.Random;
 /**
  * This class implements the objective function used by Encog's double-array genome class.
  */
-public class XorObjective implements CalculateScore {
+public class XorGaObjective implements CalculateScore {
     public final static boolean DEBUGGING = true;
     public final static String TEAM = "Ronz";
     public final static int NUM_WEIGHTS = 8;
