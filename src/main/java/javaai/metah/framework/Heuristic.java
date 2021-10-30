@@ -20,7 +20,7 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.metah.generic;
+package javaai.metah.framework;
 
 /**
  * This is an interface for reinforcement learning with a feedforward multilayer perceptron.
@@ -28,10 +28,11 @@ package javaai.metah.generic;
  */
 public interface Heuristic {
     /**
-     * Runs the learning the heuristic over all generations (or epochs).
+     * Runs the learning the heuristic over all generations or epochs using the objective.
+     * @param obj Objective the method employs
      * @return Interneuron weights
      */
-    public double[] learn();
+    public double[] learn(Objective obj);
 
     /**
      * Runs one cycle of the heuristic.

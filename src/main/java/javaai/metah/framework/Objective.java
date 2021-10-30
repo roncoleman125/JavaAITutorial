@@ -20,7 +20,7 @@
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package javaai.metah.generic;
+package javaai.metah.framework;
 
 /**
  * This is an interface to the objective function for a feedforward multilayer perceptron.
@@ -37,6 +37,7 @@ public interface Objective {
     /**
      * Invokes the feedforward equations.
      * @param xs X inputs
+     * @param ws Interneuron weights
      * @return ys outputs
      */
     public double[] feedforward(double[] xs, double[] ws);
