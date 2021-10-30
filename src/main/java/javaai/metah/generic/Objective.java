@@ -39,5 +39,5 @@ public interface Objective {
      * @param xs X inputs
      * @return ys outputs
      */
-    public double[] feedforward(double[] xs);
+    public double[] feedforward(double[] xs, double[] ws);
 }

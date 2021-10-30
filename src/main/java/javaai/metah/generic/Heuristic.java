@@ -35,24 +35,21 @@ public interface Heuristic {
 
     /**
      * Runs one cycle of the heuristic.
-     * @return Error between the current solution and the ideal solution
+     * <p>It is invoked by <i>learn</i> method.</p>
+     * @return Fitness of the current solution.
      */
     public double evolve();
 
     /**
-     * Tests if the heuristic has converged.
-     * @return True if converged, false if max generations exceeded.
-     */
-    public boolean didConverge();
-
-    /**
      * Gets the best interneuron weights over all generations so far.
+     * <p>It is invoked by <i>learn</i> method.</p>
      * @return Interneuron weights
      */
     public double[] getBest();
 
     /**
      * Gets the current interneuron weights for the most recent generation.
+     * <p>Invoked by <i>learn</i> method.</p>
      * @return Interneuron weights
      */
     public double[] getCurrent();
@@ -61,7 +58,8 @@ public interface Heuristic {
      * Sets the batch training size.
      * <p>0 == batch all inputs</p>
      * <p>n == batch n inputs</p>
-     * @param size Batch size
+     * <p>Invoked by <i>learn</i> method..</p>
+     * * @param size Batch size
      */
     public void setBatch(int size);
 }
