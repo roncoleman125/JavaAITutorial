@@ -28,7 +28,7 @@ package javaai.metah.framework;
  */
 public interface Objective {
     /**
-     * Gets the fitness of the weights.
+     * Gets the fitness of the interneuron weights.
      * @param ws Interneuron weights
      * @return Fitness
      */

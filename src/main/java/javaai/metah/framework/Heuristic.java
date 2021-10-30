@@ -28,9 +28,9 @@ package javaai.metah.framework;
  */
 public interface Heuristic {
     /**
-     * Runs the learning the heuristic over all generations or epochs using the objective.
-     * @param obj Objective the method employs
-     * @return Interneuron weights
+     * Runs the learning algorithm for all epochs using the objective.
+     * @param obj Objective learning algorithm employs
+     * @return Learned interneuron weights
      */
     public double[] learn(Objective obj);
 
@@ -59,7 +59,7 @@ public interface Heuristic {
      * Sets the batch training size.
      * <p>0 == batch all inputs</p>
      * <p>n == batch n inputs</p>
-     * <p>Invoked by <i>learn</i> method..</p>
+     * <p>Invoked by <i>learn</i> method.</p>
      * * @param size Batch size
      */
     public void setBatch(int size);
