@@ -71,7 +71,7 @@ public class Pds {
                 best = current.copy();
             }
 
-            if(epoch <= 3 || (epoch % 100) == 0)
+            if(epoch <= 5 || (epoch % 100) == 0)
                 System.out.printf("%5d %4d %4d %s\n",epoch,best.getDist(),route.getDist(),route);
         }
 
