@@ -27,11 +27,11 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Represents a city.
+ * Represents an address or stop on a route.
  * @author Ron.Coleman
  */
-public class City {
-    /** Maximum range between cities in x or y coordinate. */
+public class Address {
+    /** Maximum range between addresses in x or y coordinate. */
     public final static int RANGE = 20;
 
     private static Random ran = new Random(0);
@@ -44,7 +44,7 @@ public class City {
      * @param x X coordinate
      * @param y Y coordinate
      */
-    public City(int x, int y) {
+    public Address(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -68,49 +68,49 @@ public class City {
 
     @Override
     public boolean equals(Object obj) {
-        if(!(obj instanceof City) || obj == null)
+        if(!(obj instanceof Address) || obj == null)
             return false;
-        City city = (City)obj;
-        return city.x == this.x && city.y == this.y;
+        Address address = (Address)obj;
+        return address.x == this.x && address.y == this.y;
     }
 
     /**
-     * Makes a collection of cities at random locations.
-     * @param n Number of cities to make
-     * @return List of cities
+     * Makes a collection of addresses at random locations.
+     * @param n Number of addresses to make
+     * @return List of addresses
      */
-    public static List<City> make(int n) {
-        List<City> cities = new ArrayList<>();
+    public static List<Address> make(int n) {
+        List<Address> addresses = new ArrayList<>();
         for(int i=0; i < n; i++) {
-            City city = getCity(cities);
-            cities.add(city);
+            Address address = getAddress(addresses);
+            addresses.add(address);
         }
-        return cities;
+        return addresses;
     }
 
     /**
-     * Gets a unique city that is not already in the list.
-     * @param cities Collection of cities in the list
+     * Gets a unique address that is not already in the list.
+     * @param addresses Collection of addresses in the list
      * @return Unique city
      */
-    private static City getCity(List<City> cities) {
+    private static Address getAddress(List<Address> addresses) {
         int x = ran.nextInt(RANGE)+1;
         int y = ran.nextInt(RANGE)+1;
-        City city = new City(x,y);
-        if(cities.contains(city))
-            return getCity(cities);
-        return city;
+        Address address = new Address(x,y);
+        if(addresses.contains(address))
+            return getAddress(addresses);
+        return address;
     }
 
     /**
-     * Gets the distance between two cities "as the crow flies".
-     * @param city1 City 1
-     * @param city2 City 2
+     * Gets the distance between two addresses using taxi cab geometry.
+     * @param addr1 Address 1
+     * @param addr2 Address 2
      * @return Distance
      */
-    public static double distance(City city1, City city2) {
-        int xDist = Math.abs(city1.getX() - city2.getX());
-        int yDist = Math.abs(city1.getY() - city2.getY());
-        return Math.sqrt(xDist * xDist + yDist * yDist);
+    public static double distance(Address addr1, Address addr2) {
+        int xDist = Math.abs(addr1.getX() - addr2.getX());
+        int yDist = Math.abs(addr1.getY() - addr2.getY());
+        return (xDist + yDist); //Math.sqrt(xDist * xDist + yDist * yDist);
     }
 }
