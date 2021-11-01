@@ -62,7 +62,7 @@ public class Pds {
             int curDist = current.getDist();
             int routeDist = route.getDist();
 
-            if (Math.random() < Util.probability(curDist, routeDist, temp)) {
+            if (ran.nextDouble() < Util.probability(curDist, routeDist, temp)) {
                 current = route.copy();
             }
 
@@ -77,7 +77,7 @@ public class Pds {
 
         System.out.printf("%5d %4d %4d %s\n",epoch,best.getDist(),best.getDist(),best);
 
-        System.out.println("best route dist: " + best.getDist()+" best: "+best);
+        System.out.println("** best route dist: " + best.getDist()+" route: "+best);
 //        System.out.println("route: " + best);
     }
 }
