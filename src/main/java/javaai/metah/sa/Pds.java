@@ -53,8 +53,6 @@ public class Pds {
             Route route = current.copy();
 
             // Swap a pair of stops on this route
-//            int i = (int) (route.getNumStops() * Math.random());
-//            int j = (int) (route.getNumStops() * Math.random());
             int i = Util.getRandomIndex(1,route.getNumStops());
             int j = Util.getRandomIndex(1,route.getNumStops());
 
