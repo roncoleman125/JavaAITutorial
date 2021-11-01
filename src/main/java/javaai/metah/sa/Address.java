@@ -66,12 +66,26 @@ public class Address {
         return y;
     }
 
+    /**
+     * Tests of another address is equal
+     * @param obj Address object
+     * @return True if obj is equal to this address, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
-        if(!(obj instanceof Address) || obj == null)
+        if(obj == null || !(obj instanceof Address))
             return false;
         Address address = (Address)obj;
         return address.x == this.x && address.y == this.y;
+    }
+
+    /**
+     * Represents in string form.
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return  "("+x+","+y+")";
     }
 
     /**

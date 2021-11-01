@@ -46,6 +46,7 @@ public class Pds {
         Route current = new Route(stops);
         Route best = current.copy();
 
+        System.out.printf("%5s %4s %4s %s\n","epoch","best","dist","route");
         int epoch = 1;
         for (double temp = INITIAL_TEMP; temp > 1; temp *= COOLING_FACTOR, epoch++) {
             // Get a route to manipulate
@@ -71,12 +72,14 @@ public class Pds {
             if (current.getDist() < best.getDist()) {
                 best = current.copy();
             }
-//            System.out.println("epoch: "+epoch+" cur dist: "+curDist+" best dist: "+best.getDist()+" route: "+current);
-            System.out.println("epoch: "+epoch+" best dist: "+best.getDist()+" route dist: "+routeDist+" route: "+current);
 
+            if(epoch <= 3 || (epoch % 100) == 0)
+                System.out.printf("%5d %4d %4d %s\n",epoch,best.getDist(),route.getDist(),route);
         }
 
-        System.out.println("final route dist: " + best.getDist());
-        System.out.println("route: " + best);
+        System.out.printf("%5d %4d %4d %s\n",epoch,best.getDist(),best.getDist(),best);
+
+        System.out.println("best route dist: " + best.getDist()+" best: "+best);
+//        System.out.println("route: " + best);
     }
 }

@@ -66,7 +66,8 @@ public class Route {
         for (int i = 0; i < numStops; i++) {
             Address start = getStop(i);
             Address end = getStop(i+1 < numStops ? i+1 : 0);
-            distance += Address.distance(start, end);
+            double hop = Address.distance(start,end);
+            distance += hop;
         }
 
         return distance;
@@ -100,8 +101,9 @@ public class Route {
     public String toString() {
         String s = "";
         for(Address address : stops) {
-            s += String.format("stop(%d, %d) -> ", address.getX(), address.getY());
+            s += String.format("(%d, %d) -> ", address.getX(), address.getY());
         }
+        Address home = stops.get(0);
         s += "@";
         return s;
     }
