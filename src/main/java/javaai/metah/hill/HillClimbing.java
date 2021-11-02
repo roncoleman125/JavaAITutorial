@@ -55,10 +55,10 @@ public class HillClimbing {
     protected double[] stepSize = {1, 1};
 
     /** Baseline acceleration */
-    final double acceleration = 1.2;
+    final double ACCELERATION = 1.2;
 
     /** Candidate accelerations to explore **/
-    final double[] candidates = {-acceleration, -1/acceleration, 0, 1/acceleration, acceleration};
+    final double[] CANDIDATES = {-ACCELERATION, -1/ACCELERATION, 0, 1/ACCELERATION, ACCELERATION};
 
     /** Current same count, updated as the climbing progresses. */
     protected int sameCount = 0;
@@ -110,40 +110,45 @@ public class HillClimbing {
             // Test each dimension of the current point.
             for(int dim=0; dim < curPt.length; dim++) {
                 // Best candidate index so far -- unknown
-                int bestIndex = -1;
+                int bestIdx = -1;
 
                 // If minimizing, we should be descending from here
                 double bestFitness = direction == MINIMIZE ? Double.MAX_VALUE : -Double.MAX_VALUE;
 
                 // Try each candidate acceleration
-                for(int idx=0; idx < candidates.length; idx++) {
-                    // Update the point in the ith direction we're moving
-                    curPt[dim] += stepSize[dim]* candidates[idx];
+                for(int idx = 0; idx < CANDIDATES.length; idx++) {
+                    // Move point forward in ith direction we've been moving
+                    curPt[dim] += stepSize[dim] * CANDIDATES[idx];
 
-                    // Get its fitness
+                    // Get current point fitness
                     double newFitness = getFitness(curPt);
 
-                    // Move the point back
-                    curPt[dim] -= stepSize[dim]* candidates[idx];
+                    // Move point back: we don't yet know if this point works
+                    curPt[dim] -= stepSize[dim] * CANDIDATES[idx];
 
-                    // If we improvement, remember this acceleration
+                    // If we improved, remember this candidate acceleration
                     if((direction == Direction.MINIMIZE && newFitness < bestFitness) ||
                        (direction == Direction.MAXIMIZE && newFitness > bestFitness)) {
                         bestFitness = newFitness;
-                        bestIndex = idx;
+                        bestIdx = idx;
                     }
                 }
 
                 // If we didn't improve, reduce the step size in this ith dimension
                 // Note: best != -1 guaranteed since the best score (see above) is initially infinite.
-                if(candidates[bestIndex] == 0)
-                    stepSize[dim] /= acceleration;
+                assert(bestIdx >= 0);
 
-                // If we improvement, use the best acceleration we identified and
+                if(CANDIDATES[bestIdx] == 0)
+                    stepSize[dim] /= ACCELERATION;
+
+                // If we improved, use the best acceleration we identified and
                 // update the step in that ith dimension.
                 else {
-                    curPt[dim] += stepSize[dim]* candidates[bestIndex];
-                    stepSize[dim] *= candidates[bestIndex];
+                    // Move point forward (again)
+                    curPt[dim] += stepSize[dim] * CANDIDATES[bestIdx];
+
+                    // Refine the step for the direction we improved
+                    stepSize[dim] *= CANDIDATES[bestIdx];
                 }
             }
 
