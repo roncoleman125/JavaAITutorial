@@ -162,6 +162,10 @@ public class XorGaObjective implements CalculateScore {
         return y;
     }
 
+    /**
+     * Gets a random interneuron weight within constraints.
+     * @return Random interneuron weight.
+     */
     public static double getRandomWeight() {
         double wt = ran.nextDouble()*(RANGE_MAX-RANGE_MIN)+RANGE_MIN;
         return wt;
