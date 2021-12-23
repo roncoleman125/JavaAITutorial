@@ -110,10 +110,10 @@ public class Pso {
 
         // Repeat until we converge
         System.out.println(Pso.class.getSimpleName());
-        System.out.printf("%3s %7s %7s %7s %s\n","#","x","y","fit","same");
+        System.out.printf("%3s %7s %7s  %7s %s\n","#","x","y","fitness","same");
 
         while (!converged) {
-            System.out.printf("%3d %7.4f %7.4f %7.4f %d\n",iter,this.best.getX(),this.best.getY(),best.fitness,sameCount);
+            System.out.printf("%3d %7.4f %7.4f  %7.4f %d\n",iter,this.best.getX(),this.best.getY(),best.fitness,sameCount);
             //System.out.println(iteration + " best = " + best + " fitness=" + best.fitness + " same count=" + sameCount);
 
             // Disturb the particles
@@ -131,7 +131,7 @@ public class Pso {
             iter++;
         }
 
-        System.out.println("CONVERGED: best = " + best + " fit = " + best.fitness + " same count=" + sameCount);
+        System.out.println("CONVERGED: best = " + best + " fitness = " + best.fitness + " same count=" + sameCount);
     }
 
     /** Initializes the swarm. */

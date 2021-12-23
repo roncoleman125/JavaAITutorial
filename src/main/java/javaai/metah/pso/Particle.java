@@ -116,8 +116,8 @@ class Particle implements Serializable {
      * Agitates this particle.
      */
     public void agitate() {
-        double dx = ran.nextDouble();
-        double dy = ran.nextDouble();
+        double dx = ran.nextGaussian();
+        double dy = ran.nextGaussian();
 
         this.x += dx;
         this.y += dy;

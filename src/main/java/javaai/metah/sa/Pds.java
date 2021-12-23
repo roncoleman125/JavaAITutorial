@@ -50,20 +50,20 @@ public class Pds {
         int epoch = 1;
         for (double temp = INITIAL_TEMP; temp > 1; temp *= COOLING_FACTOR, epoch++) {
             // Get a route to manipulate
-            Route route = current.copy();
+            Route candidate = current.copy();
 
             // Swap a pair of stops on this route
-            int i = Util.getRandomIndex(1,route.getNumStops());
-            int j = Util.getRandomIndex(1,route.getNumStops());
+            int i = Util.getRandomIndex(1,candidate.getNumStops());
+            int j = Util.getRandomIndex(1,candidate.getNumStops());
 
-            Collections.swap(route.getStops(), i, j);
+            Collections.swap(candidate.getStops(), i, j);
 
             // If the distance is further than the current dist, accept it with P(dE)
             int curDist = current.getDist();
-            int routeDist = route.getDist();
+            int routeDist = candidate.getDist();
 
             if (ran.nextDouble() < Util.probability(curDist, routeDist, temp)) {
-                current = route.copy();
+                current = candidate.copy();
             }
 
             // Update the best if the current is better
@@ -72,7 +72,7 @@ public class Pds {
             }
 
             if(epoch <= 5 || (epoch % 100) == 0)
-                System.out.printf("%5d %4d %4d %s\n",epoch,best.getDist(),route.getDist(),route);
+                System.out.printf("%5d %4d %s\n",epoch,best.getDist(),best);
         }
 
         System.out.printf("%5d %4d %4d %s\n",epoch,best.getDist(),best.getDist(),best);
