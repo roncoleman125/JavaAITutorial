@@ -21,7 +21,6 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package javaai.metah.ga;
-
 import org.encog.ml.ea.genome.Genome;
 import org.encog.ml.ea.population.BasicPopulation;
 import org.encog.ml.ea.population.Population;
@@ -31,12 +30,11 @@ import org.encog.ml.ea.train.basic.TrainEA;
 import org.encog.ml.genetic.crossover.Splice;
 import org.encog.ml.genetic.genome.DoubleArrayGenome;
 import org.encog.ml.genetic.genome.DoubleArrayGenomeFactory;
-
 import java.util.Random;
 import static javaai.util.Helper.asString;
 
 /**
- * This class learns the weights using unsupervised learning for the XOR problem.
+ * This class learns the weights using GA as the optimize algorithm for the XOR problem.
  */
 public class XorGa {
     /** Stopping criteria as difference between best solution and last best one */
@@ -49,7 +47,7 @@ public class XorGa {
     public final static int POPULATION_SIZE = 10000;
 
     /** Chromosome size (ie, number of genes): domain is [0, (2^n-1)]. */
-    public final static int CHROMOSOME_SIZE = 8;
+    public final static int CHROMOSOME_SIZE = 9;
 
     /** Mutation rate */
     public final static double MUTATION_RATE = 0.01;
@@ -116,7 +114,7 @@ public class XorGa {
         boolean converged = false;
 
         // Loop until the best answer doesn't change for a while
-        System.out.printf("%3s  %4s  %4s  %s\n","#", "y1", "same","best");
+        System.out.printf("%3s  %7s  %4s  %s\n","#", "loss", "same","best");
         while(!converged) {
             //output("iteration = "+iteration, genetic.getPopulation());
 
@@ -124,17 +122,17 @@ public class XorGa {
             ga.iteration();
 
             // Get the value of the best solution for f(x)
-            double y1 = ga.getError();
+            double loss = ga.getError();
 
             DoubleArrayGenome best = (DoubleArrayGenome) ga.getBestGenome();
 
 //            System.out.printf("%d y=%4.2f same=%d >> %s\n",iteration, y, sameCount, asString(best));
-            System.out.printf("%3d  %4.2f  %4d  %s\n",iteration, y1, sameCount,asString(best));
+            System.out.printf("%3d  %7.4f  %4d  %s\n",iteration, loss, sameCount,asString(best));
 
             // System.out.println("epoch = "+iteration);
             iteration++;
 
-            converged = didConverge(y1,  ga.getPopulation());
+            converged = didConverge(loss,  ga.getPopulation());
         }
     }
 

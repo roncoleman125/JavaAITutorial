@@ -341,7 +341,7 @@ public class Helper {
         int len = encodings.length;
 
         for (int k = 0; k < len; k++) {
-            s += String.format("%7.4f", encodings[k]);
+            s += String.format("%8.4f", encodings[k]);
             if (k == len - 1)
                 s += ")";
 

@@ -83,7 +83,16 @@ public class XorGaObjective implements CalculateScore {
      * @param ws Weights
      * @return Fitness value
      */
-    public double getFitness(double[] ws) {
+
+    double getFitness(double[] ws) {
+        return getBce(ws);
+    }
+
+    /** Gets fitness as RMSE.
+     * @param ws Interneuron weights
+     * @return rmse
+     */
+    public double getRmse(double[] ws) {
         // Sum of square error
         double sumSqrErr = 0.0;
 
@@ -91,19 +100,50 @@ public class XorGaObjective implements CalculateScore {
             double x1 = XOR_INPUTS[k][0];
             double x2 = XOR_INPUTS[k][1];
 
-            double actual = feedforward(x1, x2, ws);
-            double ideal = XOR_IDEALS[k][0];
+            double y1 = feedforward(x1, x2, ws);
+            double t1 = XOR_IDEALS[k][0];
 
             // Square error
-            double sqrError = (actual - ideal) * (actual - ideal);
+            double sqrError = (y1 - t1) * (y1 - t1);
 
-            // Summ the square error
+            // Sum the square error
             sumSqrErr += sqrError;
         }
 
         double rmse = Math.sqrt(sumSqrErr / XOR_INPUTS.length);
 
         return rmse;
+    }
+
+    /** Gets fitness as binary cross entropy.
+     * @param ws Interneuron weights
+     * @return bce
+     */
+    public double getBce(double[] ws) {
+        // Sum of square error
+        double totalLoss = 0.0;
+
+        for(int k = 0; k < XOR_INPUTS.length; k++) {
+            double x1 = XOR_INPUTS[k][0];
+            double x2 = XOR_INPUTS[k][1];
+
+            double y1 = feedforward(x1, x2, ws);
+
+            // Side-step log(0) problem.
+            y1 = Math.min(Double.MAX_VALUE,Math.max(Double.MIN_VALUE,y1));
+
+            double t1 = XOR_IDEALS[k][0];
+
+            // Square error
+            double loss = t1*Math.log(y1) + (1-t1)*Math.log(1-y1);
+
+            // Sum the square error
+            totalLoss += loss;
+        }
+
+        double avgLoss = -totalLoss / XOR_INPUTS.length;
+
+        return avgLoss;
     }
 
     /**
@@ -140,12 +180,13 @@ public class XorGaObjective implements CalculateScore {
         double w6 = ws[5];
         double b1 = ws[6];
         double b2 = ws[7];
+        double b3 = ws[8];
 
-        double zh1 = w1*x1 + w3*x2 + b1;
-        double zh2 = w2*x1 + w4*x2 + b1;
+        double zh1 = w1*x1 + w3*x2 + b1*1;
+        double zh2 = w2*x1 + w4*x2 + b2*1;
         double h1 = sigmoid(zh1);
         double h2 = sigmoid(zh2);
-        double zy1 = w5*h1 + w6*h2 + b2;
+        double zy1 = w5*h1 + w6*h2 + b3*1;
         double y1 = sigmoid(zy1);
 
         return y1;
